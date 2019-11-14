@@ -749,7 +749,7 @@ If our merchant’s sailing service is not ready, we will fully refund your paym
                     <div class="sailing-payment-content">
                         <h1 style="font-family: Mark-Bold; font-size: 26px;">One last Step....</h1>
                          <div style="padding: 0px;" class="mt-4 notice row">
-                            <b-col md="12" class="align-self-center">
+                            <b-col md="12" class="p-3 align-self-center">
                                 <p style="font-family: NunitoSans-Regular;">Thank you for your payment!</p>
                                 <p style="font-family: NunitoSans-Regular;">For sailing service, after payment you have to wait for our merchant confirmation 
 maximal 24 hour. If our merchant’s sailing service is not ready, we will fully refund your payment to your account.</p>
