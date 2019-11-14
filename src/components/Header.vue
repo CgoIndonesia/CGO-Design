@@ -6,7 +6,7 @@
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav style="padding:0 30px 0 0">
         <b-navbar-nav>
-          <b-nav-item href="#" >Salling</b-nav-item>
+          <b-nav-item href="/sailing/index" >Salling</b-nav-item>
           <b-nav-item href="#">Tour</b-nav-item>
           <b-nav-item href="#">Transportation</b-nav-item>
         </b-navbar-nav>
@@ -17,7 +17,7 @@
                   <b-input-group-prepend>
                     <span class="search-icon"><i><font-awesome-icon icon="search" /></i></span>
                   </b-input-group-prepend>
-                    <b-form-input size="sm" class="search-input" placeholder="try 'labuan bajo'" style="border-width: 0px;border-left-radius:0px">
+                    <b-form-input size="sm" class="search-input" placeholder="try 'labuan bajo'" style="font-family: NunitoSans-Regular; border-width: 0px;border-left-radius:0px">
                   </b-form-input>
                 </b-input-group>
               </b-form>
@@ -29,29 +29,31 @@
                      <p style="color:rgba(255, 255, 255, 0.5);margin:0px;font-size:14px">Login</p>
               </template>
             <b-dropdown-form  style="width: 254px;">
-              <b-form-group label="Email" label-for="dropdown-form-email" @submit.stop.prevent>
+              <b-form-group style="font-family: NunitoSans-Regular;" label="Email" label-for="dropdown-form-email" @submit.stop.prevent>
                 <b-form-input
                   id="dropdown-form-email"
                   size="sm"
                   placeholder="email@example.com"
+                  style="font-family: NunitoSans-Regular;"
                 ></b-form-input>
               </b-form-group>
 
-              <b-form-group label="Password" label-for="dropdown-form-password">
+              <b-form-group style="font-family: NunitoSans-Regular;" label="Password" label-for="dropdown-form-password">
                 <b-form-input
                   id="dropdown-form-password"
                   type="password"
                   size="sm"
+                  style="font-family: NunitoSans-Regular;"
                   placeholder="Password"
                 ></b-form-input>
               </b-form-group>
-              <b-link href=""><b-dropdown-item>forgot password.?</b-dropdown-item></b-link>
+              <b-link href="" style="font-family: NunitoSans-Regular;"><b-dropdown-item>forgot password.?</b-dropdown-item></b-link>
               <b-button type="submit" style="width:100%;border-radius:5px;background: linear-gradient(168.49deg, #9CAFEF -53.91%, #2345B9 94.99%);">Log In</b-button>
             </b-dropdown-form>
             <b-dropdown-divider></b-dropdown-divider>
             <b-row>
                 <b-col md="6" style="text-align:center;">
-                  <p style="font-size:16px">log in with</p>
+                  <p style="font-family: NunitoSans-Regular; font-size:16px">log in with</p>
                 </b-col>
                 <b-col md="6" style="text-align:left;">
                   <b-link href="www.facebook.com"><img src="@/assets/img/Group.png" style="margin:5px"></b-link>
@@ -66,8 +68,8 @@
     </b-collapse>
   </b-navbar>
 </template>
-<style>
+<style scoped>
 *{
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: Mark-Medium;
 }
 </style>

@@ -6,7 +6,7 @@
         <div class="find">
           <b-row  style="padding:20px 0 10px 20px;text-align:left">
             <b-col>
-              <p style="font-size:20px;font-weight:bold">Find the best sea travel deal for your holiday</p>
+              <p style="font-size:20px;font-family:Mark-Bold">Find the best sea travel deal for your holiday</p>
             </b-col>
           </b-row>
           <b-row>
@@ -153,7 +153,7 @@
        <div class="whybook">
          <div class="container">
             <b-row align-h="center">
-              <b-col><p style="font-size:16px;font-weight:bold;">Why Book With Us</p></b-col>
+              <b-col><p style="font-size:16px;font-family:Mark-Bold;">Why Book With Us</p></b-col>
             </b-row>
             <b-row align-h="center" style="margin-top:30px">
               <b-col>
@@ -208,7 +208,7 @@
        <!-- Popular Destination -->
        <div class="popular-destination">
          <b-row align-h="center">
-           <b-col><p style="font-size:16px;font-weight:bold;">Popular Destination</p></b-col>
+           <b-col><p style="font-size:16px;font-weight:bold; font-family:Mark-Bold">Popular Destination</p></b-col>
          </b-row>
          <b-row align-h="center" style="margin-bottom:20px">
            <b-col><p style="font-size:12px"></p>Enchanting natural beauty of Indonesia is an appealing reason to go on a sea trip.</b-col>

@@ -1,5 +1,34 @@
+@font-face {
+  font-family: Mark-Light;
+  src: url(./../fonts/MarkLight.otf);
+}
+@font-face {
+  font-family: Mark-Medium;
+  src: url(./../fonts/MarkMedium.otf);
+}
+@font-face {
+  font-family: Mark-Bold;
+  src: url(./../fonts/MarkBold.otf);
+}
+@font-face {
+  font-family: Mark-Regular;
+  src: url(./../fonts/MarkRegular.otf);
+}
+@font-face {
+  font-family: NunitoSans-Bold;
+  src: url(./../fonts/NunitoSans-Bold.ttf);
+}
+@font-face {
+  font-family: NunitoSans-SemiBold;
+  src: url(./../fonts/NunitoSans-SemiBold.ttf);
+}
+@font-face {
+  font-family: NunitoSans-Regular;
+  src: url(./../fonts/NunitoSans-Regular.ttf);
+}
+
 * {
-  font-family: cursive;
+  font-family: Mark-Light;
   font-style: normal;
   font-weight: normal;
 
