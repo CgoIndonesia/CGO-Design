@@ -2,6 +2,7 @@
 <div>
 <Header />
     <div class="content-center">
+        <!-- Sailing Search Screen -->
         <b-row class="m-0" v-if="selectedContent =='sailingHome'">
             <b-col md="4">
             <div class="content-aside-sailing">
@@ -109,6 +110,7 @@
                     ></b-form-checkbox-group>
                     </div>
                 </b-form-group>
+                <!-- Empty Search -->
                 <div class="d-none empty-sailing container">
                     <b-row>
                         <b-col md="12">
@@ -233,7 +235,7 @@
                 </div>
             </b-col>
         </b-row>
-
+        <!-- Sailing Detail Screen -->
         <b-row class="m-0" v-if="selectedContent=='sailingDetail'">
             <b-col md="9">
                 <div class="content-sailing-detail">
