@@ -8,7 +8,7 @@
         <b-form>
           <b-row>
             <b-col md="8">
-              <b-form-input size="sm" v-model="text" placeholder="your email address"></b-form-input>
+              <b-form-input size="sm" placeholder="your email address"></b-form-input>
             </b-col>
             <b-col md="2">
               <b-button size="sm" variant="danger">subscribe</b-button>

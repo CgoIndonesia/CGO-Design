@@ -9,28 +9,28 @@
         <b-col md="2">
         <div class="sidebar-left">
             <div class="menu-sidebar-left">
-                <b-lin>Introduction</b-lin>
+                <b-link>Introduction</b-link>
             </div>
             <div class="menu-sidebar-left">
-                <b-lin>Purchasing and Payments I</b-lin>
+                <b-link>Purchasing and Payments I</b-link>
             </div>
             <div class="menu-sidebar-left">
-                <b-lin>Purchasing and Payments II</b-lin>
+                <b-link>Purchasing and Payments II</b-link>
             </div>
             <div class="menu-sidebar-left">
-                <b-lin>Promo Code</b-lin>
+                <b-link>Promo Code</b-link>
             </div>
             <div class="menu-sidebar-left">
-                <b-lin>Your Obligations</b-lin>
+                <b-link>Your Obligations</b-link>
             </div>
             <div class="menu-sidebar-left">
-                <b-lin>Intellectual Property</b-lin>
+                <b-link>Intellectual Property</b-link>
             </div>
             <div class="menu-sidebar-left">
-                <b-lin>Disclaimer</b-lin>
+                <b-link>Disclaimer</b-link>
             </div>
             <div class="menu-sidebar-left">
-                <b-lin>Suspension and Terminations</b-lin>
+                <b-link>Suspension and Terminations</b-link>
             </div>
         </div>
         </b-col>

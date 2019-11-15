@@ -12,6 +12,7 @@ import RegiterSuccess from '../views/Home/Register-Success.vue'
 import ForgotPassword from '../views/Home/Forgot-Password.vue'
 import ChangePassword from '../views/Home/Change-Password.vue'
 import Empty from '../views/Profile/Empty.vue'
+import { access } from 'fs';
 
 Vue.use(VueRouter)
 
@@ -23,11 +24,6 @@ const routes = [
     component: Home
   },
   {
-    path: '/home',
-    name: 'home',
-    component: Home
-  },
-  {
     path: '/home/privacy-policy',
     name: 'privacy-policy',
     component: PrivacyPolicy
@@ -35,7 +31,10 @@ const routes = [
   {
     path: '/home/faq',
     name: 'faq',
-    component: Faq
+    component: Faq,
+    meta: {
+      requiresAuth:true
+    }
   },
   {
     path: '/home/register-success',
@@ -85,6 +84,7 @@ const routes = [
     component: Empty
   }
 ]
+
 
 const router = new VueRouter({
   mode: 'history',
