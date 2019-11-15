@@ -13,6 +13,8 @@ import ForgotPassword from '../views/Home/Forgot-Password.vue'
 import ChangePassword from '../views/Home/Change-Password.vue'
 import Empty from '../views/Profile/Empty.vue'
 import { access } from 'fs';
+import sailingEmpty from '../views/sailing/index.vue'
+
 
 Vue.use(VueRouter)
 
@@ -82,6 +84,12 @@ const routes = [
     path: '/profile/empty',
     name: 'empty',
     component: Empty
+  },
+  // sailing
+  {
+    path: '/sailing/index',
+    name: 'sailingEmpty',
+    component: sailingEmpty
   }
 ]
 

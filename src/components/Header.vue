@@ -11,11 +11,12 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav style="padding:0 30px 0 0">
         <b-navbar-nav>
-          <b-nav-item href="#">Salling</b-nav-item>
+          <b-nav-item href="/sailing/index" >Salling</b-nav-item>
           <b-nav-item href="#">Tour</b-nav-item>
           <b-nav-item href="#">Transportation</b-nav-item>
         </b-navbar-nav>
         <!-- Right aligned nav items -->
+
         <b-navbar-nav>
           <b-form>
             <b-input-group class="search">
@@ -47,12 +48,13 @@
                 <b-form-input id="dropdown-form-email" size="sm" placeholder="email@example.com" v-model="form.username"></b-form-input>
               </b-form-group>
 
-              <b-form-group label="Password" label-for="dropdown-form-password">
+              <b-form-group style="font-family: NunitoSans-Regular;" label="Password" label-for="dropdown-form-password">
                 <b-form-input
                   id="dropdown-form-password"
                   type="password"
                   v-model="form.password"
                   size="sm"
+                  style="font-family: NunitoSans-Regular;"
                   placeholder="Password"
                 ></b-form-input>
               </b-form-group>
@@ -92,6 +94,7 @@
     </b-navbar>
   </div>
 </template>
+<<<<<<< HEAD
 <script>
 export default {
 
@@ -134,7 +137,10 @@ export default {
 };
 </script>
 <style>
-* {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+
+*{
+  font-family: Mark-Medium;
+
 }
 </style>

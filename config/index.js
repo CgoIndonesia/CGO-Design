@@ -5,6 +5,9 @@
 const path = require('path')
 
 module.exports = {
+  publicPath: process.env.NODE_ENV === 'production'
+  ? '/production-sub-path/'
+  : '/',
   dev: {
 
     // Paths
@@ -50,7 +53,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: 'http://cgo.co.id/',
+    assetsPublicPath: 'https://cgo.co.id/',
 
     /**
      * Source Maps

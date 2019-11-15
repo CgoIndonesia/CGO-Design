@@ -14,6 +14,7 @@ let config = {
 export default new Vuex.Store({
   state: {
     token: localStorage.getItem('access_token') || null,
+    search_sailing : [],
   },
   getters: {
     loggedIn(state) {
@@ -31,6 +32,19 @@ export default new Vuex.Store({
       localStorage.removeItem('access_token')
       state.token = null
     },
+    search(state, data){
+      console.log("dataaaaaaaaaaaa",data)
+      
+      if(data.type == "sailing"){
+        state.search_sailing = data.data
+      }else if (data.type == "tour") {
+        
+      }else if (data.type == "transportation") {
+        
+      }else if (data.type == "all"|| data.type == null) {
+        
+      }
+    }
   },
   actions: {
     register(context, data) {
@@ -80,6 +94,44 @@ export default new Vuex.Store({
     logout(context){
       return context.commit('logout')
     },
+    search(context, type, data){
+      config = {
+          headers : {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ context.getters.token,
+          },
+        }
+      return new Promise((resolve, reject) => {
+        axios.post('api/v1/UserApps/search/' ,data ? data : {}, config)
+          .then(response => {
+              //console.log("data siling", response.data)
+              context.commit("search", {type : type, data : response.data.data})
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    detailSailing(context,id, data){
+      config = {
+          headers : {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ context.getters.token,
+          },
+        }
+      return new Promise((resolve, reject) => {
+        axios.post('api/v1/UserApps/search/' +id,data ? data : {}, config)
+          .then(response => {
+              //console.log("data siling", response.data)
+              //context.commit("search", {type : type, data : response.data.data})
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
     bookingSeiling(context, data){
       return new Promise((resolve, reject) => {
         config = {
@@ -102,6 +154,10 @@ export default new Vuex.Store({
           })
       })
       
+    },
+    stringIDR(context ,data){
+        const x = Math.round(data)
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
   },
   modules: {}
