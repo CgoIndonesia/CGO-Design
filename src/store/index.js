@@ -4,7 +4,7 @@ import axios from 'axios'
 import { stat } from 'fs';
 
 Vue.use(Vuex)
-axios.defaults.baseURL = 'https://cors-anywhere.herokuapp.com/http://api.staging.cgo.co.id'
+axios.defaults.baseURL = 'https://api.staging.cgo.co.id'
 
 let config = {
   headers: {
