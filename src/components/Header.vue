@@ -7,8 +7,8 @@
       <b-collapse id="nav-collapse" is-nav style="padding:0 30px 0 0">
         <b-navbar-nav>
           <b-nav-item href="/sailing/index" >Salling</b-nav-item>
-          <b-nav-item href="#">Tour</b-nav-item>
-          <b-nav-item href="#">Transportation</b-nav-item>
+          <b-nav-item href="/Tour/tour">Tour</b-nav-item>
+          <b-nav-item href="/Transportation/transportation">Transportation</b-nav-item>
         </b-navbar-nav>
         <!-- Right aligned nav items -->
             <b-navbar-nav>
