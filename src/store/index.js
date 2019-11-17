@@ -4,7 +4,7 @@ import axios from 'axios'
 import { stat } from 'fs';
 
 Vue.use(Vuex)
-axios.defaults.baseURL = 'http://api.staging.cgo.co.id'
+axios.defaults.baseURL = 'https://cors-anywhere.herokuapp.com/http://api.staging.cgo.co.id'
 
 let config = {
   headers: {
@@ -113,17 +113,18 @@ export default new Vuex.Store({
           })
       })
     },
-    detailSailing(context,id, data){
+    detailSailing(context,data){
       config = {
           headers : {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer '+ context.getters.token,
           },
         }
+      console.log("data detailSailing", data)
       return new Promise((resolve, reject) => {
-        axios.post('api/v1/UserApps/search/' +id,data ? data : {}, config)
+        axios.post('api/v1/UserApps/Ship/' +data.id,data.data, config)
           .then(response => {
-              //console.log("data siling", response.data)
+              console.log("data detailSailing", response.data)
               //context.commit("search", {type : type, data : response.data.data})
             resolve(response)
           })

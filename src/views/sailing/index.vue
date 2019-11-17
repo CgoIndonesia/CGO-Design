@@ -161,20 +161,9 @@
               style="text-shadow: 1px 1px 2px #333;"
             >
               <!-- Text slides with image -->
-              <b-carousel-slide  v-for="(img, i) in sailingDetail.images" :key="i" :img-src="img" ></b-carousel-slide>
+              <b-carousel-slide  v-for="(img, i) in sailingDetail.images" :key="i" :img-src="img.endpoint" ></b-carousel-slide>
 
               <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
-              <b-carousel-slide>
-                <template v-slot:img>
-                  <img
-                    class="d-block img-fluid w-100"
-                    width="1024"
-                    height="480"
-                    src="https://picsum.photos/1024/480/?image=55"
-                    alt="image slot"
-                  />
-                </template>
-              </b-carousel-slide>
             </b-carousel>
 
             <div
@@ -182,7 +171,7 @@
               style="border: 2px solid #efefef; border-top:transparent;"
             >
               <div>
-                <h5 style="font-family: Mark-Bold; font-size: 22px;">{{ sailingDetail.title }}</h5>
+                <h5 style="font-family: Mark-Bold; font-size: 22px;">{{ sailingDetail.name }}</h5>
                 <div class="d-flex">
                   <img
                     style="margin-top: 3px; height: 14px; margin-right: 5px;"
@@ -190,12 +179,12 @@
                     src="../../assets/droplet-outline.png"
                     alt
                   />
-                  <p style="font-family: NunitoSams-Regular;">{{ sailingDetail.origin_city_name }}, {{ sailingDetail.origin_province_name }}</p>
+                  <p style="font-family: NunitoSams-Regular;">{{ sailingDetail.origin }} - {{ sailingDetail.destination }}</p>
                 </div>
               </div>
               <span class="d-flex price">
-                <h5 style="font-family:NunitoSans-Regular; font-size: 14px;">{{ sailingDetail.current_currency_code }}</h5>
-                <strong style="font-family:NunitoSans-Bold; font-size: 22px;">{{ stringIDR(sailingDetail.price_exchange) }}</strong>
+                <h5 style="font-family:NunitoSans-Regular; font-size: 14px;">{{ sailingDetail.availabilities[0].current_currency_code }}</h5>
+                <strong style="font-family:NunitoSans-Bold; font-size: 22px;">{{ stringIDR(sailingDetail.availabilities[0].price_exchange) }}</strong>
                 <p style="font-family:NunitoSans-Regular; font-size: 16px;">/days</p>
               </span>
             </div>
@@ -209,14 +198,14 @@
                 src="../../assets/Path 961.png"
                 alt
               />
-              <strong style="font-family: Mark-Bold; font-size: 20px; margin-right: 20px;">{{ sailingDetail.rating.length == 1 ? sailingDetail.rating + ".0" : sailingDetail.rating}}</strong>
-              <p class="m-0">Based on 231 reviews</p>
+              <strong style="font-family: Mark-Bold; font-size: 20px; margin-right: 20px;">{{ sailingDetail.rating ? sailingDetail.rating : 0  }}.0</strong>
+              <p class="m-0">Based on {{ sailingDetail.reviews ? sailingDetail.reviews.length : 0}} reviews</p>
             </div>
             <div class="p-4" style="border: 2px solid #efefef; border-top:transparent;">
               <h5 style="font-family: Mark-Bold;">About</h5>
               <p
                 style="font-family: NunitoSans-Regular; line-height: 1.8;"
-              >{{ sailingDetail.description }}</p>
+              >{{ sailingDetail.about }}</p>
               <a style="font-family: NunitoSans-Regular;" href>See all</a>
             </div>
             <div
@@ -248,7 +237,7 @@
             <div class="p-4" style="border: 2px solid #efefef; border-top:transparent;">
               <h5 style="font-family: Mark-Bold;">Facilities</h5>
               <div class="facilities d-flex flex-wrap justify-content-start">
-                <span v-for="(facilities,i) in sailingDetail.facilities" :key="i">{{ facilities }}</span>
+                <span v-for="(facilities,i) in sailingDetail.facilities" :key="i">{{ facilities.name }}</span>
               </div>
             </div>
             <div class="p-4" style="border: 2px solid #efefef; border-top:transparent;">
@@ -263,40 +252,21 @@
               <h5 style="font-family: Mark-Bold;">Spesification</h5>
               <div class="mt-4 spesification col-6 p-0">
                 <b-card>
-                  <div class="d-flex justify-content-between">
-                    <p>Sail Type</p>
-                    <strong>Speenboat</strong>
+                  <div class="d-flex justify-content-between" v-for="(item,i) in JSON.parse(sailingDetail.specification)" :key="i">
+                    <p>{{item.title}}</p>
+                    <strong>{{item.description}}</strong>
                   </div>
-                  <div class="d-flex justify-content-between">
-                    <p>Machine</p>
-                    <strong>Mits. 160PK</strong>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <p>Length</p>
-                    <strong>20M/65.6ft</strong>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <p>Width</p>
-                    <strong>20M/65.6ft</strong>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <p>Capacity</p>
-                    <strong>Max. 6 guests</strong>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <p>Cabin</p>
-                    <strong>1 Cabin</strong>
-                  </div>
+                  
                 </b-card>
               </div>
             </div>
             <div class="mt-5 rating-comment">
               <b-card>
                 <div class="title-rating-comment">
-                  <h5>Rating and comment (231)</h5>
+                  <h5>Rating and comment {{ sailingDetail.reviews ? sailingDetail.reviews.length : 0}}</h5>
                 </div>
                 <b-row>
-                  <b-col md="6">
+                  <b-col md="6" v-for="(item,i) in sailingDetail.reviews" :key="i">
                     <div class="d-flex justify-content-between">
                       <div class="d-flex align-items-center">
                         <img
@@ -319,63 +289,26 @@
                           src="../../assets/Path 961.png"
                           alt
                         />
-                        <strong>4</strong>
+                        <strong>{{ item.rating }}</strong>
                       </div>
-                      <span>02 October 2019</span>
+                      <span>{{ item.created_at }}</span>
                     </div>
                     <div class="d-flex align-items-center mb-3">
                       <img
                         style="object-fit:cover;"
                         class="rounded-circle"
-                        src="../../assets/Mask Group.png"
+                        :src="item.user_avatar"
+                        width="25px"
+                        height="25px"
                         alt
                       />
-                      <h4 class="pl-3" style="font-family: Mark-Bold; font-size: 18px;">Rupert Grint</h4>
+                      <h4 class="pl-3" style="font-family: Mark-Bold; font-size: 18px;">{{ item.user_full_name }}</h4>
                     </div>
                     <p
                       style="font-family: NunitoSans-Regular; line-height: 1.6;"
-                    >This was the sailing trip of my dreams! Everything was perfect. The crew was friendly, the food fantastic, and the beaches and villages we stopped at were lovely.</p>
+                    >{{ item.comment }}</p>
                   </b-col>
-                  <b-col md="6">
-                    <div class="d-flex justify-content-between">
-                      <div class="d-flex align-items-center">
-                        <img
-                          style="width: 23px; height: 23px; margin-right: 8px;"
-                          src="../../assets/Path 961.png"
-                          alt
-                        />
-                        <img
-                          style="width: 23px; height: 23px; margin-right: 8px;"
-                          src="../../assets/Path 961.png"
-                          alt
-                        />
-                        <img
-                          style="width: 23px; height: 23px; margin-right: 8px;"
-                          src="../../assets/Path 961.png"
-                          alt
-                        />
-                        <img
-                          style="width: 23px; height: 23px; margin-right: 8px;"
-                          src="../../assets/Path 961.png"
-                          alt
-                        />
-                        <strong>4</strong>
-                      </div>
-                      <span>17 October 2019</span>
-                    </div>
-                    <div class="d-flex align-items-center mb-3">
-                      <img
-                        style="object-fit:cover;"
-                        class="rounded-circle"
-                        src="../../assets/Mask Group.png"
-                        alt
-                      />
-                      <h4 class="pl-3" style="font-family: Mark-Bold; font-size: 18px;">Neville</h4>
-                    </div>
-                    <p
-                      style="font-family: NunitoSans-Regular; line-height: 1.6;"
-                    >This was the sailing trip of my dreams! Everything was perfect. The crew was friendly, the food fantastic, and the beaches and villages we stopped at were lovely.</p>
-                  </b-col>
+ 
                 </b-row>
                 <a href style="margin-left: 30px;">See all review</a>
               </b-card>
@@ -387,15 +320,15 @@
             <b-card>
               <div class="d-flex align-items-center">
                 <img
-                  style="object-fit:cover; height:45px; margin-top: 4px; margin-right:10px;"
+                  style="object-fit:cover; height:45px; width:45px; margin-top: 4px; margin-right:10px;"
                   class="rounded-circle"
-                  src="../../assets/Group 19 Copy.png"
+                  :src="sailingDetail.merchant_image"
                   alt
                 />
                 <span>
                   <h5
                     style="font-family: Mark-Bold; font-size: 15px; margin-bottom: 2px;"
-                  >Water Ship Group</h5>
+                  >{{ sailingDetail.merchant_name }}</h5>
                   <p
                     class="m-0"
                     style="font-family: NunitoSans-Regular; font-size: 12px;"
@@ -411,8 +344,8 @@
               <strong>8 guests</strong>
               <template v-slot:footer>
                 <span class="d-flex price">
-                  <h5>Rp</h5>
-                  <strong style="font-family:NunitoSans-Bold; font-size: 22px;">11,350.000</strong>
+                  <h5>{{ sailingDetail.availabilities[0].current_currency_code }}</h5>
+                  <strong style="font-family:NunitoSans-Bold; font-size: 22px;">{{ stringIDR(sailingDetail.availabilities[0].price_exchange) }}</strong>
                   <p>/days</p>
                 </span>
                 <b-button
@@ -796,6 +729,18 @@ export default {
       data_sailing: null,
       selected: null,
       sailingDetail :null,
+      detailBody:{
+        daterange: [
+    '2019-12-01T00:00:00+07:00',
+    '2019-12-02T00:00:00+07:00'
+  ],
+  type: 'yatch',
+  page: 1,
+  guest: 1,
+  with_skipper: false,
+  sort: [
+    'price asc'
+  ]},
       options: [
         { value: null, text: "Recommended by cGO" },
         { value: "a", text: "This is First option" },
@@ -830,10 +775,22 @@ export default {
        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     goto(to,data){
-        this.selectedContent = to
+       
         if (to == 'sailingDetail')
-            this.sailingDetail = data
-        
+         this.getDetail(to,data)
+    },
+    getDetail(to, data){
+      var body = this.selectedContent;
+      this.$store
+        .dispatch("detailSailing", {id :data.ref_id ,data :this.detailBody})
+        .then(res => {
+          this.sailingDetail = res.data.data
+          console.log(res.data.data);
+           this.selectedContent = to
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
 
   },
