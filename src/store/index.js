@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import { stat } from 'fs';
+import {
+  stat
+} from 'fs';
 
 Vue.use(Vuex)
 axios.defaults.baseURL = 'https://cors-anywhere.herokuapp.com/http://api.staging.cgo.co.id'
@@ -14,37 +16,93 @@ let config = {
 export default new Vuex.Store({
   state: {
     token: localStorage.getItem('access_token') || null,
-    search_sailing : [],
+    sailing: {
+      search_sailing: [],
+      bodyDetail: {},
+      home_search: []
+    },
+    tour: {
+      search_tour: [],
+      bodyDetail: {},
+      home_search: []
+    },
+    transport: {
+      search_transport: [],
+      bodyDetail: {},
+      home_search: []
+    },
+    home: {
+      search_home: []
+    }
   },
   getters: {
     loggedIn(state) {
       return state.token !== null
     },
     token(state) {
-      return state.token 
+      return state.token
+    },
+    searchHome(state) {
+      return state.home.search_home
     }
   },
   mutations: {
     retrieveToken(state, token) {
       state.token = token
     },
-    logout(state){
+    logout(state) {
       localStorage.removeItem('access_token')
       state.token = null
     },
-    search(state, data){
-      console.log("dataaaaaaaaaaaa",data)
-      
-      if(data.type == "sailing"){
-        state.search_sailing = data.data
-      }else if (data.type == "tour") {
-        
-      }else if (data.type == "transportation") {
-        
-      }else if (data.type == "all"|| data.type == null) {
-        
+    search(state, data) {
+      console.log("dataaaaaaaaaaaa", data)
+
+      if (data.type == "sailing") {
+        state.sailing.search_sailing = data.data
+      } else if (data.type == "tour") {
+        state.tour.search_tour = data.data
+      } else if (data.type == "transportation") {
+        state.transport.search_tour = data.data
+      } else if (data.type == "all" || data.type == null) {
+        state.home.search_home = data.data
+        var result = [];
+        data.data.forEach(item => {
+          if (result.indexOf(item["destination"]) < 0) {
+            if (item["destination"] != "") {
+              result.push(item["destination"]);
+              if (item.type == "yacht") state.sailing.home_search.push(item)
+              else if (item.type == "tour") state.tour.home_search.push(item)
+              else if (item.type == "transport") state.transport.home_search.push(item)
+            }
+          }
+        });
       }
-    }
+    },
+    bodyDetail(state, data) {
+      if (data.type == "sailing") {
+        Object.assign(state.sailing.bodyDetail, data.data);
+      } else if (data.type == "tour") {
+        Object.assign(state.tour.bodyDetail, data.data);
+      } else if (data.type == "transport") {
+        Object.assign(state.transport.bodyDetail, data.data);
+
+      } else if (data.type == "all" || data.type == null) {
+
+      }
+    },
+    uarr(state, data) {
+      var result = [];
+      var res = []
+      data.a.forEach(item => {
+        if (result.indexOf(item[data.key]) < 0) {
+          if (item[data.key] != "") {
+            result.push(item[data.key]);
+            res.push(item);
+          }
+        }
+      });
+
+    },
   },
   actions: {
     register(context, data) {
@@ -78,7 +136,7 @@ export default new Vuex.Store({
     },
     login(context, data) {
       return new Promise((resolve, reject) => {
-        axios.post('api/v1/UserApps/login' ,data, config)
+        axios.post('api/v1/UserApps/login', data, config)
           .then(response => {
             const token = response.data.token
 
@@ -91,21 +149,24 @@ export default new Vuex.Store({
           })
       })
     },
-    logout(context){
+    logout(context) {
       return context.commit('logout')
     },
-    search(context, type, data){
+    search(context, data) {
       config = {
-          headers : {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer '+ context.getters.token,
-          },
-        }
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + context.getters.token,
+        },
+      }
       return new Promise((resolve, reject) => {
-        axios.post('api/v1/UserApps/search/' ,data ? data : {}, config)
+        axios.post('api/v1/UserApps/search/', data.data ? data.data : {}, config)
           .then(response => {
-              //console.log("data siling", response.data)
-              context.commit("search", {type : type, data : response.data.data})
+            //console.log("data siling", response.data)
+            context.commit("search", {
+              type: data.type,
+              data: response.data.data
+            })
             resolve(response)
           })
           .catch(error => {
@@ -113,19 +174,23 @@ export default new Vuex.Store({
           })
       })
     },
-    detailSailing(context,data){
+    detailShip(context, data) {
+      let url;
       config = {
-          headers : {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer '+ context.getters.token,
-          },
-        }
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + context.getters.token,
+        },
+      }
       console.log("data detailSailing", data)
+      if (data.type == 'sailing') url = 'api/v1/UserApps/Ship/'
+      else if (data.type == 'tour') url = '/api/v1/UserApps/Tour/'
+      else if (data.type == 'transport') url = '/api/v1/UserApps/Transportation/'
       return new Promise((resolve, reject) => {
-        axios.post('api/v1/UserApps/Ship/' +data.id,data.data, config)
+        axios.post(url + data.id, data.data ? data.data : {}, config)
           .then(response => {
-              console.log("data detailSailing", response.data)
-              //context.commit("search", {type : type, data : response.data.data})
+            console.log("data detailSailing", response.data)
+            //context.commit("search", {type : type, data : response.data.data})
             resolve(response)
           })
           .catch(error => {
@@ -133,16 +198,16 @@ export default new Vuex.Store({
           })
       })
     },
-    bookingSeiling(context, data){
+    bookingSeiling(context, data) {
       return new Promise((resolve, reject) => {
         config = {
-          headers : {
+          headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer '+ context.getters.token,
+            'Authorization': 'Bearer ' + context.getters.token,
           },
         }
-        console.log("cinfig",config)
-        axios.post('/api/v1/UserApps/Booking/Tour' ,data, config)
+        console.log("cinfig", config)
+        axios.post('/api/v1/UserApps/Booking/Tour', data, config)
           .then(response => {
             const token = response.data.token
 
@@ -154,11 +219,11 @@ export default new Vuex.Store({
             reject(error)
           })
       })
-      
+
     },
-    stringIDR(context ,data){
-        const x = Math.round(data)
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    stringIDR(context, data) {
+      const x = Math.round(data)
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
   },
   modules: {}
