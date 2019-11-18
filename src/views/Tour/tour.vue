@@ -2,12 +2,12 @@
   <div>
     <Header />
     <div class="content-center" id="content-center">
-      <!-- Sailing Search Screen -->
-      <b-row class="m-0" v-if="selectedContent =='sailingHome'">
+      <!-- Tour Search Screen -->
+      <b-row class="m-0" v-if="selectedContent =='tourHome'">
         <b-col md="4">
           <div class="content-aside-sailing">
             <b-card
-              title="Sailing"
+              title="Tour"
               img-top
               tag="article"
               style="max-width: 18rem; font-family: Mark-Bold;"
@@ -17,7 +17,7 @@
                 <b-form-group id="input-group-1" label="Destination" label-for="input-1">
                   <b-form-input id="input-1" type="text" required placeholder="Enter Destination"></b-form-input>
                 </b-form-group>
-                <b-form-group id="input-group-1" label="Dates" label-for="input-1">
+                <b-form-group id="input-group-1" label="Month" label-for="input-1">
                   <b-form-input id="input-1" type="date" required></b-form-input>
                 </b-form-group>
                 <b-form-group id="input-group-1" label="Guest" label-for="input-1">
@@ -31,7 +31,7 @@
             <b-card img-top tag="article" style="max-width: 18rem;" class="mt-5 mb-2">
               <div class="d-flex justify-content-between">
                 <h4>Filter</h4>
-                <a class="text-red" href>Reset Filter</a>
+                <a style="color:red;" href>Reset Filter</a>
               </div>
               <b-form class="mt-4">
                 <b-form-group label="Destination">
@@ -61,44 +61,33 @@
         </b-col>
         <b-col md="8">
           <div class="content-sailing">
-            <b-form-group>
-              <div class="menu-type d-flex">
-                <p>Type</p>
-                <b-form-checkbox-group
-                  id="checkbox-group-1"
-                  v-model="selected"
-                  :options="type"
-                  name="flavour-1"
-                ></b-form-checkbox-group>
-              </div>
-            </b-form-group>
-
             <!-- Empty Search Sailing -->
             <div class="d-none empty-sailing container">
               <b-row>
                 <b-col md="12">
                   <div style="width: fit-content;" class="empty-content-sailing ml-auto mr-auto">
-                    <img src="../../assets/Empty state sailing-06 1.png" alt />
-                    <h4>No sailing available</h4>
+                    <img src="../../assets/Icon for web app-08 1.png" alt />
+                    <h4>No Tour available</h4>
                   </div>
                 </b-col>
               </b-row>
             </div>
+
             <!-- Result sailing Search -->
             <div class="container-fluid">
               <b-row>
-                <b-col md="6" class="mt-4 mb-2" v-for="(data,i) in data_sailing" :key="i">
+                <b-col md="6" class="mt-4 mb-2">
                   <b-card no-body>
                     <div>
                       <img
-                        @click="goto('sailingDetail',data)"
-                        :src="data.feature_image"
+                        @click="goto('tourDetail',null)"
+                        src="../../assets/llll 1.png"
                         alt="Snow"
                         style="cursor: pointer; object-fit:cover; width:100%;"
                       />
                       <div class="top-left">
                         <p class="m-0">RATE</p>
-                        <strong>{{ data.rating }}</strong>
+                        <strong>4.7</strong>
                       </div>
                       <div class="top-right">
                         <img src="../../assets/Path 932.png" alt />
@@ -107,7 +96,7 @@
                     <template v-slot:footer>
                       <b-row>
                         <b-col sm="7">
-                          <h5>{{ data.title }}</h5>
+                          <h5>Bali - Lombok Tour</h5>
                           <div class="d-flex">
                             <img
                               style="margin-top: 3px; height: 14px; margin-right: 5px;"
@@ -115,25 +104,140 @@
                               src="../../assets/droplet-outline.png"
                               alt
                             />
-                            <p>{{ data.origin_city_name }}, {{ data.origin_province_name }}</p>
+                            <p>Bali, Indonesia</p>
                           </div>
                         </b-col>
                         <b-col sm="5">
                           <span class="d-flex price">
-                            <h5>{{ data.current_currency_code }}</h5>
-                            <strong>{{ stringIDR(data.price_exchange) }}</strong>
+                            <h5>Rp</h5>
+                            <strong>2,350.000</strong>
+                            <p class="m-0">/pax</p>
+                          </span>
+                          <span style="float-right; color:red;">2 pax left</span>
+                        </b-col>
+                      </b-row>
+                      <div class="capacity-cabin justify-content-around d-flex pt-3">
+                        <div>
+                          <h5 class="pr-2">Capacity</h5>
+                          <p>6-8 guest</p>
+                        </div>
+                        <div>
+                          <h5 class="pr-2">Duration</h5>
+                          <p>3 days</p>
+                        </div>
+                        <div>
+                          <h5 class="pr-2">Dates</h5>
+                          <p>22 Dec-24 Dec</p>
+                        </div>
+                      </div>
+                    </template>
+                  </b-card>
+                </b-col>
+                <b-col md="6" class="mt-4 mb-2">
+                  <b-card no-body>
+                    <div>
+                      <img
+                        src="../../assets/nusa-penida-kelingking-1 1.png"
+                        alt="Snow"
+                        style="cursor: pointer; object-fit:cover; width:100%;"
+                      />
+                      <div class="top-left">
+                        <p class="m-0">RATE</p>
+                        <strong>3.9</strong>
+                      </div>
+                      <div class="top-right">
+                        <img src="../../assets/Path 932.png" alt />
+                      </div>
+                    </div>
+                    <template v-slot:footer>
+                      <b-row>
+                        <b-col sm="7">
+                          <h5>Nusa Penida Tour</h5>
+                          <div class="d-flex">
+                            <img
+                              style="margin-top: 3px; height: 14px; margin-right: 5px;"
+                              width="14"
+                              src="../../assets/droplet-outline.png"
+                              alt
+                            />
+                            <p>Bali, Indonesia</p>
+                          </div>
+                        </b-col>
+                        <b-col sm="5">
+                          <span class="d-flex price">
+                            <h5>Rp</h5>
+                            <strong>750.000</strong>
+                            <p>/pax</p>
+                          </span>
+                        </b-col>
+                      </b-row>
+                      <div class="capacity-cabin justify-content-around d-flex pt-3">
+                        <div>
+                          <h5 class="pr-2">Capacity</h5>
+                          <p>6-8 guest</p>
+                        </div>
+                        <div>
+                          <h5 class="pr-2">Duration</h5>
+                          <p>3 days</p>
+                        </div>
+                        <div>
+                          <h5 class="pr-2">Dates</h5>
+                          <p>22 Dec-24 Dec</p>
+                        </div>
+                      </div>
+                    </template>
+                  </b-card>
+                </b-col>
+                <b-col md="6" class="mt-4 mb-2">
+                  <b-card no-body>
+                    <div>
+                      <img
+                        src="../../assets/photo-1535779023901-a39d15762564 1.png"
+                        alt="Snow"
+                        style="cursor: pointer; object-fit:cover; width:100%;"
+                      />
+                      <div class="top-left">
+                        <p class="m-0">RATE</p>
+                        <strong>4.7</strong>
+                      </div>
+                      <div class="top-right">
+                        <img src="../../assets/Path 932.png" alt />
+                      </div>
+                    </div>
+                    <template v-slot:footer>
+                      <b-row>
+                        <b-col sm="7">
+                          <h5>Bali Tour Holiday</h5>
+                          <div class="d-flex">
+                            <img
+                              style="margin-top: 3px; height: 14px; margin-right: 5px;"
+                              width="14"
+                              src="../../assets/droplet-outline.png"
+                              alt
+                            />
+                            <p>Bali, Indonesia</p>
+                          </div>
+                        </b-col>
+                        <b-col sm="5">
+                          <span class="d-flex price">
+                            <h5>Rp</h5>
+                            <strong>11,350.000</strong>
                             <p>/days</p>
                           </span>
                         </b-col>
                       </b-row>
-                      <div class="capacity-cabin d-flex pt-3">
-                        <div class="d-flex">
+                      <div class="capacity-cabin justify-content-around d-flex pt-3">
+                        <div>
                           <h5 class="pr-2">Capacity</h5>
-                          <p>{{ data.max_guest }} guest</p>
+                          <p>6-8 guest</p>
                         </div>
-                        <div class="ml-3 d-flex">
-                          <h5 class="pr-2">Cabin</h5>
-                          <p>2 cabins</p>
+                        <div>
+                          <h5 class="pr-2">Duration</h5>
+                          <p>3 days</p>
+                        </div>
+                        <div>
+                          <h5 class="pr-2">Dates</h5>
+                          <p>22 Dec-24 Dec</p>
                         </div>
                       </div>
                     </template>
@@ -141,15 +245,15 @@
                 </b-col>
               </b-row>
               <div style="margin-top: 9rem;">
-                <h5 class="text-center">Yay, you have seen it all</h5>
+                <h5 class="text-center">Yay, you have seen it all!</h5>
               </div>
             </div>
           </div>
         </b-col>
       </b-row>
 
-      <!-- Sailing Detail Screen -->
-      <b-row class="m-0" v-if="selectedContent=='sailingDetail'">
+      <!-- Tour Detail Screen -->
+      <b-row class="m-0" v-if="selectedContent=='tourDetail'">
         <b-col md="9">
           <div class="content-sailing-detail">
             <b-carousel
@@ -160,14 +264,11 @@
               img-height="580"
               style="text-shadow: 1px 1px 2px #333;"
             >
-              <!-- Text slides with image -->
               <b-carousel-slide
                 v-for="(img, i) in sailingDetail.images"
                 :key="i"
                 :img-src="img.endpoint"
               ></b-carousel-slide>
-
-              <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
             </b-carousel>
 
             <div
@@ -188,15 +289,6 @@
                   >{{ sailingDetail.origin }} - {{ sailingDetail.destination }}</p>
                 </div>
               </div>
-              <span class="d-flex price">
-                <h5
-                  style="font-family:NunitoSans-Regular; font-size: 14px;"
-                >{{ sailingDetail.availabilities[0].current_currency_code }}</h5>
-                <strong
-                  style="font-family:NunitoSans-Bold; font-size: 22px;"
-                >{{ stringIDR(sailingDetail.availabilities[0].price_exchange) }}</strong>
-                <p style="font-family:NunitoSans-Regular; font-size: 16px;">/days</p>
-              </span>
             </div>
             <div
               class="d-flex align-items-center p-4"
@@ -219,8 +311,82 @@
               <h5 style="font-family: Mark-Bold;">About</h5>
               <p
                 style="font-family: NunitoSans-Regular; line-height: 1.8;"
-              >{{ sailingDetail.about }}</p>
+              >{{ sailingDetail.description }}</p>
               <a style="font-family: NunitoSans-Regular;" href>See all</a>
+            </div>
+            <div
+              class="p-4 pickup-return"
+              style="border: 2px solid #efefef; border-top:transparent;"
+            >
+              <h5 style="font-family: Mark-Bold;">Package Details</h5>
+              <div class="mt-4 d-flex flex-wrap justify-content-start">
+                <b-card class="mr-4 mb-3">
+                  <div>
+                    <h5
+                      style="font-family: NunitoSans-Regular; color: #808080; font-size: 12px;"
+                    >Duration</h5>
+                    <p
+                      style="font-family: NunitoSans-Regular; font-size: 12px;"
+                    >3 Days - 2 Nights | 23 Dec - 25 Dec</p>
+                  </div>
+                </b-card>
+                <b-card class="mr-4 mb-3">
+                  <div>
+                    <h5
+                      style="font-family: NunitoSans-Regular; color: #808080; font-size: 12px;"
+                    >Capacity</h5>
+                    <p style="font-family: NunitoSans-Regular; font-size: 12px;">6-8 guest</p>
+                  </div>
+                </b-card>
+                <b-card class="mr-4 mb-3">
+                  <div>
+                    <h5
+                      style="font-family: NunitoSans-Regular; color: #808080; font-size: 12px;"
+                    >Transportation</h5>
+                    <p style="font-family: NunitoSans-Regular; font-size: 12px;">Yacht</p>
+                  </div>
+                </b-card>
+                <b-card class="mr-4 mb-3">
+                  <div>
+                    <h5
+                      style="font-family: NunitoSans-Regular; color: #808080; font-size: 12px;"
+                    >Room</h5>
+                    <p style="font-family: NunitoSans-Regular; font-size: 12px;">Super King</p>
+                  </div>
+                </b-card>
+              </div>
+            </div>
+            <div
+              class="p-4 pickup-return"
+              style="border: 2px solid #efefef; border-top:transparent;"
+            >
+              <div class="d-flex justify-content-between">
+                <h5 style="font-family: Mark-Bold;">Itenary</h5>
+                <span
+                  style="background: #A9E8E1;
+                            padding: 5px 15px;
+                            border-radius: 0.7rem;
+                            font-size: 12px;
+                            cursor: pointer;
+                            font-family: NunitoSans-Regular;"
+                >Download Brochure</span>
+              </div>
+              <div class="mt-4 d-flex flex-wrap justify-content-start">
+                <b-card
+                  class="mr-4 mb-3"
+                  v-for="(itineraries,i) in sailingDetail.itineraries"
+                  :key="i"
+                >
+                  <div>
+                    <h5
+                      style="font-family: NunitoSans-Regular; color: #808080; font-size: 12px;"
+                    >Day {{ itineraries.day }}</h5>
+                    <p
+                      style="font-family: NunitoSans-Regular; font-size: 12px;"
+                    >{{ itineraries.description }}</p>
+                  </div>
+                </b-card>
+              </div>
             </div>
             <div
               class="p-4 pickup-return"
@@ -232,9 +398,11 @@
                   <div class="d-flex">
                     <img src="../../assets/Layer 2.png" alt style="height:20px;" />
                     <div class="pl-3">
-                      <h5 style="font-family: NunitoSans-Regular; color: #808080;">Departure</h5>
+                      <h5
+                        style="font-family: NunitoSans-Regular; color: #808080;font-size: 14px;"
+                      >Departure</h5>
                       <p
-                        style="font-family: NunitoSans-Regular;"
+                        style="font-family: NunitoSans-Regular;font-size: 14px;"
                       >{{ sailingDetail.origin }} {{ sailingDetail.date }}</p>
                     </div>
                   </div>
@@ -243,9 +411,11 @@
                   <div class="d-flex">
                     <img src="../../assets/Layer 2.png" alt style="height:20px;" />
                     <div class="pl-3">
-                      <h5 style="font-family: NunitoSans-Regular; color: #808080;">Arrival</h5>
+                      <h5
+                        style="font-family: NunitoSans-Regular; color: #808080;font-size: 14px;"
+                      >Arrival</h5>
                       <p
-                        style="font-family: NunitoSans-Regular;"
+                        style="font-family: NunitoSans-Regular;font-size: 14px;"
                       >{{ sailingDetail.destination }} {{ sailingDetail.end_date }}</p>
                     </div>
                   </div>
@@ -256,7 +426,7 @@
               <h5 style="font-family: Mark-Bold;">Facilities</h5>
               <div class="facilities d-flex flex-wrap justify-content-start">
                 <span
-                  v-for="(facilities,i) in sailingDetail.facilities"
+                  v-for="(facilities,i) in sailingDetail.ship.facilities"
                   :key="i"
                 >{{ facilities.name }}</span>
               </div>
@@ -269,20 +439,168 @@
                 <span>Sea Safe Tracking</span>
               </div>
             </div>
-            <div class="p-4" style="border: 2px solid #efefef; border-top:transparent;">
-              <h5 style="font-family: Mark-Bold;">Spesification</h5>
-              <div class="mt-4 spesification col-6 p-0">
-                <b-card>
-                  <div
-                    class="d-flex justify-content-between"
-                    v-for="(item,i) in JSON.parse(sailingDetail.specification)"
-                    :key="i"
-                  >
-                    <p>{{item.title}}</p>
-                    <strong>{{item.description}}</strong>
+            <div
+              class="mt-4 p-3"
+              style="border: 2px solid rgb(232, 230, 230); border-radius: 0.5rem;"
+            >
+              <h5
+                style="font-family: Mark-Medium;
+                         font-size: 20px; margon-bottom:15px;"
+              >Select Room</h5>
+              <b-row
+                style="border: 2px solid #d0d0d0;
+                          margin: 0;
+                          border-radius: 0.5rem;
+                          margin-bottom: 25px;"
+              >
+                <b-col md="2" class="p-0">
+                  <img
+                    src="@/assets/boat-room-drawing_csp5710024 1.png"
+                    @click="openModal();currentSlide(1)"
+                    class="hover-shadow cursor"
+                  />
+                  <!-- <div id="myModal" class="modal">
+                                <span class="close cursor" onclick="closeModal()">&times;</span>
+                                <div class="modal-content">
+
+                                    <div id="mySlides">
+                                    <div class="numbertext">1 / 4</div>
+                                    <img src="@/assets/boat-room-drawing_csp5710024 1.png" style="width:100%">
+                                    </div>
+
+                                    <div id="mySlides">
+                                    <div class="numbertext">2 / 4</div>
+                                    <img src="@/assets/boat-direction 1.png" style="width:100%">
+                                    </div>
+                                    
+                                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                                    </div>
+                  </div>-->
+                </b-col>
+                <b-col md="7">
+                  <div class="d-flex">
+                    <div style="padding-right: 15px;">
+                      <h5>Super King</h5>
+                      <p>Max 3 guest</p>
+                    </div>
+                    <div
+                      style="margin-left: 25px;
+                                padding-left: 15px;
+                                border-left: 1px solid grey;"
+                    >
+                      <h5>Facilities</h5>
+                      <ul
+                        style="columns: 2;
+                                    -webkit-columns: 2;
+                                    -moz-columns: 2;
+                                    padding-inline-start: 0px;
+                                    list-style: none;"
+                      >
+                        <li>Shower</li>
+                        <li>Toilet</li>
+                        <li>Wifi</li>
+                        <li>AC</li>
+                        <li>Food and Drink</li>
+                        <li>Kitchen</li>
+                      </ul>
+                    </div>
                   </div>
-                </b-card>
-              </div>
+                </b-col>
+                <b-col md="3">
+                  <div
+                    style="
+                                text-align: right;
+                                background: #A9E8E1;
+                                padding: 8px;
+                                border-bottom-left-radius: 0.7rem;
+                                position: absolute;
+                                top: 0;
+                                right: 0;"
+                  >
+                    <p class="m-0">Included</p>
+                  </div>
+                  <b-button
+                    style="position: absolute;
+                                bottom: 11px;
+                                width: 85%;"
+                    class="disabled"
+                    variant="primary"
+                  >Select Room</b-button>
+                </b-col>
+              </b-row>
+              <b-row
+                style="border: 2px solid #d0d0d0;
+                          margin: 0;
+                          border-radius: 0.5rem;"
+              >
+                <b-col md="2" class="p-0">
+                  <img
+                    src="@/assets/boat-direction 1.png"
+                    @click="openModal();currentSlide(1)"
+                    class="hover-shadow cursor"
+                  />
+                  <!-- <div id="myModal" class="modal">
+                                <span class="close cursor" onclick="closeModal()">&times;</span>
+                                <div class="modal-content">
+
+                                    <div id="mySlides">
+                                    <div class="numbertext">1 / 4</div>
+                                    <img src="@/assets/boat-room-drawing_csp5710024 1.png" style="width:100%">
+                                    </div>
+
+                                    <div id="mySlides">
+                                    <div class="numbertext">2 / 4</div>
+                                    <img src="@/assets/boat-direction 1.png" style="width:100%">
+                                    </div>
+                                    
+                                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                                    </div>
+                  </div>-->
+                </b-col>
+                <b-col md="7">
+                  <div class="d-flex">
+                    <div style="padding-right: 15px;">
+                      <h5>Super King</h5>
+                      <p>Max 3 guest</p>
+                    </div>
+                    <div
+                      style="margin-left: 25px;
+                                padding-left: 15px;
+                                border-left: 1px solid grey;"
+                    >
+                      <h5>Facilities</h5>
+                      <ul
+                        style="columns: 2;
+                                    -webkit-columns: 2;
+                                    -moz-columns: 2;
+                                    padding-inline-start: 0px;
+                                    list-style: none;"
+                      >
+                        <li>Shower</li>
+                        <li>Toilet</li>
+                        <li>Wifi</li>
+                        <li>AC</li>
+                        <li>Food and Drink</li>
+                        <li>Kitchen</li>
+                      </ul>
+                    </div>
+                  </div>
+                </b-col>
+                <b-col md="3">
+                  <div class="d-flex mt-3">
+                    <a href>add</a>
+                    <span class="pl-2 d-flex">
+                      Rp
+                      <h6
+                        style="font-family: NunitoSans-Bold; color: #0b0bbb;font-size: 20px;"
+                      >1,050.000</h6>
+                    </span>
+                  </div>
+                  <b-button style="width:100%" variant="primary">Select Room</b-button>
+                </b-col>
+              </b-row>
             </div>
             <div class="mt-5 rating-comment">
               <b-card>
@@ -364,32 +682,34 @@
               <h5 style="margin-top: 15px; font-family: Mark-Bold;">Book Now</h5>
               <p style="font-family: NunitoSans-Regular; margin:0px;">Dates</p>
               <strong>3 Oct - 4 Oct</strong>
-              <p style="margin-top: 15px; font-family: NunitoSans-Regular; margin:0px;">Guest</p>
+              <p
+                style="margin-top: 15px; font-family: NunitoSans-Regular; margin:0px; margin-top:15px;"
+              >Guest</p>
               <strong>8 guests</strong>
               <template v-slot:footer>
                 <span class="d-flex price">
-                  <h5>{{ sailingDetail.availabilities[0].current_currency_code }}</h5>
+                  <h5>{{ sailingDetail.ship.current_currency_code }}</h5>
                   <strong
                     style="font-family:NunitoSans-Bold; font-size: 22px;"
-                  >{{ stringIDR(sailingDetail.availabilities[0].price_exchange) }}</strong>
-                  <p>/days</p>
+                  >{{ stringIDR(sailingDetail.ship.price_exchange) }}</strong>
+                  <p>/pax</p>
                 </span>
                 <b-button
                   class="w-100"
                   variant="primary"
-                  @click="selectedContent='sailingBook'; toBook();"
+                  @click="selectedContent='tourBook'; toBook();"
                 >Book</b-button>
               </template>
             </b-card>
           </div>
         </b-col>
       </b-row>
-      <!-- Sailing Book Screen -->
-      <div v-if="selectedContent=='sailingBook'">
+      <!-- Tour Booking Screen -->
+      <div v-if="selectedContent=='tourBook'">
         <b-row class="m-0">
           <b-col md="9">
             <div class="sailing-book-content">
-              <h1 style="font-family: Mark-Bold; font-size: 28px;">Sailing Book</h1>
+              <h1 style="font-family: Mark-Bold; font-size: 28px;">Tour Booking</h1>
               <b-form class="mt-4">
                 <b-form-group label="Your Name">
                   <b-form-input type="text" required placeholder="Enter Name"></b-form-input>
@@ -453,40 +773,54 @@
 
                 <b-button style="width: 250px;" variant="danger">Apply</b-button>
               </b-form>
-              <div class="mt-4 notice row">
-                <b-col md="3">
-                  <img src="../../assets/Group 566.png" alt />
-                </b-col>
-                <b-col md="9">
-                  <h5>Important Notice</h5>
-                  <p>
-                    After payment, you have to wait for our merchant confirmation maximal 24 hour.
-                    If our merchant’s sailing service is not ready, we will fully refund your payment to your account.
-                  </p>
-                </b-col>
-              </div>
               <b-card class="price-details mt-4" header-tag="header" footer-tag="footer">
                 <template v-slot:header>
-                  <h6 class="mb-0">Price Details</h6>
+                  <h6
+                    class="mb-0"
+                    style="font-size: 15px;
+                                font-family: NunitoSans-Bold;"
+                  >Price Details</h6>
                 </template>
                 <b-card-text>
                   <div class="d-flex justify-content-between">
-                    <h6>Marina Skylight F-01</h6>
-                    <strong>Rp22.700.000</strong>
+                    <h6
+                      style="font-size: 15px;
+                                    font-family: NunitoSans-Bold;"
+                    >Bali - Lombok Tour</h6>
+                    <span
+                      style="font-size: 15px;
+                                    font-family: NunitoSans-Regular;"
+                    >Rp2.350.000</span>
                   </div>
                   <div class="d-flex justify-content-between">
-                    <em>Days (x2)</em>
-                    <strong>Rp22.700.000</strong>
+                    <em
+                      style="font-size: 15px;
+                                    font-family: NunitoSans-Regular;"
+                    >Pax (x6)</em>
+                    <strong>Rp14.100.000</strong>
                   </div>
                   <div class="d-flex justify-content-between">
-                    <em>Taxes and other fees</em>
-                    <strong>Rp22.700.000</strong>
+                    <em
+                      style="font-size: 15px;
+                                    font-family: NunitoSans-Regular;"
+                    >Taxes and other fees</em>
+                    <strong
+                      style="font-size: 15px;
+                                    font-family: NunitoSans-Bold;"
+                    >Included</strong>
                   </div>
                 </b-card-text>
                 <template v-slot:footer>
                   <div class="d-flex justify-content-between">
-                    <em>TOTAL</em>
-                    <strong>Rp22.700.000</strong>
+                    <em
+                      style="font-size: 15px;
+                                    font-family: NunitoSans-Bold;"
+                    >TOTAL</em>
+                    <strong
+                      style="font-size: 15px;
+                                    font-family: NunitoSans-Bold;
+                                    color: blue;"
+                    >Rp22.700.000</strong>
                   </div>
                 </template>
               </b-card>
@@ -494,7 +828,7 @@
                 <b-col md="7">
                   <p>
                     By clicking this button, you have agreed with
-                    <a href>Privacy Policy</a> and
+                    <a href>Privacy Policy</a>and
                     <a href>Terms & Condition</a> of cGO
                   </p>
                 </b-col>
@@ -537,7 +871,7 @@
                     <img
                       style="width: inherit; object-fit:cover;"
                       class="rounded"
-                      src="../../assets/shutterstock_357306383resize 9.png"
+                      src="../../assets/llll 1.png"
                       alt
                     />
                   </b-col>
@@ -572,7 +906,7 @@
                 </template>
                 <b-card-text>
                   <strong style="font-family: NunitoSans-Bold;">Pickup and Return</strong>
-                  <div class="d-flex justify-content-between">
+                  <div class="mt-2 d-flex justify-content-between">
                     <h6>Departure</h6>
                     <strong>Labuan Bajo at 20:30 WITA</strong>
                   </div>
@@ -589,6 +923,13 @@
                     <em style="font-family: NunitoSans-Bold;">Guest</em>
                     <strong>8 guests</strong>
                   </div>
+                  <div
+                    style="border-bottom: 1.5px solid #dadada;padding-bottom: 10px;"
+                    class="pt-2 d-flex justify-content-between"
+                  >
+                    <em style="font-family: NunitoSans-Bold;">Room</em>
+                    <strong>Super King</strong>
+                  </div>
                   <div class="pt-2 d-flex justify-content-between">
                     <em style="font-family: NunitoSans-Bold;">Order’s Name</em>
                     <strong>Emma Watson</strong>
@@ -601,14 +942,14 @@
                 </template>
                 <b-card-text>
                   <div class="d-flex justify-content-between">
-                    <h6 style="font-family: NunitoSans-Bold;">Marina Skylight F-01</h6>
+                    <h6 style="font-family: NunitoSans-Bold;">Bali - Lombok Tour</h6>
                     <strong>Rp11.350.000</strong>
                   </div>
-                  <div class="d-flex justify-content-between">
-                    <em>Days (x2)</em>
+                  <div class="pb-2 d-flex justify-content-between">
+                    <em>Pax (x2)</em>
                     <strong style="font-family: NunitoSans-Bold;">Rp22.700.000</strong>
                   </div>
-                  <div class="d-flex justify-content-between">
+                  <div class="pb-2 d-flex justify-content-between">
                     <em>Promo Code</em>
                     <strong style="font-family: NunitoSans-Bold; color:red;">- Rp300.000</strong>
                   </div>
@@ -676,14 +1017,14 @@
                   style="font-family: NunitoSans-Bold;  color: black; font-size: 20px;"
                 >Today 23:30</strong>
                 <p
-                  style="font-family: NunitoSans-Regular;"
+                  style="font-family: NunitoSans-Regular; margin-top: 10px; margin-bottom: 0;"
                 >Complete your payment within the time above</p>
               </b-col>
             </div>
             <b-card class="price-details mt-4" header-tag="header" footer-tag="footer">
               <template v-slot:header>
                 <div class="d-flex justify-content-between">
-                  <h6 class="mb-0">Payment Method</h6>
+                  <h6 class="mb-0" style="font-family: Mark-Bold;">Payment Method</h6>
                   <div class="d-flex align-items-center">
                     <span>Bank Central Asia (BCA)</span>
                     <img style="height: 15px; margin-left: 10px;" src="../../assets/Bitmap.png" alt />
@@ -695,7 +1036,7 @@
                   <h6>Account Number</h6>
                   <strong>2821479307</strong>
                 </div>
-                <div class="d-flex justify-content-between">
+                <div class="pb-2 d-flex justify-content-between">
                   <em>Account Holder Name</em>
                   <strong>PT DTech Solusi Bisnis</strong>
                 </div>
@@ -716,23 +1057,92 @@
       <!-- last step Confirmation screen -->
       <div v-if="selectedContent=='confirmation'">
         <b-row class="m-0">
-          <b-col md="12">
+          <b-col md="8">
             <div class="sailing-payment-content">
-              <h1 style="font-family: Mark-Bold; font-size: 26px;">One last Step....</h1>
-              <div style="padding: 0px;" class="mt-4 notice row">
-                <b-col md="12" class="p-3 align-self-center">
-                  <p style="font-family: NunitoSans-Regular;">Thank you for your payment!</p>
-                  <p style="font-family: NunitoSans-Regular;">
-                    For sailing service, after payment you have to wait for our merchant confirmation
-                    maximal 24 hour. If our merchant’s sailing service is not ready, we will fully refund your payment to your account.
-                  </p>
+              <h1
+                style="font-family: Mark-Bold; font-size: 26px;"
+              >Yay! Now you are ready for your trip</h1>
+              <div style="padding: 0px; height: 1000px;" class="bg-white mt-4 ticket row">
+                <b-col md="12" class="p-0">
+                  <div style="background: rgb(35, 62, 152); padding: 5px 25px;">
+                    <img src="@/assets/img/cgo-logo.png" alt />
+                  </div>
+                  <div class="p-5 d-flex justify-content-between">
+                    <div>
+                      <p>Package</p>
+                      <h6>Bali - Lombok Tour</h6>
+                    </div>
+                    <div class="d-flex">
+                      <div>
+                        <p>Order ID</p>
+                        <h6>12345678</h6>
+                      </div>
+                      <img
+                        style="height:105px; width:105px;"
+                        src="@/assets/websiteQRCode_noFrame 1.png"
+                        alt
+                      />
+                    </div>
+                  </div>
+                  <b-card class="m-4 price-details mt-4" header-tag="header" footer-tag="footer">
+                    <template v-slot:header>
+                      <div class="d-flex justify-content-between">
+                        <h6 class="mb-0" style="font-family: NunitoSans-Bold;">Dates</h6>
+                        <span>3 Oct - 4 Oct (2 days)</span>
+                      </div>
+                    </template>
+                    <b-card-text>
+                      <strong style="font-family: NunitoSans-Bold;">Pickup and Return</strong>
+                      <div class="mt-2 d-flex justify-content-between">
+                        <h6>Departure</h6>
+                        <strong>Labuan Bajo at 20:30 WITA</strong>
+                      </div>
+                      <div class="d-flex justify-content-between">
+                        <em>Arrival</em>
+                        <strong>Gili Trawangan at 20:30 WITA</strong>
+                      </div>
+                    </b-card-text>
+                    <template v-slot:footer>
+                      <div
+                        style="border-bottom: 1.5px solid #dadada;padding-bottom: 10px;"
+                        class="d-flex justify-content-between"
+                      >
+                        <em style="font-family: NunitoSans-Bold;">Guest</em>
+                        <strong>8 guests</strong>
+                      </div>
+                      <div
+                        style="border-bottom: 1.5px solid #dadada;padding-bottom: 10px;"
+                        class="pt-2 d-flex justify-content-between"
+                      >
+                        <em style="font-family: NunitoSans-Bold;">Room</em>
+                        <strong>Super King</strong>
+                      </div>
+                      <div class="pt-2 d-flex justify-content-between">
+                        <em style="font-family: NunitoSans-Bold;">Order’s Name</em>
+                        <strong>Emma Watson</strong>
+                      </div>
+                      <div class="pt-2 d-flex justify-content-between">
+                        <em style="font-family: NunitoSans-Bold;">ID Number</em>
+                        <strong>ID Card: 33002210282937</strong>
+                      </div>
+                    </template>
+                  </b-card>
+                  <div style="position: absolute; bottom: 0; padding: 40px;">
+                    <h6 style="font-family: NunitoSans-Bold; font-size:12px;">How to use:</h6>
+                    <ol style="padding-inline-start: 16px;">
+                      <li>Tunjukan tiket kepada checker setelah Anda sampai di lokasi merchant cGO</li>
+                      <li>Merchant akan melakukan scan QR pada tiket Anda</li>
+                      <li>Bawalah kartu identitas yang Anda daftarkan agar merchant dapat memverifikasi pesanan Anda</li>
+                      <li>Datanglah ke lokasi merchant selambat-lambatnya 60 menit sebelum jadwal keberangkatan</li>
+                    </ol>
+                  </div>
                 </b-col>
               </div>
-              <b-button
-                variant="primary"
-                class="float-right mt-4"
-                @click="selectedContent='confirmation'"
-              >See My Booking Status</b-button>
+            </div>
+          </b-col>
+          <b-col md="4">
+            <div class="aside-payment-content">
+              <b-button class="w-100" variant="primary">Download Ticket</b-button>
             </div>
           </b-col>
         </b-row>
@@ -747,25 +1157,18 @@ import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 
 export default {
-  name: "sailingEmpty",
+  name: "Tour",
   components: { Footer, Header },
   data() {
     return {
-      selectedContent: "sailingHome",
-      data_sailing: null,
+      selectedContent: "tourHome",
       selected: null,
       sailingDetail: null,
       dataSearch: {
-        type: "yacht"
+        type: "tour"
       },
-      detailBody: {
-        daterange: ["2019-12-01T00:00:00+07:00", "2019-12-02T00:00:00+07:00"],
-        type: "yatch",
-        page: 1,
-        guest: 1,
-        with_skipper: false,
-        sort: ["price asc"]
-      },
+      data_tour: null,
+      detailBody: null,
       options: [
         { value: null, text: "Recommended by cGO" },
         { value: "a", text: "This is First option" },
@@ -785,53 +1188,87 @@ export default {
       document.getElementById("content-center").style.backgroundColor =
         "#F7F7F7";
     },
+    openModal: function() {
+      document.getElementById("myModal").style.display = "block";
+    },
+
+    closeModal: function() {
+      document.getElementById("myModal").style.display = "none";
+    },
     search(data) {
       this.$store
         .dispatch("search", { type: "sailing", data: data })
         .then(res => {
-          this.data_sailing = this.$store.state.sailing.search_sailing;
+          this.data_tour = this.$store.state.search_tour;
+          console.log("resss", res);
         })
         .catch(error => {
           //console.log(error);
         });
     },
-    stringIDR(data) {
-      const x = Math.round(data);
-      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    },
     goto(to, data) {
-      if (to == "sailingDetail") this.getDetail(to, data);
+      if (to == "tourDetail") this.getDetail(to, { ref_id: 2 });
     },
     getDetail(to, data) {
       var body = this.selectedContent;
       this.$store
-        .dispatch("detailShip", {
-          id: data.ref_id,
-          data: this.detailBody,
-          type: "sailing"
-        })
+        .dispatch("detailShip", { id: 2, data: this.detailBody, type: "tour" })
         .then(res => {
           this.sailingDetail = res.data.data;
-          console.log(res.data.data);
+          console.log("dataaa", res.data.data);
           this.selectedContent = to;
         })
         .catch(error => {
           console.log(error);
         });
+    },
+    stringIDR(data) {
+      const x = Math.round(data);
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
   },
-  computed: {},
   created() {
-    this.$store.commit("bodyDetail", {
-      data: this.detailBody,
-      type: "sailing"
-    });
+    this.goto("tourDetail", null);
     this.search(this.dataSearch);
   }
+  //   mounted() {
+  //       var slideIndex = 1;
+  // showSlides(slideIndex);
+
+  // function plusSlides(n) {
+  //   showSlides(slideIndex += n);
+  // }
+
+  // function currentSlide(n) {
+  //   showSlides(slideIndex = n);
+  // }
+
+  // function showSlides(n) {
+  //   var i;
+  //   var slides = document.getElementById("mySlides");
+  //   var dots = document.getElementsByClassName("demo");
+  //   var captionText = document.getElementById("caption");
+  //   if (n > slides.length) {slideIndex = 1}
+  //   if (n < 1) {slideIndex = slides.length}
+  //   for (i = 0; i < slides.length; i++) {
+  //       slides[i].style.display = "none";
+  //   }
+  //   for (i = 0; i < dots.length; i++) {
+  //       dots[i].className = dots[i].className.replace(" active", "");
+  //   }
+  //   slides[slideIndex-1].style.display = "block";
+  //   dots[slideIndex-1].className += " active";
+  //   captionText.innerHTML = dots[slideIndex-1].alt;
+  // }
+  //   }
 };
 </script>
 
-<style>
+<style scoped>
+ol li {
+  font-size: 12px;
+  font-family: NunitoSans-Regular;
+}
 .content-center {
   width: 100%;
   color: #ffffff;
@@ -842,9 +1279,16 @@ export default {
   padding: 10px;
   height: 85%;
   width: -webkit-fill-available;
-  margin: 100px 280px;
+  margin: 100px 50px 100px 150px;
   color: black;
   text-align: justify;
+}
+.aside-payment-content {
+  margin: 185px 103px 185px 0;
+  background: white;
+  padding: 20px;
+  border-radius: 0.5rem;
+  border: 2px solid #e2e2e2;
 }
 .sailing-book-content form {
   background: white;
@@ -898,7 +1342,7 @@ export default {
   padding: 10px;
   height: 85%;
   width: -webkit-fill-available;
-  margin: 100px 50px 100px 0px;
+  margin: 75px 50px 100px 0px;
   color: black;
   text-align: justify;
 }
@@ -987,6 +1431,9 @@ export default {
   color: #143abe;
   padding-right: 3px;
   padding-left: 3px;
+}
+.sailing-book-content .price-details .card-body {
+  padding: 8px 1.25rem;
 }
 .facilities span {
   padding: 10px 15px;
