@@ -196,15 +196,27 @@ export default {
   },
   methods: {
     register() {
+      if (this.form.phone_number.substring(0, 1) == "0")
+        this.form.phone_number = this.form.phone_number.replace(/^0/, "+62");
+      else this.form.phone_number = this.form.phone_number;
       this.$store
         .dispatch("register", this.form)
         .then(res => {
           this.page = "verification";
           this.verification.email = this.form.email;
+          if (this.form.phone_number.substring(0, 1) == "0")
+            this.$store
+              .dispatch("otp", { phone_number: this.form.phone_number })
+              .then(res => {
+                console.log(res);
+              })
+              .catch(error => {
+                alert("Terjadi kesalahan!");
+              });
           console.log(res);
         })
         .catch(error => {
-          console.log(error);
+          alert(error.message);
         });
     },
     pinVerification() {

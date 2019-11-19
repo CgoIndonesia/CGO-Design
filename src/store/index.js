@@ -164,6 +164,17 @@ export default new Vuex.Store({
           })
       })
     },
+    otp(context, data) {
+      return new Promise((resolve, reject) => {
+        axios.post('/api/v1/UserApps/LoginGetOTP', data, config)
+          .then(response => {
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
     logout(context) {
       return context.commit('logout')
     },
