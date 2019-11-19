@@ -271,7 +271,7 @@
             </div>
             <div class="p-4" style="border: 2px solid #efefef; border-top:transparent;">
               <h5 style="font-family: Mark-Bold;">Spesification</h5>
-              <div class="mt-4 spesification col-6 p-0">
+              <div class="mt-4 spesification col-6 p-0" v-if="typeof sailingDetail.specification == 'Object'">
                 <b-card>
                   <div
                     class="d-flex justify-content-between"

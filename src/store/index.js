@@ -18,17 +18,31 @@ export default new Vuex.Store({
     token: localStorage.getItem('access_token') || null,
     sailing: {
       search_sailing: [],
-      bodyDetail: {}
+      bodyDetail: {},
+      home_search: [],
+      boody_booking: {
+        round_trip: true,
+        multi_trip: false,
+        adult: 1,
+        child: 1,
+        merchant_id: 1,
+        schedules: []
+      },
+      form: {}
     },
     tour: {
       search_tour: [],
-      bodyDetail: {}
+      bodyDetail: {},
+      home_search: []
     },
     transport: {
-      search_tour: [],
-      bodyDetail: {}
+      search_transport: [],
+      bodyDetail: {},
+      home_search: []
+    },
+    home: {
+      search_home: []
     }
-
   },
   getters: {
     loggedIn(state) {
@@ -36,6 +50,9 @@ export default new Vuex.Store({
     },
     token(state) {
       return state.token
+    },
+    searchHome(state) {
+      return state.home.search_home
     }
   },
   mutations: {
@@ -56,7 +73,24 @@ export default new Vuex.Store({
       } else if (data.type == "transportation") {
         state.transport.search_tour = data.data
       } else if (data.type == "all" || data.type == null) {
-
+        state.home.search_home = data.data
+        var result = [];
+        var sailing = [];
+        var tour = [];
+        var transport = [];
+        data.data.forEach(item => {
+          if (result.indexOf(item["destination"]) < 0) {
+            if (item["destination"] != "") {
+              result.push(item["destination"]);
+              if (item.type == "yacht") sailing.push(item)
+              else if (item.type == "tour") tour.push(item)
+              else if (item.type == "transport") transport.push(item)
+            }
+          }
+        });
+        state.sailing.home_search = sailing
+        state.tour.home_search = tour
+        state.transport.home_search = transport
       }
     },
     bodyDetail(state, data) {
@@ -64,13 +98,26 @@ export default new Vuex.Store({
         Object.assign(state.sailing.bodyDetail, data.data);
       } else if (data.type == "tour") {
         Object.assign(state.tour.bodyDetail, data.data);
-      } else if (data.type == "transportation") {
+      } else if (data.type == "transport") {
         Object.assign(state.transport.bodyDetail, data.data);
 
       } else if (data.type == "all" || data.type == null) {
 
       }
-    }
+    },
+    uarr(state, data) {
+      var result = [];
+      var res = []
+      data.a.forEach(item => {
+        if (result.indexOf(item[data.key]) < 0) {
+          if (item[data.key] != "") {
+            result.push(item[data.key]);
+            res.push(item);
+          }
+        }
+      });
+
+    },
   },
   actions: {
     register(context, data) {
@@ -153,6 +200,7 @@ export default new Vuex.Store({
       console.log("data detailSailing", data)
       if (data.type == 'sailing') url = 'api/v1/UserApps/Ship/'
       else if (data.type == 'tour') url = '/api/v1/UserApps/Tour/'
+      else if (data.type == 'transport') url = '/api/v1/UserApps/Transportation/'
       return new Promise((resolve, reject) => {
         axios.post(url + data.id, data.data ? data.data : {}, config)
           .then(response => {
