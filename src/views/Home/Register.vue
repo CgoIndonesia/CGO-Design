@@ -81,7 +81,7 @@
                   <b-input-group-prepend>
                     <span class="input-group-text" style="background-color:#DFDFDF">
                       <i>
-                        <font-awesome-icon icon="user" />
+                        <font-awesome-icon icon="phone" />
                       </i>
                     </span>
                   </b-input-group-prepend>
@@ -90,7 +90,7 @@
                     class="LoginInput"
                     type="text"
                     required
-                    placeholder="first name"
+                    placeholder="Phone Number"
                     v-model="form.phone_number"
                   ></b-form-input>
                 </b-input-group>
@@ -109,21 +109,6 @@
                     required
                     placeholder="password"
                     v-model="form.password"
-                  ></b-form-input>
-                </b-input-group>
-                <b-input-group style="margin-bottom:20px">
-                  <b-input-group-prepend>
-                    <span class="input-group-text" style="background-color:#DFDFDF">
-                      <i>
-                        <font-awesome-icon icon="lock" />
-                      </i>
-                    </span>
-                  </b-input-group-prepend>
-                  <b-form-input
-                    style="background-color:#DFDFDF"
-                    class="LoginInput"
-                    type="password"
-                    placeholder="confirm password"
                   ></b-form-input>
                 </b-input-group>
                 <b-button
@@ -227,7 +212,7 @@ export default {
       this.$store
         .dispatch("pinVerification", this.verification)
         .then(res => {
-          this.page = 'success'
+          this.page = "success";
           console.log(res);
         })
         .catch(error => {
@@ -235,7 +220,6 @@ export default {
         });
     }
   },
-  watch: {
-  }
+  watch: {}
 };
 </script>

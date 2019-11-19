@@ -8,11 +8,26 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUser, faSearch, faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import {
+  library
+} from '@fortawesome/fontawesome-svg-core'
+import {
+  fas
+} from '@fortawesome/free-solid-svg-icons'
+import {
+  faUserSecret
+} from '@fortawesome/free-solid-svg-icons'
+import {
+  faUser,
+  faSearch,
+  faEnvelope,
+  faLock
+} from '@fortawesome/free-solid-svg-icons'
+import {
+  FontAwesomeIcon
+} from '@fortawesome/vue-fontawesome'
 
-library.add(faUser,
+library.add(fas, faUserSecret, faUser,
   faSearch,
   faEnvelope,
   faLock)

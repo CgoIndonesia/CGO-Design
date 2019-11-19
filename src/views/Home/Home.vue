@@ -16,7 +16,7 @@
             <b-card no-body>
               <b-tabs card vertical>
                 <b-tab title="Sailing" active style>
-                  <b-form>
+                  <b-form @submit.stop.prevent="onSubmit">
                     <b-row style="text-align:left;padding:20px">
                       <b-col md="4">
                         <b-form-group id="input-group-2" label="Destination" label-for="input-2">
@@ -534,6 +534,12 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },
+    onSubmit() {
+      this.$v.form.$touch();
+      if (this.$v.form.$anyError) {
+        return;
+      }
     }
   },
   created() {
