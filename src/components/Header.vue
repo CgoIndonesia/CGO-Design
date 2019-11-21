@@ -11,7 +11,7 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav style="padding:0 30px 0 0">
         <b-navbar-nav>
-          <b-nav-item href="/sailing/index">Salling</b-nav-item>
+          <b-nav-item href="/sailing/index" >Salling</b-nav-item>
           <b-nav-item href="/Tour/tour">Tour</b-nav-item>
           <b-nav-item href="/Transportation/transportation">Transportation</b-nav-item>
         </b-navbar-nav>
@@ -37,7 +37,7 @@
           </b-form>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto pr-6">
-          <b-nav-item v-if="loggedIn" @click.prevent="logout">Logout</b-nav-item>
+          <b-nav-item v-if="loggedIn" @click.prevent="logout"> Logout</b-nav-item>
           <b-nav-item v-if="!loggedIn" href="/Home/register">Register</b-nav-item>
           <b-dropdown v-if="!loggedIn" variant="link" toggle-class="text-decoration-none" no-caret>
             <template v-slot:button-content style="padding:0px">
@@ -45,19 +45,10 @@
             </template>
             <b-dropdown-form style="width: 254px;">
               <b-form-group label="Email" label-for="dropdown-form-email" @submit.stop.prevent>
-                <b-form-input
-                  id="dropdown-form-email"
-                  size="sm"
-                  placeholder="email@example.com"
-                  v-model="form.username"
-                ></b-form-input>
+                <b-form-input id="dropdown-form-email" size="sm" placeholder="email@example.com" v-model="form.username"></b-form-input>
               </b-form-group>
 
-              <b-form-group
-                style="font-family: NunitoSans-Regular;"
-                label="Password"
-                label-for="dropdown-form-password"
-              >
+              <b-form-group style="font-family: NunitoSans-Regular;" label="Password" label-for="dropdown-form-password">
                 <b-form-input
                   id="dropdown-form-password"
                   type="password"
@@ -122,11 +113,10 @@ export default {
       this.$store
         .dispatch("login", this.form)
         .then(res => {
-          alert("Selamat berhasil login");
           console.log(res);
         })
         .catch(error => {
-          alert("Oppps, terjadi kesalahan");
+          console.log(error);
         });
     },
     logout(){
@@ -147,7 +137,10 @@ export default {
 };
 </script>
 <style>
-* {
+
+
+*{
   font-family: Mark-Medium;
+
 }
 </style>

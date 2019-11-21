@@ -18,25 +18,20 @@
                 <b-tab title="Sailing" active style>
                   <b-form @submit.stop.prevent="onSubmit">
                     <b-row style="text-align:left;padding:20px">
-                      <b-col md="4">
+                      <b-col md="3">
                         <b-form-group id="input-group-2" label="Destination" label-for="input-2">
-                          <b-form-select
-                            v-model="selected"
-                            class="mb-3"
+                          <b-form-input
+                            v-model="$store.state.sailing.form.destination"
+                            id="input-2"
+                            placeholder="destination"
                             style="background-color:#DFDFDF"
-                          >
-                            <option :value="null">Please select an option</option>
-                            <option
-                              v-for="(item, index) in $store.state.sailing.home_search"
-                              :key="index"
-                              :value="item.destination"
-                            >{{item.destination}}</option>
-                          </b-form-select>
+                          ></b-form-input>
                         </b-form-group>
                       </b-col>
-                      <b-col md="4">
+                      <b-col md="3">
                         <b-form-group id="input-group-2" label="Dates" label-for="input-2">
                           <b-form-input
+                            v-model="$store.state.sailing.form.date"
                             id="input-2"
                             placeholder="Dates"
                             type="date"
@@ -44,9 +39,22 @@
                           ></b-form-input>
                         </b-form-group>
                       </b-col>
-                      <b-col md="4">
+                      <b-col md="3">
+                        <b-form-group id="input-group-2" label="Day" label-for="input-2">
+                          <b-form-input
+                            v-model="$store.state.sailing.form.day"
+                            id="input-2"
+                            placeholder="2 day"
+                            type="number"
+                            style="background-color:#DFDFDF"
+                            min="1"
+                          ></b-form-input>
+                        </b-form-group>
+                      </b-col>
+                      <b-col md="3">
                         <b-form-group id="input-group-2" label="Guest" label-for="input-2">
                           <b-form-input
+                            v-model="$store.state.sailing.form.guest"
                             id="input-2"
                             placeholder="Guest"
                             type="number"
@@ -536,10 +544,7 @@ export default {
         });
     },
     onSubmit() {
-      this.$v.form.$touch();
-      if (this.$v.form.$anyError) {
-        return;
-      }
+      this.$router.push({ name: "sailingEmpty" });
     }
   },
   created() {

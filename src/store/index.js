@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import Moment from 'moment'
 import {
   stat
 } from 'fs';
 
 Vue.use(Vuex)
-axios.defaults.baseURL = 'https://api.staging.cgo.co.id'
+axios.defaults.baseURL = 'https://api.cgo.co.id'
 
 let config = {
   headers: {
@@ -17,18 +18,23 @@ export default new Vuex.Store({
   state: {
     token: localStorage.getItem('access_token') || null,
     sailing: {
+      detail: {},
+      detail_search: {},
       search_sailing: [],
       bodyDetail: {},
       home_search: [],
       boody_booking: {
         round_trip: true,
         multi_trip: false,
-        adult: 1,
-        child: 1,
-        merchant_id: 1,
+        adult: 0,
+        child: 0,
+        merchant_id: 0,
         schedules: []
       },
-      form: {}
+      form: {
+        destination: null,
+        date: Moment().format("YYYY-MM-DD")
+      }
     },
     tour: {
       search_tour: [],
@@ -53,6 +59,9 @@ export default new Vuex.Store({
     },
     searchHome(state) {
       return state.home.search_home
+    },
+    day(state) {
+      if (state.sailing.form.date) return Moment(state.sailing.form.date).add(state.sailing.form.day - 1, 'd').format("YYYY-MM-DD")
     }
   },
   mutations: {
@@ -91,6 +100,7 @@ export default new Vuex.Store({
         state.sailing.home_search = sailing
         state.tour.home_search = tour
         state.transport.home_search = transport
+
       }
     },
     bodyDetail(state, data) {
@@ -98,26 +108,25 @@ export default new Vuex.Store({
         Object.assign(state.sailing.bodyDetail, data.data);
       } else if (data.type == "tour") {
         Object.assign(state.tour.bodyDetail, data.data);
-      } else if (data.type == "transport") {
+      } else if (data.type == "transportation") {
         Object.assign(state.transport.bodyDetail, data.data);
 
       } else if (data.type == "all" || data.type == null) {
 
       }
     },
-    uarr(state, data) {
-      var result = [];
-      var res = []
-      data.a.forEach(item => {
-        if (result.indexOf(item[data.key]) < 0) {
-          if (item[data.key] != "") {
-            result.push(item[data.key]);
-            res.push(item);
-          }
-        }
-      });
+    form(state, data) {
+      if (data.type == "sailing") {
+        Object.assign(state.sailing.form, data.data);
+      } else if (data.type == "tour") {
+        Object.assign(state.tour.form, data.data);
+      } else if (data.type == "transportation") {
+        Object.assign(state.transport.form, data.data);
 
-    },
+      } else if (data.type == "all" || data.type == null) {
+
+      }
+    }
   },
   actions: {
     register(context, data) {
@@ -164,17 +173,6 @@ export default new Vuex.Store({
           })
       })
     },
-    otp(context, data) {
-      return new Promise((resolve, reject) => {
-        axios.post('/api/v1/UserApps/LoginGetOTP', data, config)
-          .then(response => {
-            resolve(response)
-          })
-          .catch(error => {
-            reject(error)
-          })
-      })
-    },
     logout(context) {
       return context.commit('logout')
     },
@@ -211,11 +209,12 @@ export default new Vuex.Store({
       console.log("data detailSailing", data)
       if (data.type == 'sailing') url = 'api/v1/UserApps/Ship/'
       else if (data.type == 'tour') url = '/api/v1/UserApps/Tour/'
-      else if (data.type == 'transport') url = '/api/v1/UserApps/Transportation/'
       return new Promise((resolve, reject) => {
         axios.post(url + data.id, data.data ? data.data : {}, config)
           .then(response => {
             console.log("data detailSailing", response.data)
+            if (data.type == 'sailing') context.state.sailing.detail = response.data.data
+            else if (data.type == 'tour') context.state.tour.detail = response.data.data
             //context.commit("search", {type : type, data : response.data.data})
             resolve(response)
           })
