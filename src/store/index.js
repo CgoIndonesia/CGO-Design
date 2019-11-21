@@ -184,7 +184,7 @@ export default new Vuex.Store({
         },
       }
       return new Promise((resolve, reject) => {
-        axios.post('api/v1/UserApps/search/', data.data ? data.data : {}, config)
+        axios.post('api/v1/UserApps/search', data.data ? data.data : {}, config)
           .then(response => {
             //console.log("data siling", response.data)
             context.commit("search", {
