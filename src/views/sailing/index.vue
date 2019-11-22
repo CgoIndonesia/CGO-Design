@@ -122,6 +122,7 @@
                   <b-card no-body>
                     <div>
                       <img
+                        width="100%"
                         height="200px"
                         @click="goto('sailingDetail',data)"
                         :src="data.feature_image|| noImage"
@@ -194,9 +195,15 @@
             >
               <!-- Text slides with image -->
               <b-carousel-slide
+              :v-if="sailingDetail.images"
                 v-for="(img, i) in sailingDetail.images"
                 :key="i"
                 :img-src="img.endpoint || noImage"
+                style="max-height:400px;"
+              ></b-carousel-slide>
+              <b-carousel-slide
+                :v-else="sailingDetail.images"
+                :img-src="noImage"
                 style="max-height:400px;"
               ></b-carousel-slide>
 
