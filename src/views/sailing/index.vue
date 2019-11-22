@@ -51,7 +51,12 @@
                 </b-form-group>
               </b-form>
 
-              <b-button class="mt-3 w-100" href="#" variant="primary">Search</b-button>
+              <b-button
+                @click.prevent="search(dataSearch)"
+                class="mt-3 w-100"
+                href="#"
+                variant="primary"
+              >Search</b-button>
             </b-card>
 
             <b-card img-top tag="article" style="max-width: 18rem;" class="mt-5 mb-2">
@@ -117,14 +122,16 @@
                   <b-card no-body>
                     <div>
                       <img
+                        width="2000px"
+                        height="200px"
                         @click="goto('sailingDetail',data)"
-                        :src="data.feature_image"
+                        :src="data.feature_image|| null"
                         alt="Snow"
-                        style="cursor: pointer; object-fit:cover; width:100%;"
+                        style="cursor: pointer; object-fit:cover;max-height:200px"
                       />
                       <div class="top-left">
                         <p class="m-0">RATE</p>
-                        <strong>{{ data.rating }}</strong>
+                        <strong>{{ data.rating }}.0</strong>
                       </div>
                       <div class="top-right">
                         <img src="../../assets/Path 932.png" alt />
@@ -217,10 +224,10 @@
               <span class="d-flex price">
                 <h5
                   style="font-family:NunitoSans-Regular; font-size: 14px;"
-                >{{ sailingDetail.availabilities[0].current_currency_code }}</h5>
+                >{{ searchDetail.current_currency_code }}</h5>
                 <strong
                   style="font-family:NunitoSans-Bold; font-size: 22px;"
-                >{{ stringIDR(sailingDetail.availabilities[0].price_exchange) }}</strong>
+                >{{ stringIDR(searchDetail.price_exchange) }}</strong>
                 <p style="font-family:NunitoSans-Regular; font-size: 16px;">/days</p>
               </span>
             </div>
@@ -397,10 +404,10 @@
               <strong>{{$store.state.sailing.form.guest }} guests</strong>
               <template v-slot:footer>
                 <span class="d-flex price">
-                  <h5>{{ sailingDetail.availabilities[0].current_currency_code }}</h5>
+                  <h5>{{ searchDetail.current_currency_code }}</h5>
                   <strong
                     style="font-family:NunitoSans-Bold; font-size: 22px;"
-                  >{{ stringIDR(sailingDetail.availabilities[0].price_exchange) }}</strong>
+                  >{{ stringIDR(searchDetail.price_exchange) }}</strong>
                   <p>/days</p>
                 </span>
                 <b-button
@@ -421,17 +428,32 @@
               <h1 style="font-family: Mark-Bold; font-size: 28px;">Sailing Book</h1>
               <b-form class="mt-4">
                 <b-form-group label="Your Name">
-                  <b-form-input type="text" required placeholder="Enter Name"></b-form-input>
+                  <b-form-input
+                    type="text"
+                    required
+                    placeholder="Enter Name"
+                    v-model="$store.state.sailing.sailing_book.first_name"
+                  ></b-form-input>
                 </b-form-group>
                 <b-row>
                   <b-col md="6">
                     <b-form-group label="Email">
-                      <b-form-input type="email" required placeholder="ex : emmawatson@gmail.com"></b-form-input>
+                      <b-form-input
+                        v-model="$store.state.sailing.sailing_book.email"
+                        type="email"
+                        required
+                        placeholder="ex : emmawatson@gmail.com"
+                      ></b-form-input>
                     </b-form-group>
                   </b-col>
                   <b-col md="6">
                     <b-form-group label="Phone Number">
-                      <b-form-input type="text" required placeholder="Enter Phone Number"></b-form-input>
+                      <b-form-input
+                        v-model="$store.state.sailing.sailing_book.phone_number"
+                        type="text"
+                        required
+                        placeholder="Enter Phone Number"
+                      ></b-form-input>
                     </b-form-group>
                   </b-col>
                 </b-row>
@@ -440,17 +462,14 @@
                     <b-form-group label="ID Type">
                       <b-form-select class="mb-3">
                         <template v-slot:first>
-                          <option :value="null" disabled>ID Card</option>
+                          <option :value="null">ID Card</option>
                         </template>
-
-                        <option value="C">Option C</option>
-                        <option value="D">Option D</option>
                       </b-form-select>
                     </b-form-group>
                   </b-col>
                   <b-col md="6">
                     <b-form-group label="ID Number">
-                      <b-form-input type="number" required placeholder="Enter Phone Number"></b-form-input>
+                      <b-form-input type="text" required placeholder="Enter ID Number"></b-form-input>
                     </b-form-group>
                   </b-col>
                 </b-row>
@@ -501,7 +520,7 @@
                 <b-card-text>
                   <div class="d-flex justify-content-between">
                     <h6>{{ sailingDetail.name }}</h6>
-                    <strong>Rp {{ stringIDR(sailingDetail.availabilities[0].price_exchange) }}</strong>
+                    <strong>Rp {{ stringIDR(searchDetail.price_exchange) }}</strong>
                   </div>
                   <div class="d-flex justify-content-between">
                     <em>Days (x{{ $store.state.sailing.form.day }})</em>
@@ -568,7 +587,7 @@
                     <img
                       style="width: inherit; object-fit:cover;"
                       class="rounded"
-                      src="../../assets/shutterstock_357306383resize 9.png"
+                      :src="searchDetail.feature_image"
                       alt
                     />
                   </b-col>
@@ -576,20 +595,22 @@
                     <div>
                       <h6
                         style="font-family: NunitoSans-Bold; font-size: 18px;"
-                      >Marina Skylight F-01</h6>
+                      >{{ sailingDetail.name }}</h6>
                       <span class="d-flex align-items-center">
-                        <img style="height: 14px;" src="../../assets/droplet-outline.png" alt />
-                        <p class="m-0 ml-3">Bali, Indonesia</p>
+                        <img style="height: 14px;" :src="searchDetail.feature_image || null" alt />
+                        <p
+                          class="m-0 ml-3"
+                        >{{ searchDetail.destination}} {{ searchDetail.destination_province_name }}, {{ searchDetail.destination_country_name }}</p>
                       </span>
                     </div>
                     <div style="position: absolute; bottom: 0;" class="d-flex align-items-center">
                       <img
                         style="height:29px;"
                         class="rounded-circle"
-                        src="../../assets/Group 19 Copy.png"
+                        :src="sailingDetail.merchant_image"
                         alt
                       />
-                      <h6 class="m-0 ml-3">Water Ship Group</h6>
+                      <h6 class="m-0 ml-3">{{ sailingDetail.merchant_name }}</h6>
                     </div>
                   </b-col>
                 </b-row>
@@ -622,7 +643,7 @@
                   </div>
                   <div class="pt-2 d-flex justify-content-between">
                     <em style="font-family: NunitoSans-Bold;">Order’s Name</em>
-                    <strong>Emma Watson</strong>
+                    <strong>{{$store.state.sailing.sailing_book.first_name }}</strong>
                   </div>
                 </template>
               </b-card>
@@ -633,7 +654,7 @@
                 <b-card-text>
                   <div class="d-flex justify-content-between">
                     <h6 style="font-family: NunitoSans-Bold;">{{sailingDetail.name}}</h6>
-                    <strong>Rp {{ stringIDR(sailingDetail.availabilities[0].price_exchange) }}</strong>
+                    <strong>Rp {{ stringIDR(searchDetail.price_exchange) }}</strong>
                   </div>
                   <div class="d-flex justify-content-between">
                     <em>Days (x{{ $store.state.sailing.form.day }})</em>
@@ -641,9 +662,9 @@
                       style="font-family: NunitoSans-Bold;"
                     >Rp{{ stringIDR($store.state.sailing.form.total) }}</strong>
                   </div>
-                  <div class="d-flex justify-content-between" v-if="nulled">
+                  <div class="d-flex justify-content-between" v-if="null">
                     <em>Promo Code</em>
-                    <strong style="font-family: NunitoSans-Bold; color:red;">- Rp300.000</strong>
+                    <strong style="font-family: NunitoSans-Bold; color:red;">- Rp0</strong>
                   </div>
                   <div class="d-flex justify-content-between">
                     <em>Taxes and other fees</em>
@@ -743,7 +764,7 @@
             <b-button
               variant="primary"
               class="float-right mt-4"
-              @click="selectedContent='confirmation'"
+              @click="booking_ship"
             >I Have Completed Payment</b-button>
           </div>
         </div>
@@ -821,8 +842,24 @@ export default {
         "#F7F7F7";
     },
     search(data) {
+      var guest = parseInt(this.$store.state.sailing.form.guest) || 1;
+      var date_from = Moment.parseZone(this.$store.state.sailing.form.date)
+        .utc()
+        .format();
+      var date_to = Moment.parseZone(this.$store.getters.day)
+        .utc()
+        .format();
+
+      var body = {
+        type: "yacht",
+        page: 1,
+        guest: guest,
+        daterange: [date_from, date_to],
+        sort: ["price asc"]
+      };
+      console.log("sd", body);
       this.$store
-        .dispatch("search", { type: "sailing", data: data })
+        .dispatch("search", { type: "sailing", data: body })
         .then(res => {
           this.data_sailing = this.$store.state.sailing.search_sailing;
         })
@@ -850,7 +887,7 @@ export default {
         })
         .then(res => {
           this.$store.state.sailing.form.total =
-            this.$store.state.sailing.detail.availabilities[0].price_exchange *
+            this.$store.state.sailing.detail_search.price_exchange *
             this.$store.state.sailing.form.day;
           ///this.sailingDetail = res.data.data;
           //console.log(res.data.data);
@@ -863,6 +900,73 @@ export default {
     dateFormat(data) {
       var dt = Moment(data).format("DD MMM");
       return dt;
+    },
+    booking_ship() {
+      var date_from = Moment(this.$store.state.sailing.form.date).format();
+      var date_to = Moment(this.$store.getters.day).format();
+
+      var guest = parseInt(this.$store.state.sailing.form.guest) || 1;
+      var price = this.$store.state.sailing.form.total;
+      var usd = price / 15000;
+      var currency_code = this.$store.state.sailing.detail_search
+        .current_currency_code;
+      var date_now = Moment.utc().format();
+      var body = {
+        daterange: [date_from, date_to],
+        round_trip: true,
+        multi_trip: false,
+        adult: guest,
+        child: 0,
+        merchant_id: this.searchDetail.ref_id,
+        ship_availability: [
+          {
+            price: usd,
+            price_exchange: price,
+            price_before_discount: price,
+            price_before_discount_exchange: price,
+            currency_code: "IDR",
+            current_currency_code: "IDR",
+            discount_rate: 0,
+            discount_percent: 0,
+            promotion_name: "",
+            date: date_now,
+            schedule_id: 3199,
+            promotion_id: 0
+          }
+        ]
+      };
+      console.log(body);
+      this.$store
+        .dispatch("bookingShip", {
+          data: body,
+          type: "sailing"
+        })
+        .then(res => {
+          var bookingCode = res.data.data.code || "0";
+          console.log(res.data.data);
+          this.$store
+            .dispatch("charge", {
+              id: bookingCode,
+              data: {
+                payment_type: "bca_va"
+              }
+            })
+            .then(res => {
+              alert(
+                "kllik link untuk permbayaran " + res.data.data.redirect_url
+              );
+            })
+            .catch(error => {
+              console.log(error);
+              alert(error.message);
+            });
+        })
+        .catch(error => {
+          console.log(error);
+          alert(error.message);
+        });
+
+      //this.selectedContent = "confirmation";
     }
   },
   computed: {
@@ -871,6 +975,9 @@ export default {
     },
     searchDetail() {
       return this.$store.state.sailing.detail_search;
+    },
+    profile() {
+      return JSON.parse(this.$store.state.profile);
     }
   },
   created() {

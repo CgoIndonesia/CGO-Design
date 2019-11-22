@@ -16,7 +16,7 @@
             <b-card no-body>
               <b-tabs card vertical>
                 <b-tab title="Sailing" active style>
-                  <b-form @submit.stop.prevent="onSubmit">
+                  <b-form @submit.stop.prevent="onSubmitSailing">
                     <b-row style="text-align:left;padding:20px">
                       <b-col md="3">
                         <b-form-group id="input-group-2" label="Destination" label-for="input-2">
@@ -78,12 +78,13 @@
                   </b-form>
                 </b-tab>
                 <b-tab title="Tour">
-                  <b-form>
+                  <b-form @submit.stop.prevent="onSubmitTour">
                     <b-row style="text-align:left;padding:20px">
                       <b-col md="4">
                         <b-form-group id="input-group-2" label="Destination" label-for="input-2">
                           <b-form-input
                             id="input-2"
+                            v-model="$store.state.tour.form.destination"
                             placeholder="your holiday destination"
                             style="background-color:#DFDFDF"
                           ></b-form-input>
@@ -93,6 +94,8 @@
                         <b-form-group id="input-group-2" label="Dates" label-for="input-2">
                           <b-form-input
                             id="input-2"
+                            v-model="$store.state.tour.form.date"
+                            type="date"
                             placeholder="Dates"
                             style="background-color:#DFDFDF"
                           ></b-form-input>
@@ -103,6 +106,9 @@
                           <b-form-input
                             id="input-2"
                             placeholder="Guest"
+                            type="number"
+                            min="1"
+                            v-model="$store.state.tour.form.guest"
                             style="background-color:#DFDFDF"
                           ></b-form-input>
                         </b-form-group>
@@ -533,18 +539,12 @@ export default {
     Header
   },
   methods: {
-    search(data) {
-      this.$store
-        .dispatch("search", { type: "all", data: data })
-        .then(res => {
-          console.log(this.$store.getters.searchHome);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
-    onSubmit() {
+    search(data) {},
+    onSubmitSailing() {
       this.$router.push({ name: "sailingEmpty" });
+    },
+    onSubmitTour() {
+      this.$router.push({ name: "Tour" });
     }
   },
   created() {

@@ -15,17 +15,39 @@
             >
               <b-form class="mt-4">
                 <b-form-group id="input-group-1" label="Destination" label-for="input-1">
-                  <b-form-input id="input-1" type="text" required placeholder="Enter Destination"></b-form-input>
+                  <b-form-input
+                    id="input-1"
+                    v-model="$store.state.tour.form.destination"
+                    type="text"
+                    required
+                    placeholder="Enter Destination"
+                  ></b-form-input>
                 </b-form-group>
                 <b-form-group id="input-group-1" label="Month" label-for="input-1">
-                  <b-form-input id="input-1" type="date" required></b-form-input>
+                  <b-form-input
+                    id="input-1"
+                    v-model="$store.state.tour.form.date"
+                    type="date"
+                    required
+                  ></b-form-input>
                 </b-form-group>
                 <b-form-group id="input-group-1" label="Guest" label-for="input-1">
-                  <b-form-input id="input-1" type="number" required placeholder="Guest total here"></b-form-input>
+                  <b-form-input
+                    id="input-1"
+                    v-model="$store.state.tour.form.guest"
+                    type="number"
+                    required
+                    placeholder="Guest total here"
+                  ></b-form-input>
                 </b-form-group>
               </b-form>
 
-              <b-button class="mt-3 w-100" href="#" variant="primary">Search</b-button>
+              <b-button
+                @click.prevent="search(null)"
+                class="mt-3 w-100"
+                href="#"
+                variant="primary"
+              >Search</b-button>
             </b-card>
 
             <b-card img-top tag="article" style="max-width: 18rem;" class="mt-5 mb-2">
@@ -80,7 +102,7 @@
                   <b-card no-body>
                     <div>
                       <img
-                        @click="goto('tourDetail',null)"
+                        @click="goto('tourDetail',{ref_id:2})"
                         src="../../assets/llll 1.png"
                         alt="Snow"
                         style="cursor: pointer; object-fit:cover; width:100%;"
@@ -133,17 +155,18 @@
                     </template>
                   </b-card>
                 </b-col>
-                <b-col md="6" class="mt-4 mb-2">
+                <b-col md="6" class="mt-4 mb-2" v-for="(data,i) in data_tour" :key="i">
                   <b-card no-body>
                     <div>
                       <img
+                        @click="goto('tourDetail',data)"
                         src="../../assets/nusa-penida-kelingking-1 1.png"
                         alt="Snow"
                         style="cursor: pointer; object-fit:cover; width:100%;"
                       />
                       <div class="top-left">
                         <p class="m-0">RATE</p>
-                        <strong>3.9</strong>
+                        <strong>{{ data.rating }}.0</strong>
                       </div>
                       <div class="top-right">
                         <img src="../../assets/Path 932.png" alt />
@@ -152,7 +175,7 @@
                     <template v-slot:footer>
                       <b-row>
                         <b-col sm="7">
-                          <h5>Nusa Penida Tour</h5>
+                          <h5>{{ data.title }}</h5>
                           <div class="d-flex">
                             <img
                               style="margin-top: 3px; height: 14px; margin-right: 5px;"
@@ -160,69 +183,14 @@
                               src="../../assets/droplet-outline.png"
                               alt
                             />
-                            <p>Bali, Indonesia</p>
+                            <p>{{ data.origin_city_name }}, {{ data.origin_province_name }}</p>
                           </div>
                         </b-col>
                         <b-col sm="5">
                           <span class="d-flex price">
-                            <h5>Rp</h5>
-                            <strong>750.000</strong>
+                            <h5>{{ data.current_currency_code }}</h5>
+                            <strong>{{ stringIDR(data.price_exchange) }}</strong>
                             <p>/pax</p>
-                          </span>
-                        </b-col>
-                      </b-row>
-                      <div class="capacity-cabin justify-content-around d-flex pt-3">
-                        <div>
-                          <h5 class="pr-2">Capacity</h5>
-                          <p>6-8 guest</p>
-                        </div>
-                        <div>
-                          <h5 class="pr-2">Duration</h5>
-                          <p>3 days</p>
-                        </div>
-                        <div>
-                          <h5 class="pr-2">Dates</h5>
-                          <p>22 Dec-24 Dec</p>
-                        </div>
-                      </div>
-                    </template>
-                  </b-card>
-                </b-col>
-                <b-col md="6" class="mt-4 mb-2">
-                  <b-card no-body>
-                    <div>
-                      <img
-                        src="../../assets/photo-1535779023901-a39d15762564 1.png"
-                        alt="Snow"
-                        style="cursor: pointer; object-fit:cover; width:100%;"
-                      />
-                      <div class="top-left">
-                        <p class="m-0">RATE</p>
-                        <strong>4.7</strong>
-                      </div>
-                      <div class="top-right">
-                        <img src="../../assets/Path 932.png" alt />
-                      </div>
-                    </div>
-                    <template v-slot:footer>
-                      <b-row>
-                        <b-col sm="7">
-                          <h5>Bali Tour Holiday</h5>
-                          <div class="d-flex">
-                            <img
-                              style="margin-top: 3px; height: 14px; margin-right: 5px;"
-                              width="14"
-                              src="../../assets/droplet-outline.png"
-                              alt
-                            />
-                            <p>Bali, Indonesia</p>
-                          </div>
-                        </b-col>
-                        <b-col sm="5">
-                          <span class="d-flex price">
-                            <h5>Rp</h5>
-                            <strong>11,350.000</strong>
-                            <p>/days</p>
                           </span>
                         </b-col>
                       </b-row>
@@ -265,7 +233,7 @@
               style="text-shadow: 1px 1px 2px #333;"
             >
               <b-carousel-slide
-                v-for="(img, i) in sailingDetail.images"
+                v-for="(img, i) in tourDetail.images"
                 :key="i"
                 :img-src="img.endpoint"
               ></b-carousel-slide>
@@ -276,7 +244,7 @@
               style="border: 2px solid #efefef; border-top:transparent;"
             >
               <div>
-                <h5 style="font-family: Mark-Bold; font-size: 22px;">{{ sailingDetail.name }}</h5>
+                <h5 style="font-family: Mark-Bold; font-size: 22px;">{{ tourDetail.name }}</h5>
                 <div class="d-flex">
                   <img
                     style="margin-top: 3px; height: 14px; margin-right: 5px;"
@@ -286,7 +254,7 @@
                   />
                   <p
                     style="font-family: NunitoSams-Regular;"
-                  >{{ sailingDetail.origin }} - {{ sailingDetail.destination }}</p>
+                  >{{ tourDetail.origin }} - {{ tourDetail.destination }}</p>
                 </div>
               </div>
             </div>
@@ -302,16 +270,16 @@
               />
               <strong
                 style="font-family: Mark-Bold; font-size: 20px; margin-right: 20px;"
-              >{{ sailingDetail.rating ? sailingDetail.rating : 0 }}.0</strong>
+              >{{ tourDetail.rating ? tourDetail.rating : 0 }}.0</strong>
               <p
                 class="m-0"
-              >Based on {{ sailingDetail.reviews ? sailingDetail.reviews.length : 0}} reviews</p>
+              >Based on {{ tourDetail.reviews ? tourDetail.reviews.length : 0}} reviews</p>
             </div>
             <div class="p-4" style="border: 2px solid #efefef; border-top:transparent;">
               <h5 style="font-family: Mark-Bold;">About</h5>
               <p
                 style="font-family: NunitoSans-Regular; line-height: 1.8;"
-              >{{ sailingDetail.description }}</p>
+              >{{ tourDetail.description }}</p>
               <a style="font-family: NunitoSans-Regular;" href>See all</a>
             </div>
             <div
@@ -374,7 +342,7 @@
               <div class="mt-4 d-flex flex-wrap justify-content-start">
                 <b-card
                   class="mr-4 mb-3"
-                  v-for="(itineraries,i) in sailingDetail.itineraries"
+                  v-for="(itineraries,i) in tourDetail.itineraries"
                   :key="i"
                 >
                   <div>
@@ -403,7 +371,7 @@
                       >Departure</h5>
                       <p
                         style="font-family: NunitoSans-Regular;font-size: 14px;"
-                      >{{ sailingDetail.origin }} {{ sailingDetail.date }}</p>
+                      >{{ tourDetail.origin }} {{ tourDetail.date }}</p>
                     </div>
                   </div>
                 </b-card>
@@ -416,7 +384,7 @@
                       >Arrival</h5>
                       <p
                         style="font-family: NunitoSans-Regular;font-size: 14px;"
-                      >{{ sailingDetail.destination }} {{ sailingDetail.end_date }}</p>
+                      >{{ tourDetail.destination }} {{ tourDetail.end_date }}</p>
                     </div>
                   </div>
                 </b-card>
@@ -426,7 +394,7 @@
               <h5 style="font-family: Mark-Bold;">Facilities</h5>
               <div class="facilities d-flex flex-wrap justify-content-start">
                 <span
-                  v-for="(facilities,i) in sailingDetail.ship.facilities"
+                  v-for="(facilities,i) in tourDetail.ship.facilities"
                   :key="i"
                 >{{ facilities.name }}</span>
               </div>
@@ -605,10 +573,10 @@
             <div class="mt-5 rating-comment">
               <b-card>
                 <div class="title-rating-comment">
-                  <h5>Rating and comment {{ sailingDetail.reviews ? sailingDetail.reviews.length : 0}}</h5>
+                  <h5>Rating and comment {{ tourDetail.reviews ? tourDetail.reviews.length : 0}}</h5>
                 </div>
                 <b-row>
-                  <b-col md="6" v-for="(item,i) in sailingDetail.reviews" :key="i">
+                  <b-col md="6" v-for="(item,i) in tourDetail.reviews" :key="i">
                     <div class="d-flex justify-content-between">
                       <div class="d-flex align-items-center">
                         <img
@@ -664,13 +632,13 @@
                 <img
                   style="object-fit:cover; height:45px; width:45px; margin-top: 4px; margin-right:10px;"
                   class="rounded-circle"
-                  :src="sailingDetail.merchant_image"
+                  :src="tourDetail.merchant_image"
                   alt
                 />
                 <span>
                   <h5
                     style="font-family: Mark-Bold; font-size: 15px; margin-bottom: 2px;"
-                  >{{ sailingDetail.merchant_name }}</h5>
+                  >{{ tourDetail.merchant_name }}</h5>
                   <p
                     class="m-0"
                     style="font-family: NunitoSans-Regular; font-size: 12px;"
@@ -681,17 +649,17 @@
             <b-card class="mt-5 text-left">
               <h5 style="margin-top: 15px; font-family: Mark-Bold;">Book Now</h5>
               <p style="font-family: NunitoSans-Regular; margin:0px;">Dates</p>
-              <strong>3 Oct - 4 Oct</strong>
+              <strong>{{ dateFormat($store.state.tour.form.date) }} - {{dateFormat($store.getters.pax)}}</strong>
               <p
                 style="margin-top: 15px; font-family: NunitoSans-Regular; margin:0px; margin-top:15px;"
               >Guest</p>
-              <strong>8 guests</strong>
+              <strong>{{$store.state.tour.form.guest }} guests/pax</strong>
               <template v-slot:footer>
                 <span class="d-flex price">
-                  <h5>{{ sailingDetail.ship.current_currency_code }}</h5>
+                  <h5>{{ tourDetail.ship.current_currency_code }}</h5>
                   <strong
                     style="font-family:NunitoSans-Bold; font-size: 22px;"
-                  >{{ stringIDR(sailingDetail.ship.price_exchange) }}</strong>
+                  >{{ stringIDR(tourDetail.ship.price_exchange) }}</strong>
                   <p>/pax</p>
                 </span>
                 <b-button
@@ -712,17 +680,32 @@
               <h1 style="font-family: Mark-Bold; font-size: 28px;">Tour Booking</h1>
               <b-form class="mt-4">
                 <b-form-group label="Your Name">
-                  <b-form-input type="text" required placeholder="Enter Name"></b-form-input>
+                  <b-form-input
+                    type="text"
+                    v-model="$store.state.sailing.sailing_book.first_name"
+                    required
+                    placeholder="Enter Name"
+                  ></b-form-input>
                 </b-form-group>
                 <b-row>
                   <b-col md="6">
                     <b-form-group label="Email">
-                      <b-form-input type="email" required placeholder="ex : emmawatson@gmail.com"></b-form-input>
+                      <b-form-input
+                        type="email"
+                        v-model="$store.state.sailing.sailing_book.email"
+                        required
+                        placeholder="ex : emmawatson@gmail.com"
+                      ></b-form-input>
                     </b-form-group>
                   </b-col>
                   <b-col md="6">
                     <b-form-group label="Phone Number">
-                      <b-form-input type="text" required placeholder="Enter Phone Number"></b-form-input>
+                      <b-form-input
+                        type="text"
+                        v-model="$store.state.sailing.sailing_book.phone_number"
+                        required
+                        placeholder="Enter Phone Number"
+                      ></b-form-input>
                     </b-form-group>
                   </b-col>
                 </b-row>
@@ -731,17 +714,19 @@
                     <b-form-group label="ID Type">
                       <b-form-select class="mb-3">
                         <template v-slot:first>
-                          <option :value="null" disabled>ID Card</option>
+                          <option :value="'ID Card'">ID Card</option>
                         </template>
-
-                        <option value="C">Option C</option>
-                        <option value="D">Option D</option>
                       </b-form-select>
                     </b-form-group>
                   </b-col>
                   <b-col md="6">
                     <b-form-group label="ID Number">
-                      <b-form-input type="number" required placeholder="Enter Phone Number"></b-form-input>
+                      <b-form-input
+                        type="text"
+                        v-model="$store.state.sailing.sailing_book.id_card_number"
+                        required
+                        placeholder="Enter Phone Number"
+                      ></b-form-input>
                     </b-form-group>
                   </b-col>
                 </b-row>
@@ -786,18 +771,18 @@
                     <h6
                       style="font-size: 15px;
                                     font-family: NunitoSans-Bold;"
-                    >Bali - Lombok Tour</h6>
+                    >{{ tourDetail.destination }} {{ searchDetail.origin_city_name }}, {{ searchDetail.origin_province_name }}</h6>
                     <span
                       style="font-size: 15px;
                                     font-family: NunitoSans-Regular;"
-                    >Rp2.350.000</span>
+                    >Rp {{ tourDetail.price_exchange }}</span>
                   </div>
                   <div class="d-flex justify-content-between">
                     <em
                       style="font-size: 15px;
                                     font-family: NunitoSans-Regular;"
-                    >Pax (x6)</em>
-                    <strong>Rp14.100.000</strong>
+                    >Pax (x{{$store.state.tour.form.guest}})</em>
+                    <strong>Rp {{$store.state.tour.form.total}}</strong>
                   </div>
                   <div class="d-flex justify-content-between">
                     <em
@@ -820,7 +805,7 @@
                       style="font-size: 15px;
                                     font-family: NunitoSans-Bold;
                                     color: blue;"
-                    >Rp22.700.000</strong>
+                    >Rp {{$store.state.tour.form.total}}</strong>
                   </div>
                 </template>
               </b-card>
@@ -847,12 +832,14 @@
               <h6
                 style="margin-bottom: 30px; font-family: Mark-Bold; font-size: 20px; color: #292727;"
               >Booking Details</h6>
-              <strong>Marina Skylight F-01</strong>
-              <p class="m-0 mt-1">Bali, Indonesia</p>
+              <strong>{{ tourDetail.name }}</strong>
+              <p
+                class="m-0 mt-1"
+              >{{ searchDetail.origin_city_name }}, {{ searchDetail.origin_province_name }}</p>
               <p class="m-0 mt-3 mb-2">Dates</p>
-              <strong>03 Oct - 04 Oct</strong>
+              <strong>{{ dateFormat($store.state.tour.form.date) }} - {{dateFormat($store.getters.pax)}}</strong>
               <p class="m-0 mt-3 mb-2">Guest</p>
-              <strong>8 guests</strong>
+              <strong>{{$store.state.tour.form.guest }} guests</strong>
             </div>
           </b-col>
         </b-row>
@@ -871,7 +858,7 @@
                     <img
                       style="width: inherit; object-fit:cover;"
                       class="rounded"
-                      src="../../assets/llll 1.png"
+                      :src="searchDetail.feature_image|| 'https://icon-library.net/images/no-image-available-icon/no-image-available-icon-6.jpg'"
                       alt
                     />
                   </b-col>
@@ -879,20 +866,20 @@
                     <div>
                       <h6
                         style="font-family: NunitoSans-Bold; font-size: 18px;"
-                      >Marina Skylight F-01</h6>
+                      >{{ tourDetail.name }}</h6>
                       <span class="d-flex align-items-center">
                         <img style="height: 14px;" src="../../assets/droplet-outline.png" alt />
-                        <p class="m-0 ml-3">Bali, Indonesia</p>
+                        <p class="m-0 ml-3">{{ tourDetail.origin }} - {{ tourDetail.destination }}</p>
                       </span>
                     </div>
                     <div style="position: absolute; bottom: 0;" class="d-flex align-items-center">
                       <img
                         style="height:29px;"
                         class="rounded-circle"
-                        src="../../assets/Group 19 Copy.png"
+                        :src="tourDetail.merchant_image ||noImage"
                         alt
                       />
-                      <h6 class="m-0 ml-3">Water Ship Group</h6>
+                      <h6 class="m-0 ml-3">{{tourDetail.merchant_name}}</h6>
                     </div>
                   </b-col>
                 </b-row>
@@ -901,18 +888,18 @@
                 <template v-slot:header>
                   <div class="d-flex justify-content-between">
                     <h6 class="mb-0" style="font-family: NunitoSans-Bold;">Dates</h6>
-                    <span>3 Oct - 4 Oct (2 days)</span>
+                    <span>{{ dateFormat($store.state.tour.form.date) }} - {{dateFormat($store.getters.pax)}}</span>
                   </div>
                 </template>
                 <b-card-text>
                   <strong style="font-family: NunitoSans-Bold;">Pickup and Return</strong>
                   <div class="mt-2 d-flex justify-content-between">
                     <h6>Departure</h6>
-                    <strong>Labuan Bajo at 20:30 WITA</strong>
+                    <strong>{{ tourDetail.origin }} {{ dateFormat($store.state.tour.form.date) }} at 20:30 WITA</strong>
                   </div>
                   <div class="d-flex justify-content-between">
                     <em>Arrival</em>
-                    <strong>Gili Trawangan at 20:30 WITA</strong>
+                    <strong>{{ tourDetail.destination }} {{dateFormat($store.getters.pax)}} at 20:30 WITA</strong>
                   </div>
                 </b-card-text>
                 <template v-slot:footer>
@@ -921,7 +908,7 @@
                     class="d-flex justify-content-between"
                   >
                     <em style="font-family: NunitoSans-Bold;">Guest</em>
-                    <strong>8 guests</strong>
+                    <strong>{{$store.state.tour.form.guest }} guests</strong>
                   </div>
                   <div
                     style="border-bottom: 1.5px solid #dadada;padding-bottom: 10px;"
@@ -932,7 +919,7 @@
                   </div>
                   <div class="pt-2 d-flex justify-content-between">
                     <em style="font-family: NunitoSans-Bold;">Order’s Name</em>
-                    <strong>Emma Watson</strong>
+                    <strong>{{ $store.state.sailing.sailing_book.first_name }}</strong>
                   </div>
                 </template>
               </b-card>
@@ -942,16 +929,20 @@
                 </template>
                 <b-card-text>
                   <div class="d-flex justify-content-between">
-                    <h6 style="font-family: NunitoSans-Bold;">Bali - Lombok Tour</h6>
-                    <strong>Rp11.350.000</strong>
+                    <h6
+                      style="font-family: NunitoSans-Bold;"
+                    >{{ tourDetail.origin }} - {{ tourDetail.destination }}</h6>
+                    <strong>Rp {{tourDetail.price_exchange}}</strong>
                   </div>
                   <div class="pb-2 d-flex justify-content-between">
-                    <em>Pax (x2)</em>
-                    <strong style="font-family: NunitoSans-Bold;">Rp22.700.000</strong>
+                    <em>Pax (x{{$store.state.tour.form.guest}})</em>
+                    <strong
+                      style="font-family: NunitoSans-Bold;"
+                    >Rp {{$store.state.tour.form.total}}</strong>
                   </div>
                   <div class="pb-2 d-flex justify-content-between">
                     <em>Promo Code</em>
-                    <strong style="font-family: NunitoSans-Bold; color:red;">- Rp300.000</strong>
+                    <strong style="font-family: NunitoSans-Bold; color:red;">- Rp0</strong>
                   </div>
                   <div class="d-flex justify-content-between">
                     <em>Taxes and other fees</em>
@@ -961,7 +952,9 @@
                 <template v-slot:footer>
                   <div class="d-flex justify-content-between">
                     <em style="font-family: NunitoSans-Bold;">TOTAL</em>
-                    <strong style="font-family: NunitoSans-Bold; color:blue;">Rp22.400.000</strong>
+                    <strong
+                      style="font-family: NunitoSans-Bold; color:blue;"
+                    >Rp {{$store.state.tour.form.total}}</strong>
                   </div>
                 </template>
               </b-card>
@@ -1042,7 +1035,7 @@
                 </div>
                 <div class="d-flex justify-content-between">
                   <em>Transfer Amount</em>
-                  <strong>Rp22.400.000</strong>
+                  <strong>Rp {{$store.state.tour.form.total}}</strong>
                 </div>
               </b-card-text>
             </b-card>
@@ -1070,7 +1063,7 @@
                   <div class="p-5 d-flex justify-content-between">
                     <div>
                       <p>Package</p>
-                      <h6>Bali - Lombok Tour</h6>
+                      <h6>{{ tourDetail.origin }} - {{ tourDetail.destination }}</h6>
                     </div>
                     <div class="d-flex">
                       <div>
@@ -1088,18 +1081,18 @@
                     <template v-slot:header>
                       <div class="d-flex justify-content-between">
                         <h6 class="mb-0" style="font-family: NunitoSans-Bold;">Dates</h6>
-                        <span>3 Oct - 4 Oct (2 days)</span>
+                        <span>{{ dateFormat($store.state.tour.form.date) }} - {{dateFormat($store.getters.pax)}}</span>
                       </div>
                     </template>
                     <b-card-text>
                       <strong style="font-family: NunitoSans-Bold;">Pickup and Return</strong>
                       <div class="mt-2 d-flex justify-content-between">
                         <h6>Departure</h6>
-                        <strong>Labuan Bajo at 20:30 WITA</strong>
+                        <strong>{{ tourDetail.origin }} {{ dateFormat($store.state.tour.form.date) }} at 20:30 WITA</strong>
                       </div>
                       <div class="d-flex justify-content-between">
                         <em>Arrival</em>
-                        <strong>Gili Trawangan at 20:30 WITA</strong>
+                        <strong>{{ tourDetail.destination }} {{dateFormat($store.getters.pax)}} Gili Trawangan at 20:30 WITA</strong>
                       </div>
                     </b-card-text>
                     <template v-slot:footer>
@@ -1108,7 +1101,7 @@
                         class="d-flex justify-content-between"
                       >
                         <em style="font-family: NunitoSans-Bold;">Guest</em>
-                        <strong>8 guests</strong>
+                        <strong>{{$store.state.tour.form.guest }} guests</strong>
                       </div>
                       <div
                         style="border-bottom: 1.5px solid #dadada;padding-bottom: 10px;"
@@ -1119,11 +1112,11 @@
                       </div>
                       <div class="pt-2 d-flex justify-content-between">
                         <em style="font-family: NunitoSans-Bold;">Order’s Name</em>
-                        <strong>Emma Watson</strong>
+                        <strong>{{ $store.state.sailing.sailing_book.first_name }}</strong>
                       </div>
                       <div class="pt-2 d-flex justify-content-between">
                         <em style="font-family: NunitoSans-Bold;">ID Number</em>
-                        <strong>ID Card: 33002210282937</strong>
+                        <strong>ID Card: {{ $store.state.sailing.sailing_book.id_card_number }}</strong>
                       </div>
                     </template>
                   </b-card>
@@ -1142,7 +1135,11 @@
           </b-col>
           <b-col md="4">
             <div class="aside-payment-content">
-              <b-button class="w-100" variant="primary">Download Ticket</b-button>
+              <b-button
+                @click.prevent="booking_ship"
+                class="w-100"
+                variant="primary"
+              >Download Ticket</b-button>
             </div>
           </b-col>
         </b-row>
@@ -1155,15 +1152,17 @@
 <script>
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import Moment from "moment";
 
 export default {
   name: "Tour",
   components: { Footer, Header },
   data() {
     return {
+      noImage:
+        "https://icon-library.net/images/no-image-available-icon/no-image-available-icon-6.jpg",
       selectedContent: "tourHome",
       selected: null,
-      sailingDetail: null,
       dataSearch: {
         type: "tour"
       },
@@ -1188,6 +1187,10 @@ export default {
       document.getElementById("content-center").style.backgroundColor =
         "#F7F7F7";
     },
+    dateFormat(data) {
+      var dt = Moment(data).format("DD MMM");
+      return dt;
+    },
     openModal: function() {
       document.getElementById("myModal").style.display = "block";
     },
@@ -1196,8 +1199,24 @@ export default {
       document.getElementById("myModal").style.display = "none";
     },
     search(data) {
+      var guest = parseInt(this.$store.state.sailing.form.guest) || 1;
+      var date_from = Moment.parseZone(this.$store.state.tour.form.date)
+        .utc()
+        .format();
+      var date_to = Moment.parseZone(this.$store.getters.pax)
+        .utc()
+        .format();
+
+      var body = {
+        type: "tour",
+        page: 1,
+        guest: guest,
+        daterange: [date_from, date_to],
+        sort: ["price asc"]
+      };
+      console.log(body);
       this.$store
-        .dispatch("search", { type: "sailing", data: data })
+        .dispatch("search", { type: "sailing", data: body })
         .then(res => {
           this.data_tour = this.$store.state.search_tour;
           console.log("resss", res);
@@ -1207,14 +1226,80 @@ export default {
         });
     },
     goto(to, data) {
+      //$this.state.tour.detail_search;
+      this.$store.state.tour.detail_search = data;
       if (to == "tourDetail") this.getDetail(to, { ref_id: 2 });
+    },
+    booking_ship() {
+      var date_from = Moment(this.$store.state.tour.form.date).format();
+      var date_to = Moment(this.$store.getters.pax).format();
+      var guest = parseInt(this.$store.state.tour.form.guest) || 1;
+      var price = this.$store.state.tour.form.total;
+      var usd = price / 15000;
+      var currency_code = this.searchDetail.current_currency_code;
+      var date_now = Moment.utc().format();
+      var body = {
+        daterange: [date_from, date_to],
+        round_trip: true,
+        multi_trip: false,
+        adult: guest,
+        child: 0,
+        merchant_id: this.searchDetail.id,
+        ship_availability: [
+          {
+            price: usd,
+            price_exchange: price,
+            price_before_discount: price,
+            price_before_discount_exchange: price,
+            currency_code: "IDR",
+            current_currency_code: "IDR",
+            discount_rate: 0,
+            discount_percent: 0,
+            promotion_name: "",
+            date: date_now,
+            schedule_id: 3199,
+            promotion_id: 0
+          }
+        ]
+      };
+      this.$store
+        .dispatch("bookingShip", {
+          type: "tour",
+          data: body
+        })
+        .then(res => {
+          var bookingCode = res.data.data.code || "0";
+          console.log(res.data.data);
+          this.$store
+            .dispatch("charge", {
+              id: bookingCode,
+              data: {
+                payment_type: "bca_va"
+              }
+            })
+            .then(res => {
+              alert(
+                "kllik link untuk permbayaran " + res.data.data.redirect_url
+              );
+            })
+            .catch(error => {
+              alert(error.data.message);
+            });
+        })
+        .catch(error => {
+          alert(error.data.message);
+        });
+
+      //this.selectedContent = "confirmation";
     },
     getDetail(to, data) {
       var body = this.selectedContent;
       this.$store
         .dispatch("detailShip", { id: 2, data: this.detailBody, type: "tour" })
         .then(res => {
-          this.sailingDetail = res.data.data;
+          var harga = this.$store.state.tour.detail.price_exchange || 0;
+          this.$store.state.tour.form.total =
+            harga * this.$store.state.tour.form.day;
           console.log("dataaa", res.data.data);
           this.selectedContent = to;
         })
@@ -1227,8 +1312,18 @@ export default {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
   },
+  computed: {
+    tourDetail() {
+      return this.$store.state.tour.detail;
+    },
+    searchDetail() {
+      return this.$store.state.tour.detail_search;
+    },
+    profile() {
+      return JSON.parse(this.$store.state.profile);
+    }
+  },
   created() {
-    this.goto("tourDetail", null);
     this.search(this.dataSearch);
   }
   //   mounted() {
