@@ -104,10 +104,9 @@
     </b-navbar>
   </div>
 </template>
-<<<<<<< HEAD
+
 <script>
 export default {
-
   data() {
     return {
       form: {
@@ -129,23 +128,21 @@ export default {
           console.log(error);
         });
     },
-    logout(){
-      this.$store.dispatch("logout")
-      .then(r =>{
-        this.$router.push({ name: 'home' })
-      })
-    },
-    
+    logout() {
+      this.$store.dispatch("logout").then(r => {
+        this.$router.push({ name: "home" });
+      });
+    }
   },
   watch: {},
-  computed : {
-    loggedIn(){
+  computed: {
+    loggedIn() {
       return this.$store.getters.loggedIn;
     }
   },
   created() {
-    this.$store.dispatch('profile')
-  },
+    this.$store.dispatch("profile");
+  }
 };
 </script>
 <style>
