@@ -1165,7 +1165,7 @@ export default {
       var date_to = Moment.parseZone(this.$store.getters.pax)
         .utc()
         .format();
-      var days = this.$store.state.tour.form.day;
+      var days = parseInt(this.$store.state.tour.form.day) || 1;
 
       var body = {
         type: "tour",
