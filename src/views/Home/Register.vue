@@ -81,7 +81,7 @@
                   <b-input-group-prepend>
                     <span class="input-group-text" style="background-color:#DFDFDF">
                       <i>
-                        <font-awesome-icon icon="user" />
+                        <font-awesome-icon icon="phone" />
                       </i>
                     </span>
                   </b-input-group-prepend>
@@ -90,7 +90,7 @@
                     class="LoginInput"
                     type="text"
                     required
-                    placeholder="first name"
+                    placeholder="Phone Number"
                     v-model="form.phone_number"
                   ></b-form-input>
                 </b-input-group>
@@ -109,21 +109,6 @@
                     required
                     placeholder="password"
                     v-model="form.password"
-                  ></b-form-input>
-                </b-input-group>
-                <b-input-group style="margin-bottom:20px">
-                  <b-input-group-prepend>
-                    <span class="input-group-text" style="background-color:#DFDFDF">
-                      <i>
-                        <font-awesome-icon icon="lock" />
-                      </i>
-                    </span>
-                  </b-input-group-prepend>
-                  <b-form-input
-                    style="background-color:#DFDFDF"
-                    class="LoginInput"
-                    type="password"
-                    placeholder="confirm password"
                   ></b-form-input>
                 </b-input-group>
                 <b-button
@@ -211,15 +196,27 @@ export default {
   },
   methods: {
     register() {
+      if (this.form.phone_number.substring(0, 1) == "0")
+        this.form.phone_number = this.form.phone_number.replace(/^0/, "+62");
+      else this.form.phone_number = this.form.phone_number;
       this.$store
         .dispatch("register", this.form)
         .then(res => {
           this.page = "verification";
           this.verification.email = this.form.email;
+          if (this.form.phone_number.substring(0, 1) == "0")
+            this.$store
+              .dispatch("otp", { phone_number: this.form.phone_number })
+              .then(res => {
+                console.log(res);
+              })
+              .catch(error => {
+                alert("Terjadi kesalahan!");
+              });
           console.log(res);
         })
         .catch(error => {
-          console.log(error);
+          alert(error.message);
         });
     },
     pinVerification() {
@@ -227,7 +224,7 @@ export default {
       this.$store
         .dispatch("pinVerification", this.verification)
         .then(res => {
-          this.page = 'success'
+          this.page = "success";
           console.log(res);
         })
         .catch(error => {
@@ -235,7 +232,6 @@ export default {
         });
     }
   },
-  watch: {
-  }
+  watch: {}
 };
 </script>

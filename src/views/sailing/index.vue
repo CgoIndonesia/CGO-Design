@@ -15,17 +15,48 @@
             >
               <b-form class="mt-4">
                 <b-form-group id="input-group-1" label="Destination" label-for="input-1">
-                  <b-form-input id="input-1" type="text" required placeholder="Enter Destination"></b-form-input>
+                  <b-form-input
+                    v-model="$store.state.sailing.form.destination"
+                    id="input-2"
+                    placeholder="destination"
+                    style="background-color:#DFDFDF"
+                  ></b-form-input>
                 </b-form-group>
                 <b-form-group id="input-group-1" label="Dates" label-for="input-1">
-                  <b-form-input id="input-1" type="date" required></b-form-input>
+                  <b-form-input
+                    v-model="$store.state.sailing.form.date"
+                    id="input-2"
+                    placeholder="Dates"
+                    type="date"
+                    style="background-color:#DFDFDF"
+                  ></b-form-input>
+                </b-form-group>
+                <b-form-group id="input-group-1" label="Day" label-for="input-1">
+                  <b-form-input
+                    v-model="$store.state.sailing.form.day"
+                    id="input-2"
+                    placeholder="2 day"
+                    type="number"
+                    style="background-color:#DFDFDF"
+                  ></b-form-input>
                 </b-form-group>
                 <b-form-group id="input-group-1" label="Guest" label-for="input-1">
-                  <b-form-input id="input-1" type="number" required placeholder="Guest total here"></b-form-input>
+                  <b-form-input
+                    v-model="$store.state.sailing.form.guest"
+                    id="input-2"
+                    placeholder="Guest"
+                    type="number"
+                    style="background-color:#DFDFDF"
+                  ></b-form-input>
                 </b-form-group>
               </b-form>
 
-              <b-button class="mt-3 w-100" href="#" variant="primary">Search</b-button>
+              <b-button
+                @click.prevent="search(dataSearch)"
+                class="mt-3 w-100"
+                href="#"
+                variant="primary"
+              >Search</b-button>
             </b-card>
 
             <b-card img-top tag="article" style="max-width: 18rem;" class="mt-5 mb-2">
@@ -91,14 +122,15 @@
                   <b-card no-body>
                     <div>
                       <img
+                        height="200px"
                         @click="goto('sailingDetail',data)"
-                        :src="data.feature_image"
+                        :src="data.feature_image|| noImage"
                         alt="Snow"
-                        style="cursor: pointer; object-fit:cover; width:100%;"
+                        style="cursor: pointer; object-fit:cover;max-height:200px"
                       />
                       <div class="top-left">
                         <p class="m-0">RATE</p>
-                        <strong>{{ data.rating }}</strong>
+                        <strong>{{ data.rating }}.0</strong>
                       </div>
                       <div class="top-right">
                         <img src="../../assets/Path 932.png" alt />
@@ -164,7 +196,8 @@
               <b-carousel-slide
                 v-for="(img, i) in sailingDetail.images"
                 :key="i"
-                :img-src="img.endpoint"
+                :img-src="img.endpoint || noImage"
+                style="max-height:400px;"
               ></b-carousel-slide>
 
               <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
@@ -191,10 +224,10 @@
               <span class="d-flex price">
                 <h5
                   style="font-family:NunitoSans-Regular; font-size: 14px;"
-                >{{ sailingDetail.availabilities[0].current_currency_code }}</h5>
+                >{{ searchDetail.current_currency_code }}</h5>
                 <strong
                   style="font-family:NunitoSans-Bold; font-size: 22px;"
-                >{{ stringIDR(sailingDetail.availabilities[0].price_exchange) }}</strong>
+                >{{ stringIDR(searchDetail.price_exchange) }}</strong>
                 <p style="font-family:NunitoSans-Regular; font-size: 16px;">/days</p>
               </span>
             </div>
@@ -271,7 +304,10 @@
             </div>
             <div class="p-4" style="border: 2px solid #efefef; border-top:transparent;">
               <h5 style="font-family: Mark-Bold;">Spesification</h5>
-              <div class="mt-4 spesification col-6 p-0">
+              <div
+                class="mt-4 spesification col-6 p-0"
+                v-if="typeof sailingDetail.specification == 'Object'"
+              >
                 <b-card>
                   <div
                     class="d-flex justify-content-between"
@@ -363,15 +399,15 @@
             <b-card class="mt-5 text-left">
               <h5 style="margin-top: 15px; font-family: Mark-Bold;">Book Now</h5>
               <p style="font-family: NunitoSans-Regular; margin:0px;">Dates</p>
-              <strong>3 Oct - 4 Oct</strong>
+              <strong>{{ dateFormat($store.state.sailing.form.date) }} - {{dateFormat($store.getters.day)}}</strong>
               <p style="margin-top: 15px; font-family: NunitoSans-Regular; margin:0px;">Guest</p>
-              <strong>8 guests</strong>
+              <strong>{{$store.state.sailing.form.guest }} guests</strong>
               <template v-slot:footer>
                 <span class="d-flex price">
-                  <h5>{{ sailingDetail.availabilities[0].current_currency_code }}</h5>
+                  <h5>{{ searchDetail.current_currency_code }}</h5>
                   <strong
                     style="font-family:NunitoSans-Bold; font-size: 22px;"
-                  >{{ stringIDR(sailingDetail.availabilities[0].price_exchange) }}</strong>
+                  >{{ stringIDR(searchDetail.price_exchange) }}</strong>
                   <p>/days</p>
                 </span>
                 <b-button
@@ -392,17 +428,32 @@
               <h1 style="font-family: Mark-Bold; font-size: 28px;">Sailing Book</h1>
               <b-form class="mt-4">
                 <b-form-group label="Your Name">
-                  <b-form-input type="text" required placeholder="Enter Name"></b-form-input>
+                  <b-form-input
+                    type="text"
+                    required
+                    placeholder="Enter Name"
+                    v-model="$store.state.sailing.sailing_book.first_name"
+                  ></b-form-input>
                 </b-form-group>
                 <b-row>
                   <b-col md="6">
                     <b-form-group label="Email">
-                      <b-form-input type="email" required placeholder="ex : emmawatson@gmail.com"></b-form-input>
+                      <b-form-input
+                        v-model="$store.state.sailing.sailing_book.email"
+                        type="email"
+                        required
+                        placeholder="ex : emmawatson@gmail.com"
+                      ></b-form-input>
                     </b-form-group>
                   </b-col>
                   <b-col md="6">
                     <b-form-group label="Phone Number">
-                      <b-form-input type="text" required placeholder="Enter Phone Number"></b-form-input>
+                      <b-form-input
+                        v-model="$store.state.sailing.sailing_book.phone_number"
+                        type="text"
+                        required
+                        placeholder="Enter Phone Number"
+                      ></b-form-input>
                     </b-form-group>
                   </b-col>
                 </b-row>
@@ -411,21 +462,27 @@
                     <b-form-group label="ID Type">
                       <b-form-select class="mb-3">
                         <template v-slot:first>
-                          <option :value="null" disabled>ID Card</option>
+                          <option :value="null">ID Card</option>
                         </template>
-
-                        <option value="C">Option C</option>
-                        <option value="D">Option D</option>
                       </b-form-select>
                     </b-form-group>
                   </b-col>
                   <b-col md="6">
                     <b-form-group label="ID Number">
-                      <b-form-input type="number" required placeholder="Enter Phone Number"></b-form-input>
+                      <b-form-input
+                        v-model="$store.state.sailing.sailing_book.id_card_number"
+                        type="text"
+                        required
+                        placeholder="Enter ID Number"
+                      ></b-form-input>
                     </b-form-group>
                   </b-col>
                 </b-row>
-                <b-form-checkbox id="checkbox-1" name="checkbox-1">Save my identity</b-form-checkbox>
+                <b-form-checkbox
+                  v-model="$store.state.sailing.sailing_book.id_card_number"
+                  id="checkbox-1"
+                  name="checkbox-1"
+                >Save my identity</b-form-checkbox>
               </b-form>
               <b-form class="mt-4">
                 <h1 style="font-family: NunitoSans-Bold; font-size: 20px;">Special Notes</h1>
@@ -471,22 +528,22 @@
                 </template>
                 <b-card-text>
                   <div class="d-flex justify-content-between">
-                    <h6>Marina Skylight F-01</h6>
-                    <strong>Rp22.700.000</strong>
+                    <h6>{{ sailingDetail.name }}</h6>
+                    <strong>Rp {{ stringIDR(searchDetail.price_exchange) }}</strong>
                   </div>
                   <div class="d-flex justify-content-between">
-                    <em>Days (x2)</em>
-                    <strong>Rp22.700.000</strong>
+                    <em>Days (x{{ $store.state.sailing.form.day }})</em>
+                    <strong>Rp {{ stringIDR($store.state.sailing.form.total) }}</strong>
                   </div>
                   <div class="d-flex justify-content-between">
                     <em>Taxes and other fees</em>
-                    <strong>Rp22.700.000</strong>
+                    <strong>Rp.0</strong>
                   </div>
                 </b-card-text>
                 <template v-slot:footer>
                   <div class="d-flex justify-content-between">
                     <em>TOTAL</em>
-                    <strong>Rp22.700.000</strong>
+                    <strong>Rp {{ stringIDR($store.state.sailing.form.total) }}</strong>
                   </div>
                 </template>
               </b-card>
@@ -513,12 +570,14 @@
               <h6
                 style="margin-bottom: 30px; font-family: Mark-Bold; font-size: 20px; color: #292727;"
               >Booking Details</h6>
-              <strong>Marina Skylight F-01</strong>
-              <p class="m-0 mt-1">Bali, Indonesia</p>
+              <strong>{{ sailingDetail.name }}</strong>
+              <p
+                class="m-0 mt-1"
+              >{{ searchDetail.destination}} {{ searchDetail.destination_province_name }}, {{ searchDetail.destination_country_name }}</p>
               <p class="m-0 mt-3 mb-2">Dates</p>
-              <strong>03 Oct - 04 Oct</strong>
+              <strong>{{ dateFormat($store.state.sailing.form.date) }} - {{dateFormat($store.getters.day)}}</strong>
               <p class="m-0 mt-3 mb-2">Guest</p>
-              <strong>8 guests</strong>
+              <strong>{{$store.state.sailing.form.guest }} guests</strong>
             </div>
           </b-col>
         </b-row>
@@ -537,7 +596,7 @@
                     <img
                       style="width: inherit; object-fit:cover;"
                       class="rounded"
-                      src="../../assets/shutterstock_357306383resize 9.png"
+                      :src="searchDetail.feature_image"
                       alt
                     />
                   </b-col>
@@ -545,20 +604,22 @@
                     <div>
                       <h6
                         style="font-family: NunitoSans-Bold; font-size: 18px;"
-                      >Marina Skylight F-01</h6>
+                      >{{ sailingDetail.name }}</h6>
                       <span class="d-flex align-items-center">
-                        <img style="height: 14px;" src="../../assets/droplet-outline.png" alt />
-                        <p class="m-0 ml-3">Bali, Indonesia</p>
+                        <img style="height: 14px;" :src="searchDetail.feature_image || null" alt />
+                        <p
+                          class="m-0 ml-3"
+                        >{{ searchDetail.destination}} {{ searchDetail.destination_province_name }}, {{ searchDetail.destination_country_name }}</p>
                       </span>
                     </div>
                     <div style="position: absolute; bottom: 0;" class="d-flex align-items-center">
                       <img
                         style="height:29px;"
                         class="rounded-circle"
-                        src="../../assets/Group 19 Copy.png"
+                        :src="sailingDetail.merchant_image"
                         alt
                       />
-                      <h6 class="m-0 ml-3">Water Ship Group</h6>
+                      <h6 class="m-0 ml-3">{{ sailingDetail.merchant_name }}</h6>
                     </div>
                   </b-col>
                 </b-row>
@@ -567,18 +628,18 @@
                 <template v-slot:header>
                   <div class="d-flex justify-content-between">
                     <h6 class="mb-0" style="font-family: NunitoSans-Bold;">Dates</h6>
-                    <span>3 Oct - 4 Oct (2 days)</span>
+                    <span>{{ dateFormat($store.state.sailing.form.date) }} - {{dateFormat($store.getters.day)}}</span>
                   </div>
                 </template>
                 <b-card-text>
                   <strong style="font-family: NunitoSans-Bold;">Pickup and Return</strong>
                   <div class="d-flex justify-content-between">
                     <h6>Departure</h6>
-                    <strong>Labuan Bajo at 20:30 WITA</strong>
+                    <strong>{{ sailingDetail.origin }} at 20:30 WITA</strong>
                   </div>
                   <div class="d-flex justify-content-between">
                     <em>Arrival</em>
-                    <strong>Gili Trawangan at 20:30 WITA</strong>
+                    <strong>{{ sailingDetail.destination }} at 20:30 WITA</strong>
                   </div>
                 </b-card-text>
                 <template v-slot:footer>
@@ -587,11 +648,11 @@
                     class="d-flex justify-content-between"
                   >
                     <em style="font-family: NunitoSans-Bold;">Guest</em>
-                    <strong>8 guests</strong>
+                    <strong>{{ $store.state.sailing.form.guest }} guests</strong>
                   </div>
                   <div class="pt-2 d-flex justify-content-between">
                     <em style="font-family: NunitoSans-Bold;">Order’s Name</em>
-                    <strong>Emma Watson</strong>
+                    <strong>{{$store.state.sailing.sailing_book.first_name }}</strong>
                   </div>
                 </template>
               </b-card>
@@ -601,16 +662,18 @@
                 </template>
                 <b-card-text>
                   <div class="d-flex justify-content-between">
-                    <h6 style="font-family: NunitoSans-Bold;">Marina Skylight F-01</h6>
-                    <strong>Rp11.350.000</strong>
+                    <h6 style="font-family: NunitoSans-Bold;">{{sailingDetail.name}}</h6>
+                    <strong>Rp {{ stringIDR(searchDetail.price_exchange) }}</strong>
                   </div>
                   <div class="d-flex justify-content-between">
-                    <em>Days (x2)</em>
-                    <strong style="font-family: NunitoSans-Bold;">Rp22.700.000</strong>
+                    <em>Days (x{{ $store.state.sailing.form.day }})</em>
+                    <strong
+                      style="font-family: NunitoSans-Bold;"
+                    >Rp{{ stringIDR($store.state.sailing.form.total) }}</strong>
                   </div>
-                  <div class="d-flex justify-content-between">
+                  <div class="d-flex justify-content-between" v-if="null">
                     <em>Promo Code</em>
-                    <strong style="font-family: NunitoSans-Bold; color:red;">- Rp300.000</strong>
+                    <strong style="font-family: NunitoSans-Bold; color:red;">- Rp0</strong>
                   </div>
                   <div class="d-flex justify-content-between">
                     <em>Taxes and other fees</em>
@@ -620,7 +683,9 @@
                 <template v-slot:footer>
                   <div class="d-flex justify-content-between">
                     <em style="font-family: NunitoSans-Bold;">TOTAL</em>
-                    <strong style="font-family: NunitoSans-Bold; color:blue;">Rp22.400.000</strong>
+                    <strong
+                      style="font-family: NunitoSans-Bold; color:blue;"
+                    >Rp{{ stringIDR($store.state.sailing.form.total) }}</strong>
                   </div>
                 </template>
               </b-card>
@@ -701,14 +766,14 @@
                 </div>
                 <div class="d-flex justify-content-between">
                   <em>Transfer Amount</em>
-                  <strong>Rp22.400.000</strong>
+                  <strong>Rp{{ stringIDR($store.state.sailing.form.total) }}</strong>
                 </div>
               </b-card-text>
             </b-card>
             <b-button
               variant="primary"
               class="float-right mt-4"
-              @click="selectedContent='confirmation'"
+              @click="booking_ship"
             >I Have Completed Payment</b-button>
           </div>
         </div>
@@ -745,6 +810,7 @@
 <script>
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import Moment from "moment";
 
 export default {
   name: "sailingEmpty",
@@ -752,12 +818,14 @@ export default {
   data() {
     return {
       selectedContent: "sailingHome",
+      noImage:
+        "https://icon-library.net/images/no-image-available-icon/no-image-available-icon-6.jpg",
       data_sailing: null,
       selected: null,
-      sailingDetail: null,
       dataSearch: {
         type: "yacht"
       },
+
       detailBody: {
         daterange: ["2019-12-01T00:00:00+07:00", "2019-12-02T00:00:00+07:00"],
         type: "yatch",
@@ -786,8 +854,24 @@ export default {
         "#F7F7F7";
     },
     search(data) {
+      var guest = parseInt(this.$store.state.sailing.form.guest) || 1;
+      var date_from = Moment.parseZone(this.$store.state.sailing.form.date)
+        .utc()
+        .format();
+      var date_to = Moment.parseZone(this.$store.getters.day)
+        .utc()
+        .format();
+
+      var body = {
+        type: "yacht",
+        page: 1,
+        guest: guest,
+        daterange: [date_from, date_to],
+        sort: ["price asc"]
+      };
+      console.log("sd", body);
       this.$store
-        .dispatch("search", { type: "sailing", data: data })
+        .dispatch("search", { type: "sailing", data: body })
         .then(res => {
           this.data_sailing = this.$store.state.sailing.search_sailing;
         })
@@ -800,6 +884,9 @@ export default {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     goto(to, data) {
+      console.log("dataaaa log", data);
+      this.$store.state.sailing.detail_search = data;
+
       if (to == "sailingDetail") this.getDetail(to, data);
     },
     getDetail(to, data) {
@@ -811,16 +898,100 @@ export default {
           type: "sailing"
         })
         .then(res => {
-          this.sailingDetail = res.data.data;
-          console.log(res.data.data);
+          this.$store.state.sailing.form.total =
+            this.$store.state.sailing.detail_search.price_exchange *
+            this.$store.state.sailing.form.day;
+          ///this.sailingDetail = res.data.data;
+          //console.log(res.data.data);
           this.selectedContent = to;
         })
         .catch(error => {
           console.log(error);
         });
+    },
+    dateFormat(data) {
+      var dt = Moment(data).format("DD MMM");
+      return dt;
+    },
+    booking_ship() {
+      var date_from = Moment(this.$store.state.sailing.form.date).format();
+      var date_to = Moment(this.$store.getters.day).format();
+
+      var guest = parseInt(this.$store.state.sailing.form.guest) || 1;
+      var price = this.$store.state.sailing.form.total;
+      var usd = price / 15000;
+      var currency_code = this.$store.state.sailing.detail_search
+        .current_currency_code;
+      var date_now = Moment.utc().format();
+      var body = {
+        daterange: [date_from, date_to],
+        round_trip: true,
+        multi_trip: false,
+        adult: guest,
+        child: 0,
+        merchant_id: this.searchDetail.ref_id,
+        ship_availability: [
+          {
+            price: usd,
+            price_exchange: price,
+            price_before_discount: price,
+            price_before_discount_exchange: price,
+            currency_code: "IDR",
+            current_currency_code: "IDR",
+            discount_rate: 0,
+            discount_percent: 0,
+            promotion_name: "",
+            date: date_now,
+            schedule_id: 3199,
+            promotion_id: 0
+          }
+        ]
+      };
+      console.log(body);
+      this.$store
+        .dispatch("bookingShip", {
+          data: body,
+          type: "sailing"
+        })
+        .then(res => {
+          var bookingCode = res.data.data.code || "0";
+          console.log(res.data.data);
+          this.$store
+            .dispatch("charge", {
+              id: bookingCode,
+              data: {
+                payment_type: "bca_va"
+              }
+            })
+            .then(res => {
+              alert(
+                "kllik link untuk permbayaran " + res.data.data.redirect_url
+              );
+            })
+            .catch(error => {
+              console.log(error);
+              alert(error.message);
+            });
+        })
+        .catch(error => {
+          console.log(error);
+          alert(error.message);
+        });
+
+      //this.selectedContent = "confirmation";
     }
   },
-  computed: {},
+  computed: {
+    sailingDetail() {
+      return this.$store.state.sailing.detail;
+    },
+    searchDetail() {
+      return this.$store.state.sailing.detail_search;
+    },
+    profile() {
+      return JSON.parse(this.$store.state.profile);
+    }
+  },
   created() {
     this.$store.commit("bodyDetail", {
       data: this.detailBody,
