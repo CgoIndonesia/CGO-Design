@@ -96,6 +96,120 @@
                     <template v-slot:footer>
                       <b-row>
                         <b-col sm="7">
+                          <h5>Omegangetrip Open Trip Pahawang</h5>
+                          <div class="d-flex">
+                            <img
+                              style="margin-top: 3px; height: 14px; margin-right: 5px;"
+                              width="14"
+                              src="../../assets/droplet-outline.png"
+                              alt
+                            />
+                            <p>New Harbor</p>
+                          </div>
+                        </b-col>
+                        <b-col sm="5">
+                          <span class="d-flex price">
+                            <h5>Rp</h5>
+                            <strong>12.000.000</strong>
+                            <p class="m-0">/pax</p>
+                          </span>
+                          <span style="float-right; color:red;">2 pax left</span>
+                        </b-col>
+                      </b-row>
+                      <div class="capacity-cabin justify-content-around d-flex pt-3">
+                        <div>
+                          <h5 class="pr-2">Capacity</h5>
+                          <p>6-8 guest</p>
+                        </div>
+                        <div>
+                          <h5 class="pr-2">Duration</h5>
+                          <p>3 days</p>
+                        </div>
+                        <div>
+                          <h5 class="pr-2">Dates</h5>
+                          <p>22 Dec-24 Dec</p>
+                        </div>
+                      </div>
+                    </template>
+                  </b-card>
+                </b-col>
+                <b-col md="6" class="mt-4 mb-2">
+                  <b-card no-body>
+                    <div>
+                      <img
+                        @click="selectedContent ='tourDetail'"
+                        src="../../assets/llll 1.png"
+                        alt="Snow"
+                        style="cursor: pointer; object-fit:cover; width:100%;"
+                      />
+                      <div class="top-left">
+                        <p class="m-0">RATE</p>
+                        <strong>4.7</strong>
+                      </div>
+                      <div class="top-right">
+                        <img src="../../assets/Path 932.png" alt />
+                      </div>
+                    </div>
+                    <template v-slot:footer>
+                      <b-row>
+                        <b-col sm="7">
+                          <h5>Bali - Lombok Tour</h5>
+                          <div class="d-flex">
+                            <img
+                              style="margin-top: 3px; height: 14px; margin-right: 5px;"
+                              width="14"
+                              src="../../assets/droplet-outline.png"
+                              alt
+                            />
+                            <p>Bali, Indonesia</p>
+                          </div>
+                        </b-col>
+                        <b-col sm="5">
+                          <span class="d-flex price">
+                            <h5>Rp</h5>
+                            <strong>2,350.000</strong>
+                            <p class="m-0">/pax</p>
+                          </span>
+                          <span style="float-right; color:red;">2 pax left</span>
+                        </b-col>
+                      </b-row>
+                      <div class="capacity-cabin justify-content-around d-flex pt-3">
+                        <div>
+                          <h5 class="pr-2">Capacity</h5>
+                          <p>6-8 guest</p>
+                        </div>
+                        <div>
+                          <h5 class="pr-2">Duration</h5>
+                          <p>3 days</p>
+                        </div>
+                        <div>
+                          <h5 class="pr-2">Dates</h5>
+                          <p>22 Dec-24 Dec</p>
+                        </div>
+                      </div>
+                    </template>
+                  </b-card>
+                </b-col>
+                <b-col md="6" class="mt-4 mb-2">
+                  <b-card no-body>
+                    <div>
+                      <img
+                        @click="goto('tourDetail',null)"
+                        src="../../assets/llll 1.png"
+                        alt="Snow"
+                        style="cursor: pointer; object-fit:cover; width:100%;"
+                      />
+                      <div class="top-left">
+                        <p class="m-0">RATE</p>
+                        <strong>4.7</strong>
+                      </div>
+                      <div class="top-right">
+                        <img src="../../assets/Path 932.png" alt />
+                      </div>
+                    </div>
+                    <template v-slot:footer>
+                      <b-row>
+                        <b-col sm="7">
                           <h5>Bali - Lombok Tour</h5>
                           <div class="d-flex">
                             <img

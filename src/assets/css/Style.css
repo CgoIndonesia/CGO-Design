@@ -455,3 +455,17 @@
     margin-top: 20%;
   }
 }
+.dot {
+  height: 32px;
+  width: 32px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dots {
+  height: 80px;
+  width: 80px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}
