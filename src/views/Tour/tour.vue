@@ -1167,14 +1167,7 @@ export default {
         .format();
       var days = parseInt(this.$store.state.tour.form.day) || 1;
 
-      var body = {
-        type: "tour",
-        page: 1,
-        guest: guest,
-        days: days,
-        date: date_from,
-        sort: ["price asc"]
-      };
+      var body = {};
       console.log(body);
       this.$store
         .dispatch("search", { type: "tour", data: body })

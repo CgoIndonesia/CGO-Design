@@ -195,7 +195,7 @@
             >
               <!-- Text slides with image -->
               <b-carousel-slide
-              :v-if="sailingDetail.images"
+                :v-if="sailingDetail.images"
                 v-for="(img, i) in sailingDetail.images"
                 :key="i"
                 :img-src="img.endpoint || noImage"
@@ -870,11 +870,7 @@ export default {
         .format();
 
       var body = {
-        type: "yacht",
-        page: 1,
-        guest: guest,
-        daterange: [date_from, date_to],
-        sort: ["price asc"]
+        type: "yacht"
       };
       console.log("sd", body);
       this.$store
