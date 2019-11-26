@@ -531,7 +531,7 @@
             <b-col>
               <div class="container-fluid news-cover">
                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                  <div class="carousel-inner row w-100 mx-auto">
+                  <div class="carousel-inner row w-75 mx-auto">
                     <div class="carousel-item col-md-6 active">
                       <b-card img-src="https://img.jakpost.net/c/2019/01/19/2019_01_19_63436_1547869618._large.jpg" img-alt="Card image" img-left class="mb-3">
                         <b-card-text>
