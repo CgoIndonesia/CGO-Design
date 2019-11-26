@@ -7,15 +7,18 @@
         <b-row style="padding:20px 0 10px 20px;text-align:left">
           <b-col>
             <p
-              style="font-size:20px;font-family:Mark-Bold"
+              style="font-size:20px;font-family:Mark-Bold; color: #292727;"
             >Find the best sea travel deal for your holiday</p>
           </b-col>
         </b-row>
         <b-row>
           <b-col>
             <b-card no-body>
-              <b-tabs card vertical>
-                <b-tab title="Sailing" active style>
+              <b-tabs card pills vertical id="tab-find">
+                <b-tab active style>
+                  <template v-slot:title>
+                    <img src="@/assets/img/Group 426.png" alt=""> <strong>Sailing</strong>
+                  </template>
                   <b-form @submit.stop.prevent="onSubmitSailing">
                     <b-row style="text-align:left;padding:20px">
                       <b-col md="3">
@@ -24,7 +27,10 @@
                             v-model="$store.state.sailing.form.destination"
                             id="input-2"
                             placeholder="destination"
-                            style="background-color:#DFDFDF"
+                            style="background-color: #F7F7F7;
+                                border: transparent;
+                                font-family: NunitoSans-Regular;
+                                font-size: 14px;"
                           ></b-form-input>
                         </b-form-group>
                       </b-col>
@@ -35,7 +41,10 @@
                             id="input-2"
                             placeholder="Dates"
                             type="date"
-                            style="background-color:#DFDFDF"
+                            style="background-color: #F7F7F7;
+                              border: transparent;
+                              font-family: NunitoSans-Regular;
+                              font-size: 14px;"
                           ></b-form-input>
                         </b-form-group>
                       </b-col>
@@ -46,7 +55,10 @@
                             id="input-2"
                             placeholder="2 day"
                             type="number"
-                            style="background-color:#DFDFDF"
+                            style="background-color: #F7F7F7;
+                              border: transparent;
+                              font-family: NunitoSans-Regular;
+                              font-size: 14px;"
                             min="1"
                           ></b-form-input>
                         </b-form-group>
@@ -58,12 +70,15 @@
                             id="input-2"
                             placeholder="Guest"
                             type="number"
-                            style="background-color:#DFDFDF"
+                            style="background-color: #F7F7F7;
+                              border: transparent;
+                              font-family: NunitoSans-Regular;
+                              font-size: 14px;"
                           ></b-form-input>
                         </b-form-group>
                       </b-col>
                     </b-row>
-                    <b-row style="text-align:left;padding:20px">
+                    <b-row style="text-align:left;padding:0 20px">
                       <b-col md="4"></b-col>
                       <b-col md="4"></b-col>
                       <b-col md="4">
@@ -77,7 +92,10 @@
                     </b-row>
                   </b-form>
                 </b-tab>
-                <b-tab title="Tour">
+                <b-tab>
+                  <template v-slot:title>
+                    <img src="@/assets/img/Group 427.png" alt=""> <strong>Tour</strong>
+                  </template>
                   <b-form @submit.stop.prevent="onSubmitTour">
                     <b-row style="text-align:left;padding:20px">
                       <b-col md="3">
@@ -86,7 +104,10 @@
                             id="input-2"
                             v-model="$store.state.tour.form.destination"
                             placeholder="your holiday destination"
-                            style="background-color:#DFDFDF"
+                            style="background-color: #F7F7F7;
+                                border: transparent;
+                                font-family: NunitoSans-Regular;
+                                font-size: 14px;"
                           ></b-form-input>
                         </b-form-group>
                       </b-col>
@@ -97,7 +118,10 @@
                             v-model="$store.state.tour.form.date"
                             type="date"
                             placeholder="Dates"
-                            style="background-color:#DFDFDF"
+                            style="background-color: #F7F7F7;
+                                border: transparent;
+                                font-family: NunitoSans-Regular;
+                                font-size: 14px;"
                           ></b-form-input>
                         </b-form-group>
                       </b-col>
@@ -108,7 +132,10 @@
                             id="input-2"
                             placeholder="2 day"
                             type="number"
-                            style="background-color:#DFDFDF"
+                            style="background-color: #F7F7F7;
+                                border: transparent;
+                                font-family: NunitoSans-Regular;
+                                font-size: 14px;"
                             min="1"
                           ></b-form-input>
                         </b-form-group>
@@ -121,12 +148,15 @@
                             type="number"
                             min="1"
                             v-model="$store.state.tour.form.guest"
-                            style="background-color:#DFDFDF"
+                            style="background-color: #F7F7F7;
+                                border: transparent;
+                                font-family: NunitoSans-Regular;
+                                font-size: 14px;"
                           ></b-form-input>
                         </b-form-group>
                       </b-col>
                     </b-row>
-                    <b-row style="text-align:left;padding:20px">
+                    <b-row style="text-align:left;padding:0 20px">
                       <b-col md="4"></b-col>
                       <b-col md="4"></b-col>
                       <b-col md="4">
@@ -140,7 +170,10 @@
                     </b-row>
                   </b-form>
                 </b-tab>
-                <b-tab title="Transportation">
+                <b-tab>
+                  <template v-slot:title>
+                    <img src="@/assets/img/camper-van.png" alt=""> <strong>Transportation</strong>
+                  </template>
                   <b-form>
                     <b-row style="text-align:left;padding:20px">
                       <b-col md="4">
@@ -148,7 +181,10 @@
                           <b-form-input
                             id="input-2"
                             placeholder="your holiday destination"
-                            style="background-color:#DFDFDF"
+                            style="background-color: #F7F7F7;
+                                border: transparent;
+                                font-family: NunitoSans-Regular;
+                                font-size: 14px;"
                           ></b-form-input>
                         </b-form-group>
                       </b-col>
@@ -157,7 +193,10 @@
                           <b-form-input
                             id="input-2"
                             placeholder="Dates"
-                            style="background-color:#DFDFDF"
+                            style="background-color: #F7F7F7;
+                                border: transparent;
+                                font-family: NunitoSans-Regular;
+                                font-size: 14px;"
                           ></b-form-input>
                         </b-form-group>
                       </b-col>
@@ -166,12 +205,15 @@
                           <b-form-input
                             id="input-2"
                             placeholder="Guest"
-                            style="background-color:#DFDFDF"
+                            style="background-color: #F7F7F7;
+                                border: transparent;
+                                font-family: NunitoSans-Regular;
+                                font-size: 14px;"
                           ></b-form-input>
                         </b-form-group>
                       </b-col>
                     </b-row>
-                    <b-row style="text-align:left;padding:20px">
+                    <b-row style="text-align:left;padding:0 20px">
                       <b-col md="4"></b-col>
                       <b-col md="4"></b-col>
                       <b-col md="4">
@@ -200,7 +242,7 @@
       <div class="container">
         <b-row align-h="center">
           <b-col>
-            <p style="font-size:16px;font-family:Mark-Bold;">Why Book With Us</p>
+            <p style="font-size:20px;font-family:Mark-Bold; color: #292727;">Why Book With Us</p>
           </b-col>
         </b-row>
         <b-row align-h="center" style="margin-top:30px">
@@ -257,12 +299,12 @@
     <div class="popular-destination">
       <b-row align-h="center">
         <b-col>
-          <p style="font-size:16px;font-weight:bold; font-family:Mark-Bold">Popular Destination</p>
+          <p style="font-size:22px;font-weight:bold; font-family:Mark-Bold; color: #292727;">Popular Destination</p>
         </b-col>
       </b-row>
       <b-row align-h="center" style="margin-bottom:20px">
         <b-col>
-          <p style="font-size:12px"></p>Enchanting natural beauty of Indonesia is an appealing reason to go on a sea trip.
+          <p style="font-size:15px; font-family: NunitoSans-Regular; margin-bottom: 1.7rem;">Enchanting natural beauty of Indonesia is an appealing reason to go on a sea trip.</p>
         </b-col>
       </b-row>
       <b-row align-h="center">
@@ -271,7 +313,8 @@
             <b-col md="3" style="margin-bottom:20px">
               <div class="card-p-destination">
                 <div class="card-p-destination-gradient">
-                  <p style="color:#ffffff">Bali</p>
+                  <p style="color:#ffffff; font-family: Mark-Bold;
+                  font-size: 20px;">Bali</p>
                 </div>
                 <img src="@/assets/bali.png" style="witdth:260.75px;height:232.88px;" />
               </div>
@@ -279,7 +322,8 @@
             <b-col md="3" style="margin-bottom:20px">
               <div class="card-p-destination">
                 <div class="card-p-destination-gradient">
-                  <p style="color:#ffffff">Lombok</p>
+                  <p style="color:#ffffff; font-family: Mark-Bold;
+                  font-size: 20px;">Lombok</p>
                 </div>
                 <img src="@/assets/lombok.png" style="witdth:260.75px;height:232.88px;" />
               </div>
@@ -287,7 +331,8 @@
             <b-col md="3" style="margin-bottom:20px">
               <div class="card-p-destination">
                 <div class="card-p-destination-gradient">
-                  <p style="color:#ffffff">Labuan Bajo</p>
+                  <p style="color:#ffffff; font-family: Mark-Bold;
+                  font-size: 20px;">Labuan Bajo</p>
                 </div>
                 <img src="@/assets/labuan-bajo.png" style="witdth:260.75px;height:232.88px;" />
               </div>
@@ -295,7 +340,8 @@
             <b-col md="3" style="margin-bottom:20px">
               <div class="card-p-destination">
                 <div class="card-p-destination-gradient">
-                  <p style="color:#ffffff">Pulau Pari,Kep. Seribu</p>
+                  <p style="color:#ffffff; font-family: Mark-Bold;
+                   font-size: 20px;">Pulau Pari, Kep. Seribu</p>
                 </div>
                 <img src="@/assets/pulau-pari.png" style="witdth:260.75px;height:232.88px;" />
               </div>
@@ -303,7 +349,8 @@
             <b-col md="3" style="margin-bottom:20px">
               <div class="card-p-destination">
                 <div class="card-p-destination-gradient">
-                  <p style="color:#ffffff">Pulau Tidung,Kep. Seribu</p>
+                  <p style="color:#ffffff; font-family: Mark-Bold;
+                   font-size: 20px;">Pulau Tidung, Kep. Seribu</p>
                 </div>
                 <img src="@/assets/pulau-tidung.png" style="witdth:260.75px;height:232.88px;" />
               </div>
@@ -311,7 +358,8 @@
             <b-col md="3" style="margin-bottom:20px">
               <div class="card-p-destination">
                 <div class="card-p-destination-gradient">
-                  <p style="color:#ffffff">Pulau Kelor,Kep. Seribu</p>
+                  <p style="color:#ffffff; font-family: Mark-Bold;
+                  font-size: 20px;">Pulau Kelor, Kep. Seribu</p>
                 </div>
                 <img src="@/assets/pulau kelor.png" style="witdth:260.75px;height:232.88px;" />
               </div>
@@ -319,7 +367,8 @@
             <b-col md="3" style="margin-bottom:20px">
               <div class="card-p-destination">
                 <div class="card-p-destination-gradient">
-                  <p style="color:#ffffff">Pulau Onrust,Kep. Seribu</p>
+                  <p style="color:#ffffff; font-family: Mark-Bold;
+                  font-size: 20px;">Pulau Onrust, Kep. Seribu</p>
                 </div>
                 <img src="@/assets/pulau-onrush.png" style="witdth:260.75px;height:232.88px;" />
               </div>
@@ -327,7 +376,8 @@
             <b-col md="3" style="margin-bottom:20px">
               <div class="card-p-destination">
                 <div class="card-p-destination-gradient">
-                  <p style="color:#ffffff">Ujung Kulon</p>
+                  <p style="color:#ffffff; font-family: Mark-Bold;
+                  font-size: 20px;">Ujung Kulon</p>
                 </div>
                 <img src="@/assets/ujung-kulon.png" style="witdth:260.75px;height:232.88px;" />
               </div>
@@ -337,38 +387,41 @@
       </b-row>
       <b-row align-h="center">
         <b-col>
-          <b-button variant="outline-primary">See All</b-button>
+          <b-button variant="outline-primary" style="font-family: NunitoSans-Regular;
+    width: 9rem;">See All</b-button>
         </b-col>
       </b-row>
       <!-- Spesial Promos -->
       <b-row align-h="center" style="margin-top:50px">
         <b-col>
-          <p style="font-size:18px;font-weight:bold;">Special Promos</p>
+          <p style="font-size:22px;font-family: Mark-Bold;color: #292727;">Special Promos</p>
         </b-col>
       </b-row>
       <b-row align-h="center">
         <b-col>
-          <p style="font-size:12px;">Lorem ipsum dolor sit amet constecteuer</p>
+          <p style="font-size: 13px;
+          font-family: NunitoSans-Regular;">Enjoy variety of exclusive offers</p>
         </b-col>
       </b-row>
       <div class="container">
         <b-row>
+          <b-col md="2"></b-col>
           <b-col md="4">
             <div class="promos">
               <b-row>
                 <b-col md="2"></b-col>
-                <b-col md="9" align-self="end">
+                <b-col md="10" align-self="end">
                   <div class="component-promos">
                     <p
                       style="font-weight: bold;font-size: 20px;color: #292727;"
                     >Get discount for your first book</p>
                   </div>
                 </b-col>
-                <img src="@/assets/img/Frame.png" alt style="position:absolute;margin:20% 0 0 8%" />
+                <img src="@/assets/img/Frame.png" alt style="position:absolute;margin:14% 0px 0px 8%;" />
               </b-row>
               <b-row>
                 <b-col>
-                  <p>leran more</p>
+                  <p style="font-family: NunitoSans-Regular;">learn more</p>
                 </b-col>
               </b-row>
             </div>
@@ -376,43 +429,23 @@
           <b-col md="4">
             <div class="promos">
               <b-row>
-                <b-col md="2"></b-col>
-                <b-col md="9" align-self="end">
+                <b-col md="2">
+                </b-col>
+                <b-col md="10" align-self="end">
                   <div class="component-promos">
                     <p style="font-weight: bold;font-size: 20px;color: #292727;">Invite Your Friends</p>
                   </div>
                 </b-col>
-                <img src="@/assets/img/Frame.png" alt style="position:absolute;margin:20% 0 0 8%" />
+                 <img src="@/assets/img/Group 596.png" alt style="position:absolute;margin:14% 0px 0px 8%;" />
               </b-row>
               <b-row>
                 <b-col>
-                  <p>leran more</p>
+                  <p style="font-family: NunitoSans-Regular;">learn more</p>
                 </b-col>
               </b-row>
             </div>
           </b-col>
-          <b-col md="4">
-            <div class="promos">
-              <b-row>
-                <b-col md="2"></b-col>
-                <b-col md="9" align-self="end">
-                  <div class="component-promos">
-                    <p style="font-weight: bold;font-size: 20px;color: #292727;">Get Voucher</p>
-                  </div>
-                </b-col>
-                <img
-                  src="@/assets/img/Frame (1).png"
-                  alt
-                  style="position:absolute;margin:20% 0 0 8%"
-                />
-              </b-row>
-              <b-row>
-                <b-col>
-                  <p>leran more</p>
-                </b-col>
-              </b-row>
-            </div>
-          </b-col>
+          <b-col md="2"></b-col>
         </b-row>
       </div>
     </div>
@@ -420,12 +453,12 @@
     <div class="content-above">
       <b-row align-h="center">
         <b-col>
-          <p style="font-size:16px;font-weight:bold">Never been on board before?</p>
+          <p style="font-size:22px;font-family: Mark-Bold;color: #292727;">Never been on board before?</p>
         </b-col>
       </b-row>
       <b-row align-h="center">
         <b-col>
-          <p style="font-size:12px;">Learn more about our services</p>
+          <p style="font-size:12px; font-family:NunitoSans-Regular;">Learn more about our services</p>
         </b-col>
       </b-row>
       <div class="container">
@@ -494,36 +527,57 @@
               <b-button variant="danger">News Covered</b-button>
             </b-col>
           </b-row>
-          <b-row align-h="center" style="margin-top:2%">
+          <b-row align-h="center" style="margin-top:5%">
             <b-col>
-              <b-carousel
-                id="carousel-1"
-                :interval="4000"
-                controls
-                indicators
-                background="#ababab"
-                img-width="952"
-                img-height="218"
-                style="text-shadow: 1px 1px 2px #333;margin-left:10%;margin-right:10%;border-radius:10px"
-              >
-                <!-- Text slides with image -->
-                <b-carousel-slide
-                  caption="First slide"
-                  text="Nulla vitae elit libero, a pharetra augue mollis interdum."
-                  img-src="https://picsum.photos/952/200/?image=52"
-                ></b-carousel-slide>
-
-                <!-- Slides with custom text -->
-                <b-carousel-slide img-src="https://picsum.photos/952/200/?image=54">
-                  <h1>Hello world!</h1>
-                </b-carousel-slide>
-
-                <!-- Slides with image only -->
-                <b-carousel-slide img-src="https://picsum.photos/952/200/?image=58"></b-carousel-slide>
-
-                <!-- Slides with img slot -->
-                <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
-              </b-carousel>
+              <div class="container-fluid news-cover">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner row w-100 mx-auto">
+                    <div class="carousel-item col-md-6 active">
+                      <b-card img-src="https://img.jakpost.net/c/2019/01/19/2019_01_19_63436_1547869618._large.jpg" img-alt="Card image" img-left class="mb-3">
+                        <b-card-text>
+                         Online reservation platform cGo to offer yachts, boats for your travel needs.
+                        </b-card-text>
+                      </b-card>
+                    </div>
+                    <div class="carousel-item col-md-6">
+                      <b-card img-src="https://www.thefolio.co.id/wp-content/uploads/2019/09/Team-cGO-_-Partners.jpg" img-alt="Card image" img-left class="mb-3">
+                        <b-card-text>
+                          cGo: The Platform for Marine Tourism Officially Launched.
+                        </b-card-text>
+                      </b-card>
+                    </div>
+                    <div class="carousel-item col-md-6">
+                      <b-card img-src="https://whatsnewindonesia.com/wp-content/uploads/2019/09/Jajaran_Kepemilikan_cGO.jpg" img-alt="Card image" img-left class="mb-3">
+                        <b-card-text>
+                         INTRODUCING CGO : A NEW AVENUE TO EXPLORE THE INDONESIA ARCHIPELAGO.
+                        </b-card-text>
+                      </b-card>
+                    </div>
+                    <div class="carousel-item col-md-6">
+                      <b-card img-src="https://www.gadis.co.id/gadis/new-img/images/cGO%2C%20Solusi%20Tepat%20untuk%20Eksplorasi%20Wisata%20Bahari%20Indonesia%20-%20Artikel%201.JPG" img-alt="Card image" img-left class="mb-3">
+                        <b-card-text>
+                          cGO, Solusi Tepat untuk Eksplorasi Wisata Bahari Indonesia.
+                        </b-card-text>
+                      </b-card>
+                    </div>
+                    <div class="carousel-item col-md-6">
+                      <b-card img-src="http://samudranesia.id/wp-content/uploads/2019/09/birds-eye-view-2133661_960_720.jpg" img-alt="Card image" img-left class="mb-3">
+                        <b-card-text>
+                         Media Launch cGO, Aplikasi Sewa Kapal Pesiar Indonesia.
+                        </b-card-text>
+                      </b-card>
+                    </div>
+                  </div>
+                  <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+              </div>
             </b-col>
           </b-row>
         </div>
@@ -550,6 +604,32 @@ export default {
     Footer,
     Header
   },
+  mounted() {
+    $(document).ready(function() {
+  $("#myCarousel").on("slide.bs.carousel", function(e) {
+    var $e = $(e.relatedTarget);
+    var idx = $e.index();
+    var itemsPerSlide = 4;
+    var totalItems = $(".carousel-item").length;
+
+    if (idx >= totalItems - (itemsPerSlide - 1)) {
+      var it = itemsPerSlide - (totalItems - idx);
+      for (var i = 0; i < it; i++) {
+        // append slides to end
+        if (e.direction == "left") {
+          $(".carousel-item")
+            .eq(i)
+            .appendTo(".carousel-inner");
+        } else {
+          $(".carousel-item")
+            .eq(0)
+            .appendTo($(this).find(".carousel-inner"));
+        }
+      }
+    }
+  });
+});
+  },
   methods: {
     search(data) {},
     onSubmitSailing() {
@@ -564,5 +644,3 @@ export default {
   }
 };
 </script>
-<style>
-</style>

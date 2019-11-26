@@ -16,7 +16,8 @@ import { access } from 'fs';
 import sailingEmpty from '../views/sailing/index.vue'
 import Tour from '../views/Tour/tour.vue'
 import Transportation from '../views/Transportation/transportation.vue'
-import Merchant from '../views/Merchant/Merchant.vue'
+// import Merchant from '../views/Merchant/Merchant.vue'
+import Merchant from '../views/Home/Merchant.vue'
 
 
 Vue.use(VueRouter)
@@ -75,6 +76,11 @@ const routes = [
     path: '/home/contactus',
     name: 'contactus',
     component: ContactUs
+  },
+  {
+    path: '/home/merchant',
+    name: 'merchant',
+    component: Merchant
   },
   // Destination
   {

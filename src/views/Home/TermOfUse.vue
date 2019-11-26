@@ -3,7 +3,7 @@
     <Header />
     <div class="content-center">
     <b-row>
-    <p style="font-weight:bold;font-size:30px;color:#233E98;float:left;margin: 80px 0 0 120px">Term Of Use</p>
+    <p style="font-weight:bold;font-size:30px;color:#233E98;float:left;margin: 80px 0 0 120px">Term and Condition</p>
     </b-row>
       <b-row align-h="center">
 
