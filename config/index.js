@@ -6,8 +6,7 @@ const path = require('path')
 
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production' ?
-    '/production-sub-path/' :
-    '/',
+    '/production-sub-path/' : '/',
   dev: {
 
     // Paths

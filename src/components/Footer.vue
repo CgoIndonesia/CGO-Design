@@ -2,8 +2,7 @@
   <div>
     <b-navbar toggleable="lg" type="dark" style="background-color:#233E98;">
       <b-col md="6">
-        <b-navbar-brand style="font-size: 16px;
-    font-family: Mark-Bold;">be the first to receive our update news!</b-navbar-brand>
+        <b-navbar-brand style="font-size:16px;">be the first to receive our update news!</b-navbar-brand>
       </b-col>
       <b-col md="6" style="align:right;">
         <b-form>
@@ -24,8 +23,8 @@
           <b-col md="2">
             <p style="font-weight:bold;color:#233E98;">Company</p>
             <b-link href="#">About</b-link>
-            <!-- <br /> -->
-            <!-- <b-link href="#">Careers</b-link> -->
+            <br />
+            <b-link href="#">Careers</b-link>
             <br />
             <b-link href="#">Marchant</b-link>
           </b-col>
@@ -47,22 +46,20 @@
             </b-row>
             <b-row>
               <b-col style="text-align:left;">
-                <!-- <b-link href="www.facebook.com"><img src="@/assets/img/fb.png" style="margin:5px"></b-link> -->
-                <!-- <b-link href="www.twitter.com"><img src="@/assets/img/tw.png" style="margin:5px"></b-link> -->
-                <b-link href="https://www.instagram.com/cgoindonesia/?hl=en"><img src="@/assets/img/ig.png" style="margin:5px"></b-link>
+                <b-link href="www.facebook.com"><img src="@/assets/img/fb.png" style="margin:5px"></b-link>
+                <b-link href="www.twitter.com"><img src="@/assets/img/tw.png" style="margin:5px"></b-link>
+                <b-link href="www.instagram.com"><img src="@/assets/img/ig.png" style="margin:5px"></b-link>
               </b-col>
             </b-row>
           </b-col>
           <b-col md="3" offset-md="3">
-            <!-- <b-button variant="outline-primary" style="margin:5px;width:100px;">English</b-button>-->
-            <b-button variant="outline-primary" style="margin:5px;width:100px;">USD</b-button> 
+            <b-button variant="outline-primary" style="margin:5px;width:100px;">English</b-button>
+            <b-button variant="outline-primary" style="margin:5px;width:100px;">USD</b-button>
           </b-col>
         </b-row>
         <b-row>
-          <b-col style="margin-top:33px;">
-            <p style="color: rgb(35, 62, 152);
-              font-family: NunitoSans-Regular;
-              font-size: 13px;">&copy;2019 cGo. All rights reserved</p>
+          <b-col style="margin-top:10px;">
+            <p style="font-weight:bold;color:#233E98;">&copy;2019 cGo. All rights reserved</p>
           </b-col>
         </b-row>
       </b-container>

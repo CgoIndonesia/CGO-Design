@@ -11,9 +11,9 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav style="padding:0 30px 0 0">
         <b-navbar-nav>
-          <b-nav-item href="/sailing/index" style="font-family: Mark-Bold !important;">Sailing</b-nav-item>
-          <b-nav-item href="/Tour/tour" style="font-family: Mark-Bold !important;">Tour</b-nav-item>
-          <b-nav-item href="/Transportation/transportation" style="font-family: Mark-Bold !important;">Transportation</b-nav-item>
+          <b-nav-item href="/sailing/index">Salling</b-nav-item>
+          <b-nav-item href="/Tour/tour">Tour</b-nav-item>
+          <b-nav-item href="/Transportation/transportation">Transportation</b-nav-item>
         </b-navbar-nav>
         <!-- Right aligned nav items -->
 
@@ -30,21 +30,22 @@
               <b-form-input
                 size="sm"
                 class="search-input"
-                placeholder="try 'labuan bajo'..."
-                style="border-width: 0px;border-left-radius:0px; font-family: NunitoSans-Regular; color:#B7B5B5;"
+                placeholder="try 'labuan bajo'"
+                style="border-width: 0px;border-left-radius:0px"
               ></b-form-input>
             </b-input-group>
           </b-form>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto pr-6">
-          <b-nav-item v-if="loggedIn" @click.prevent="logout" style="font-family: Mark-Bold !important;">Logout</b-nav-item>
-          <b-nav-item v-if="!loggedIn" href="/Home/register" style="font-family: Mark-Bold !important;">Register</b-nav-item>
+          <b-nav-item v-if="loggedIn" v-b-modal.modal-prevent-closing>Logout</b-nav-item>
+          <b-nav-item v-if="!loggedIn" href="/Home/register">Register</b-nav-item>
+
           <b-dropdown v-if="!loggedIn" variant="link" toggle-class="text-decoration-none" no-caret>
             <template v-slot:button-content style="padding:0px">
-              <p style="color:rgba(255, 255, 255, 0.5);margin:0px; font-size:14px; font-family: Mark-Bold;">Login</p>
+              <p style="color:rgba(255, 255, 255, 0.5);margin:0px;font-size:14px">Login</p>
             </template>
             <b-dropdown-form style="width: 254px;">
-              <b-form-group style="font-family: Mark-Bold !important;" label="Email" label-for="dropdown-form-email" @submit.stop.prevent>
+              <b-form-group label="Email" label-for="dropdown-form-email" @submit.stop.prevent>
                 <b-form-input
                   id="dropdown-form-email"
                   size="sm"
@@ -54,8 +55,8 @@
               </b-form-group>
 
               <b-form-group
+                style="font-family: NunitoSans-Regular;"
                 label="Password"
-                style="font-family: Mark-Bold !important;"
                 label-for="dropdown-form-password"
               >
                 <b-form-input
@@ -73,7 +74,7 @@
               <b-button
                 type="submit"
                 @click.prevent="login"
-                style="width:100%;border-radius:5px;background: linear-gradient(168.49deg, #9CAFEF -53.91%, #2345B9 94.99%); font-family: Mark-Bold !important;"
+                style="width:100%;border-radius:5px;background: linear-gradient(168.49deg, #9CAFEF -53.91%, #2345B9 94.99%);"
               >Log In</b-button>
             </b-dropdown-form>
             <b-dropdown-divider></b-dropdown-divider>
@@ -91,29 +92,33 @@
               </b-col>
             </b-row>
           </b-dropdown>
-          <b-col>
+          <b-col v-if="!loggedIn">
             <b-button
               size="sm"
               variant="danger"
-              style="border-radius:5px;width:150px;margin-top:3px; font-family: Mark-Bold !important;"
-              href="/Home/merchant"
+              style="border-radius:5px;width:150px;margin-top:3px"
+              href="/Merchant/merchant"
             >for merchant</b-button>
           </b-col>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
+
+    <!-- modal -->
+    <b-modal id="modal-prevent-closing" ref="modal" title="Confirm Message" @ok="logout">
+      <form ref="form" @submit.stop.prevent="handleSubmit">Are you sure you want to logout?</form>
+    </b-modal>
   </div>
 </template>
-<<<<<<< HEAD
+
 <script>
 export default {
-
   data() {
     return {
       form: {
         username: null,
         password: null,
-        device: "android",
+        device: "WEB",
         fcm_token: "ABCDEFGHIJK"
       }
     };
@@ -129,23 +134,21 @@ export default {
           console.log(error);
         });
     },
-    logout(){
-      this.$store.dispatch("logout")
-      .then(r =>{
-        this.$router.push({ name: 'home' })
-      })
-    },
-    
+    logout() {
+      this.$store.dispatch("logout").then(r => {
+        this.$router.push({ name: "home" });
+      });
+    }
   },
   watch: {},
-  computed : {
-    loggedIn(){
+  computed: {
+    loggedIn() {
       return this.$store.getters.loggedIn;
     }
   },
   created() {
-    this.$store.dispatch('profile')
-  },
+    this.$store.dispatch("profile");
+  }
 };
 </script>
 <style>
