@@ -23,7 +23,7 @@
         <b-row>
           <b-col md="2">
             <p style="font-weight:bold;color:#233E98;">Company</p>
-            <b-link href="#">About</b-link>
+            <b-link href="/home/aboutus">About</b-link>
             <!-- <br /> -->
             <!-- <b-link href="#">Careers</b-link> -->
             <br />

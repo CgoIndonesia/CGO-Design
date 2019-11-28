@@ -485,7 +485,15 @@
   overflow: hidden;
   position: relative;
 }
-
+.hero-image-about {
+  background: url('../image-home.png') no-repeat;
+  height: 190vh;
+  min-height: auto;
+  margin-top: 52px;
+  background-size: contain;
+  overflow: hidden;
+  position: relative;
+}
 .hero-text {
   text-align: center;
   position: absolute;
