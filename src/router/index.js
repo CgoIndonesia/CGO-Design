@@ -18,6 +18,7 @@ import Tour from '../views/Tour/tour.vue'
 import Transportation from '../views/Transportation/transportation.vue'
 // import Merchant from '../views/Merchant/Merchant.vue'
 import Merchant from '../views/Home/Merchant.vue'
+import Services from '../views/Home/Services.vue'
 
 
 Vue.use(VueRouter)
@@ -112,11 +113,17 @@ const routes = [
     name: 'Transportation',
     component: Transportation
   },
-  //
+  //Merchant
   {
     path: '/Merchant/merchant',
     name: 'Merchant',
     component: Merchant
+  },
+  //Services
+  {
+    path: '/Services/services',
+    name: 'Service',
+    component: Services
   }
 ]
 

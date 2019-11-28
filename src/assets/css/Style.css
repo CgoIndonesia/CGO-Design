@@ -461,8 +461,23 @@
 }
 #tab-find .tab-pane {padding: 0px !important;}
 
+.services-menu button {
+  background-color: white;
+  color: black;
+  border: transparent;
+  font-family: Mark-Bold;
+  font-size: 18px;
+}
+.services-menu button:hover, .services-menu button.active{
+  color: #233E98;
+  background-color: white;
+  border-color: transparent;
+  box-shadow: none;
+  border-bottom: 3px solid #233E98;
+}
+
 .hero-image {
-  background: url('../bg-header.png') no-repeat fixed;
+  background: url('../bg-header.png') no-repeat;
   height: 190vh;
   min-height: auto;
   margin-top: 52px;
@@ -499,6 +514,7 @@
 .news-cover .card img {
   height: 200px !important;
   width: 200px !important;
+  object-fit: cover;
 }
 .news-cover .card {height: 200px !important;}
 /* profile-empty-state */
@@ -529,68 +545,46 @@
   border-radius: 50%;
   display: inline-block;
 }
+/* show 4 items */
 @media (min-width: 768px) {
-  /* show 4 items */
-  .carousel-inner .active,
-  .carousel-inner .active + .carousel-item,
-  .carousel-inner .active + .carousel-item + .carousel-item,
-  .carousel-inner .active + .carousel-item + .carousel-item + .carousel-item {
-    display: block;
-  }
-
-  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
-  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item,
-  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item,
-  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item + .carousel-item {
-    transition: none;
-  }
-
-  .carousel-inner .carousel-item-next,
-  .carousel-inner .carousel-item-prev {
-    position: relative;
-    transform: translate3d(0, 0, 0);
-  }
-
-  .carousel-inner .active.carousel-item + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
-    position: absolute;
-    top: 0;
-    right: -25%;
-    z-index: -1;
-    display: block;
-    visibility: visible;
-  }
-
-  /* left or forward direction */
-  .active.carousel-item-left + .carousel-item-next.carousel-item-left,
-  .carousel-item-next.carousel-item-left + .carousel-item,
-  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item,
-  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item,
-  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
-    position: relative;
-    transform: translate3d(-100%, 0, 0);
-    visibility: visible;
-  }
-
-  /* farthest right hidden item must be absolue position for animations */
-  .carousel-inner .carousel-item-prev.carousel-item-right {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    display: block;
-    visibility: visible;
-  }
-
-  /* right or prev direction */
-  .active.carousel-item-right + .carousel-item-prev.carousel-item-right,
-  .carousel-item-prev.carousel-item-right + .carousel-item,
-  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item,
-  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item,
-  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
-    position: relative;
-    transform: translate3d(100%, 0, 0);
-    visibility: visible;
-    display: block;
-    visibility: visible;
-  }
+	/* left or forward direction */
+	/* farthest right hidden item must be absolue position for animations */
+	/* right or prev direction */
+	 .carousel-inner .active, .carousel-inner .active + .carousel-item, .carousel-inner .active + .carousel-item + .carousel-item, .carousel-inner .active + .carousel-item + .carousel-item + .carousel-item {
+		 display: block;
+	}
+	 .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left), .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item, .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item, .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item + .carousel-item {
+		 transition: none;
+	}
+	 .carousel-inner .carousel-item-next, .carousel-inner .carousel-item-prev {
+		 position: relative;
+		 transform: translate3d(0, 0, 0);
+	}
+	 .carousel-inner .active.carousel-item + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+		 position: absolute;
+		 top: 0;
+		 right: -25%;
+		 z-index: -1;
+		 display: block;
+		 visibility: visible;
+	}
+	 .active.carousel-item-left + .carousel-item-next.carousel-item-left, .carousel-item-next.carousel-item-left + .carousel-item, .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item, .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item, .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+		 position: relative;
+		 transform: translate3d(-100%, 0, 0);
+		 visibility: visible;
+	}
+	 .carousel-inner .carousel-item-prev.carousel-item-right {
+		 position: absolute;
+		 top: 0;
+		 left: 0;
+		 z-index: -1;
+		 display: block;
+		 visibility: visible;
+	}
+	 .active.carousel-item-right + .carousel-item-prev.carousel-item-right, .carousel-item-prev.carousel-item-right + .carousel-item, .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item, .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item, .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+		 position: relative;
+		 transform: translate3d(100%, 0, 0);
+		 visibility: visible;
+		 display: block;
+	}
 }

@@ -20,7 +20,7 @@
                     <img src="@/assets/img/Group 426.png" alt=""> <strong>Sailing</strong>
                   </template>
                   <b-form @submit.stop.prevent="onSubmitSailing">
-                    <b-row style="text-align:left;padding:20px">
+                    <b-row style="text-align:left; padding: 0px 20px; padding-top: 15px;">
                       <b-col md="3">
                         <b-form-group id="input-group-2" label="Destination" label-for="input-2">
                           <b-form-input
@@ -35,8 +35,8 @@
                         </b-form-group>
                       </b-col>
                       <b-col md="3">
-                        <b-form-group id="input-group-2" label="Dates" label-for="input-2">
-                          <b-form-input
+                        <b-form-group id="input-group-2" label="Check In" label-for="input-2">
+                          <!-- <b-form-input
                             v-model="$store.state.sailing.form.date"
                             id="input-2"
                             placeholder="Dates"
@@ -44,26 +44,30 @@
                             style="background-color: #F7F7F7;
                               border: transparent;
                               font-family: NunitoSans-Regular;
-                              font-size: 14px;"
-                          ></b-form-input>
+                              font-size: 14px;" 
+                          ></b-form-input> -->
+                          <!-- <datepicker @selected="bindingDate" v-model="state.date" format="dd MMM yyyy" :disabled-dates="state.disabledDates"></datepicker> -->
+                          <date-picker v-model="time1" @change="bindingDate()" :disabled-date="notBeforeToday" placeholder="Select date" style="width: 140px; padding: 2px;" value-type="format" format="DD-MMM-YYYY"></date-picker>
                         </b-form-group>
                       </b-col>
                       <b-col md="3">
-                        <b-form-group id="input-group-2" label="Day" label-for="input-2">
-                          <b-form-input
-                            v-model="$store.state.sailing.form.day"
-                            id="input-2"
-                            placeholder="2 day"
-                            type="number"
-                            style="background-color: #F7F7F7;
-                              border: transparent;
-                              font-family: NunitoSans-Regular;
-                              font-size: 14px;"
-                            min="1"
-                          ></b-form-input>
+                        <b-form-group id="input-group-2" label="Duration" label-for="input-2">
+                          <select class="form-control" @change="changeCheckOut()" id="divisions_list" name="division" v-model="duration">
+                            <option v-for="days in day" :value="days.value">
+                                {{days.name}}
+                            </option>
+                          </select>
                         </b-form-group>
                       </b-col>
                       <b-col md="3">
+                        <b-form-group id="input-group-2" label="Check Out" label-for="input-2">
+                          <p
+                          >{{checkOut}}</p>
+                        </b-form-group>
+                      </b-col>
+                    </b-row>
+                    <b-row style="text-align:left;padding:0 20px">
+                      <b-col md="4">
                         <b-form-group id="input-group-2" label="Guest" label-for="input-2">
                           <b-form-input
                             v-model="$store.state.sailing.form.guest"
@@ -77,12 +81,9 @@
                           ></b-form-input>
                         </b-form-group>
                       </b-col>
-                    </b-row>
-                    <b-row style="text-align:left;padding:0 20px">
                       <b-col md="4"></b-col>
-                      <b-col md="4"></b-col>
-                      <b-col md="4">
-                        <b-form-group>
+                      <b-col md="4" class="align-self-center">
+                        <b-form-group class="m-0">
                           <b-button
                             type="submit"
                             style="width:100%;background: linear-gradient(170.2deg, #9CAFEF -53.91%, #2345B9 94.99%);"
@@ -98,7 +99,7 @@
                   </template>
                   <b-form @submit.stop.prevent="onSubmitTour">
                     <b-row style="text-align:left;padding:20px">
-                      <b-col md="3">
+                      <b-col md="4">
                         <b-form-group id="input-group-2" label="Destination" label-for="input-2">
                           <b-form-input
                             id="input-2"
@@ -111,8 +112,8 @@
                           ></b-form-input>
                         </b-form-group>
                       </b-col>
-                      <b-col md="3">
-                        <b-form-group id="input-group-2" label="Dates" label-for="input-2">
+                      <b-col md="4">
+                        <b-form-group id="input-group-2" label="Month" label-for="input-2">
                           <b-form-input
                             id="input-2"
                             v-model="$store.state.tour.form.date"
@@ -125,7 +126,7 @@
                           ></b-form-input>
                         </b-form-group>
                       </b-col>
-                      <b-col md="3">
+                      <!-- <b-col md="3">
                         <b-form-group id="input-group-2" label="Day" label-for="input-2">
                           <b-form-input
                             v-model="$store.state.tour.form.day"
@@ -139,8 +140,8 @@
                             min="1"
                           ></b-form-input>
                         </b-form-group>
-                      </b-col>
-                      <b-col md="3">
+                      </b-col> -->
+                      <b-col md="4">
                         <b-form-group id="input-group-2" label="Guest" label-for="input-2">
                           <b-form-input
                             id="input-2"
@@ -153,6 +154,7 @@
                                 font-family: NunitoSans-Regular;
                                 font-size: 14px;"
                           ></b-form-input>
+                          
                         </b-form-group>
                       </b-col>
                     </b-row>
@@ -175,9 +177,9 @@
                     <img src="@/assets/img/camper-van.png" alt=""> <strong>Transportation</strong>
                   </template>
                   <b-form>
-                    <b-row style="text-align:left;padding:20px">
+                    <b-row style="text-align:left;padding: 0 20px; padding-top: 15px;">
                       <b-col md="4">
-                        <b-form-group id="input-group-2" label="Destination" label-for="input-2">
+                        <b-form-group id="input-group-2" label="From" label-for="input-2">
                           <b-form-input
                             id="input-2"
                             placeholder="your holiday destination"
@@ -189,10 +191,10 @@
                         </b-form-group>
                       </b-col>
                       <b-col md="4">
-                        <b-form-group id="input-group-2" label="Dates" label-for="input-2">
+                        <b-form-group id="input-group-2" label="To" label-for="input-2">
                           <b-form-input
                             id="input-2"
-                            placeholder="Dates"
+                            placeholder="your holiday destination"
                             style="background-color: #F7F7F7;
                                 border: transparent;
                                 font-family: NunitoSans-Regular;
@@ -214,10 +216,41 @@
                       </b-col>
                     </b-row>
                     <b-row style="text-align:left;padding:0 20px">
-                      <b-col md="4"></b-col>
-                      <b-col md="4"></b-col>
                       <b-col md="4">
-                        <b-form-group>
+                        <b-form-group id="input-group-2" label="Departure" label-for="input-2">
+                          <b-form-input
+                            id="input-2"
+                            placeholder="Dates"
+                            style="background-color: #F7F7F7;
+                                border: transparent;
+                                font-family: NunitoSans-Regular;
+                                font-size: 14px;"
+                          ></b-form-input>
+                        </b-form-group>
+                      </b-col>
+                      <b-col md="4">
+                        <b-form-group id="input-group-2">
+                             <b-form-checkbox
+                            name="checkbox-1"
+                            v-model="returnStatus"
+                            v-value="1"
+                            v-unchecked-value="null"
+                            class="mb-1"
+                          > Return
+                          </b-form-checkbox>
+                          <b-form-input
+                          v-if="returnStatus == 1"
+                            id="input-2"
+                            placeholder="Dates"
+                            style="background-color: #F7F7F7;
+                                border: transparent;
+                                font-family: NunitoSans-Regular;
+                                font-size: 14px;"
+                          ></b-form-input>
+                        </b-form-group>
+                      </b-col>
+                      <b-col md="4" class="align-self-center">
+                        <b-form-group class="m-0">
                           <b-button
                             type="submit"
                             style="width:100%;background: linear-gradient(170.2deg, #9CAFEF -53.91%, #2345B9 94.99%);"
@@ -592,17 +625,36 @@
 // @ is an alias to /src
 import Footer from "@/components/Footer.vue";
 import Header from "@/components/Header.vue";
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
+import moment from 'moment'
+
+const today = new Date();
+today.setHours(0, 0, 0, 0);
 
 export default {
   name: "home",
   data() {
     return {
-      selected: null
+      day: [
+        {name: 1, value: 1},
+        {name: 2, value: 2},
+        {name: 3, value: 3},
+        {name: 4, value: 4},
+        {name: 5, value: 5},
+        {name: 6, value: 6}
+        ],
+      returnStatus: null,
+      selected: null,
+      duration: 1,
+      checkOut: null,
+      time1: new Date(Date.now()),
     };
   },
   components: {
     Footer,
-    Header
+    Header, 
+    DatePicker
   },
   mounted() {
     $(document).ready(function() {
@@ -637,6 +689,20 @@ export default {
     },
     onSubmitTour() {
       this.$router.push({ name: "Tour" });
+    },
+    changeCheckOut(){
+      var days = this.duration;
+      this.checkOut = new Date(new Date(this.time1).setDate(new Date(this.time1).getDate() + days));
+      this.checkOut =  moment(String(this.checkOut)).format('DD-MMM-YYYY')
+    },
+    notBeforeToday(date) {
+      return date < today;
+    },
+    bindingDate(){
+      var days = this.duration;
+      this.checkOut = new Date(new Date(this.time1).setDate(new Date(this.time1).getDate() + days));
+      this.checkOut =  moment(String(this.checkOut)).format('DD-MMM-YYYY')
+      console.log(result)
     }
   },
   created() {
