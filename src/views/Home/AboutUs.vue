@@ -40,8 +40,8 @@
                     </b-card>
                 </b-col>
             </b-row>
-            <b-row>
-                <p>cGO exist to provide access for everyone to Explore, Experience and Enjoy the Indonesian archipelago through trusted platform in an affordable, safety and comfortable manner. Starting with personal experience, we commited to create a new journey so that there will be no more difficulties when traveling across the sea.</p>
+            <b-row class="mt-5 justify-content-center">
+                <p class="mt-5" style="width: 65%;">cGO exist to provide access for everyone to Explore, Experience and Enjoy the Indonesian archipelago through trusted platform in an affordable, safety and comfortable manner. Starting with personal experience, we commited to create a new journey so that there will be no more difficulties when traveling across the sea.</p>
             </b-row>
         </div>
     <Footer />
