@@ -142,8 +142,18 @@
 
                             <b-button style="    width: 35% !important;
                             margin-left: auto;
-                            margin-right: auto;" type="submit" variant="primary">Submit</b-button>
+                            margin-right: auto;" type="submit" variant="primary" @click="$bvModal.show('modal-3')">Submit</b-button>
                             </b-form>
+                            <b-modal id="modal-1" title="BootstrapVue" hide-header hide-footer>
+                <div class="text-center">
+                  <h5>Thank You.. We will contact you soon!</h5>
+                <p class="my-4">Let’s bring Indonesia’s sea industry to the next level together</p>
+                <img src="@/assets/Empty state sailing-06 1.png" alt="">
+                <div>
+                  <b-button variant="outline-primary" @click="$bvModal.hide('modal-3')">Close</b-button>
+                </div>
+                </div>
+              </b-modal>
                     </b-tab>
                 </b-tabs>
             </div>

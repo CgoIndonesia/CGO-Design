@@ -12,7 +12,17 @@
               <b-form-input size="sm" placeholder="your email address"></b-form-input>
             </b-col>
             <b-col md="2">
-              <b-button size="sm" variant="danger">subscribe</b-button>
+              <b-button size="sm" variant="danger" @click="$bvModal.show('modal-1')">subscribe</b-button>
+              <b-modal id="modal-1" title="BootstrapVue" hide-header hide-footer>
+                <div class="text-center">
+                  <h5>Thank you for your subscribe!</h5>
+                <p class="my-4">We will keep you updated with our latest news and promo</p>
+                <img src="@/assets/img/Icon for web app-18 1.png" alt="">
+                <div>
+                  <b-button variant="outline-primary" @click="$bvModal.hide('modal-1')">Close</b-button>
+                </div>
+                </div>
+              </b-modal>
             </b-col>
           </b-row>
         </b-form>
@@ -59,7 +69,12 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col style="margin-top:33px;">
+          <b-col md="2" style="margin-top:33px;">
+            <p style="color: rgb(35, 62, 152);
+              font-family: NunitoSans-Regular;
+              font-size: 13px;">PT DTech Solusi Bisnis</p>
+          </b-col>
+          <b-col md="6" style="margin-top:33px;">
             <p style="color: rgb(35, 62, 152);
               font-family: NunitoSans-Regular;
               font-size: 13px;">&copy;2019 cGo. All rights reserved</p>

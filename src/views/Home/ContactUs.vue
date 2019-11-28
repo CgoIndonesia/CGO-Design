@@ -26,8 +26,18 @@
                             <b-form-group label="Message" style=" text-align:left;font-weight:bold">
                                 <b-form-textarea id="message"  rows="4"></b-form-textarea>
                             </b-form-group>
-                            <b-button type="reset" variant="primary">Submit</b-button>
+                            <b-button type="reset" variant="primary"  @click="$bvModal.show('modal-2')">Submit</b-button>
                             </b-form>
+                            <b-modal id="modal-1" title="BootstrapVue" hide-header hide-footer>
+                <div class="text-center">
+                  <h5>Thank You.. We will contact you soon!</h5>
+                <p class="my-4">Let’s bring Indonesia’s sea industry to the next level together</p>
+                <img src="@/assets/Empty state sailing-06 1.png" alt="">
+                <div>
+                  <b-button variant="outline-primary" @click="$bvModal.hide('modal-2')">Close</b-button>
+                </div>
+                </div>
+              </b-modal>
                     </div>
                 </b-col>
             </b-row>

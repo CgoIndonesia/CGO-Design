@@ -270,7 +270,7 @@
             >
               <h5 style="font-family: Mark-Bold;">Pickup and Return</h5>
               <div class="mt-4 d-flex flex-wrap justify-content-start">
-                <b-card class="mr-4">
+                <b-card class="mr-4" @click="goToMaps()" style="cursor: pointer;">
                   <div class="d-flex">
                     <img src="../../assets/Layer 2.png" alt style="height:20px;" />
                     <div class="pl-3">
@@ -281,7 +281,7 @@
                     </div>
                   </div>
                 </b-card>
-                <b-card>
+                <b-card @click="goToMaps()" style="cursor: pointer;">
                   <div class="d-flex">
                     <img src="../../assets/Layer 2.png" alt style="height:20px;" />
                     <div class="pl-3">
@@ -332,7 +332,7 @@
             <div class="mt-5 rating-comment">
               <b-card>
                 <div class="title-rating-comment">
-                  <h5>Rating and comment {{ sailingDetail.reviews ? sailingDetail.reviews.length : 0}}</h5>
+                  <h5>Rating and Review {{ sailingDetail.reviews ? sailingDetail.reviews.length : 0}}</h5>
                 </div>
                 <b-row>
                   <b-col md="6" v-for="(item,i) in sailingDetail.reviews" :key="i">
@@ -472,6 +472,7 @@
                       <b-form-select class="mb-3">
                         <template v-slot:first>
                           <option :value="null">ID Card</option>
+                          <option :value="'ID Card'">Passport</option>
                         </template>
                       </b-form-select>
                     </b-form-group>
@@ -493,7 +494,7 @@
                   name="checkbox-1"
                 >Save my identity</b-form-checkbox>
               </b-form>
-              <b-form class="mt-4">
+              <!-- <b-form class="mt-4">
                 <h1 style="font-family: NunitoSans-Bold; font-size: 20px;">Special Notes</h1>
                 <b-form-textarea
                   id="textarea-rows"
@@ -501,7 +502,7 @@
                   rows="8"
                   class="mt-4"
                 ></b-form-textarea>
-              </b-form>
+              </b-form> -->
               <b-form
                 style="padding: 30px; background: #E2FDFB;"
                 class="mt-4 justify-content-around ref-code"
@@ -710,7 +711,7 @@
                   <b-button
                     class="w-100"
                     variant="primary"
-                    @click="selectedContent='payment'"
+                    @click="selectedContent='payment'; setLastPayment();"
                   >Continue to Payment</b-button>
                 </b-col>
               </b-row>
@@ -726,7 +727,7 @@
               <b-button
                 class="mt-4 w-100"
                 variant="primary"
-                @click="selectedContent='payment'"
+                @click="selectedContent='payment'; setLastPayment();"
               >Continue to Payment</b-button>
             </div>
           </b-col>
@@ -748,7 +749,7 @@
                 <h5 style="font-family: NunitoSans-Regular;">Make a payment before</h5>
                 <strong
                   style="font-family: NunitoSans-Bold;  color: black; font-size: 20px;"
-                >Today 23:30</strong>
+                >{{ lastPayment }}</strong>
                 <p
                   style="font-family: NunitoSans-Regular;"
                 >Complete your payment within the time above</p>
@@ -827,6 +828,7 @@ export default {
   data() {
     return {
       selectedContent: "sailingHome",
+      lastPayment: null,
       noImage:
         "https://icon-library.net/images/no-image-available-icon/no-image-available-icon-6.jpg",
       data_sailing: null,
@@ -858,6 +860,11 @@ export default {
     };
   },
   methods: {
+    goToMaps() {
+      var url = "https://www.google.com/maps/preview";
+      this.$router.push({ path: "/sailing/index" });
+      window.open(url, "_target");
+    },
     toBook: function() {
       document.getElementById("content-center").style.backgroundColor =
         "#F7F7F7";
@@ -984,6 +991,9 @@ export default {
         });
 
       //this.selectedContent = "confirmation";
+    },
+    setLastPayment() {
+      this.lastPayment = new Moment().add(2, 'hours').calendar();
     }
   },
   computed: {
