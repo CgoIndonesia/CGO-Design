@@ -5,13 +5,13 @@
       toggleable="lg"
       style="background-color:#233E98;color:#ffffff:padding:0 10% 0 10%"
     >
-      <b-navbar-brand href="home" style="padding:0 0 0 30px">
+      <b-navbar-brand href="/" style="padding:0 0 0 30px">
         <img src="@/assets/img/cgo-logo.png" />
       </b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav style="padding:0 30px 0 0">
         <b-navbar-nav>
-          <b-nav-item href="/sailing/index" >Salling</b-nav-item>
+          <b-nav-item href="/sailing/index">Salling</b-nav-item>
           <b-nav-item href="/Tour/tour">Tour</b-nav-item>
           <b-nav-item href="/Transportation/transportation">Transportation</b-nav-item>
         </b-navbar-nav>
@@ -37,18 +37,28 @@
           </b-form>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto pr-6">
-          <b-nav-item v-if="loggedIn" @click.prevent="logout"> Logout</b-nav-item>
+          <b-nav-item v-if="loggedIn" v-b-modal.modal-prevent-closing>Logout</b-nav-item>
           <b-nav-item v-if="!loggedIn" href="/Home/register">Register</b-nav-item>
+
           <b-dropdown v-if="!loggedIn" variant="link" toggle-class="text-decoration-none" no-caret>
             <template v-slot:button-content style="padding:0px">
               <p style="color:rgba(255, 255, 255, 0.5);margin:0px;font-size:14px">Login</p>
             </template>
             <b-dropdown-form style="width: 254px;">
               <b-form-group label="Email" label-for="dropdown-form-email" @submit.stop.prevent>
-                <b-form-input id="dropdown-form-email" size="sm" placeholder="email@example.com" v-model="form.username"></b-form-input>
+                <b-form-input
+                  id="dropdown-form-email"
+                  size="sm"
+                  placeholder="email@example.com"
+                  v-model="form.username"
+                ></b-form-input>
               </b-form-group>
 
-              <b-form-group style="font-family: NunitoSans-Regular;" label="Password" label-for="dropdown-form-password">
+              <b-form-group
+                style="font-family: NunitoSans-Regular;"
+                label="Password"
+                label-for="dropdown-form-password"
+              >
                 <b-form-input
                   id="dropdown-form-password"
                   type="password"
@@ -82,28 +92,33 @@
               </b-col>
             </b-row>
           </b-dropdown>
-          <b-col>
+          <b-col v-if="!loggedIn">
             <b-button
               size="sm"
               variant="danger"
               style="border-radius:5px;width:150px;margin-top:3px"
+              href="/Merchant/merchant"
             >for merchant</b-button>
           </b-col>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
+
+    <!-- modal -->
+    <b-modal id="modal-prevent-closing" ref="modal" title="Confirm Message" @ok="logout">
+      <form ref="form" @submit.stop.prevent="handleSubmit">Are you sure you want to logout?</form>
+    </b-modal>
   </div>
 </template>
-<<<<<<< HEAD
+
 <script>
 export default {
-
   data() {
     return {
       form: {
         username: null,
         password: null,
-        device: "android",
+        device: "WEB",
         fcm_token: "ABCDEFGHIJK"
       }
     };
@@ -119,28 +134,25 @@ export default {
           console.log(error);
         });
     },
-    logout(){
-      this.$store.dispatch("logout")
-      .then(r =>{
-        this.$router.push({ name: 'home' })
-      })
-      
-      
+    logout() {
+      this.$store.dispatch("logout").then(r => {
+        this.$router.push({ name: "home" });
+      });
     }
   },
   watch: {},
-  computed : {
-    loggedIn(){
+  computed: {
+    loggedIn() {
       return this.$store.getters.loggedIn;
     }
+  },
+  created() {
+    this.$store.dispatch("profile");
   }
 };
 </script>
 <style>
-
-
-*{
+* {
   font-family: Mark-Medium;
-
 }
 </style>
