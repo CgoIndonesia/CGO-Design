@@ -5,10 +5,13 @@ import store from './store'
 import './assets/css/Style.css'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap/dist/js/bootstrap.min.js'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
+import Select2 from 'v-select2-component';
+
+
+Vue.component('Select2', Select2);
 
 import {
   library

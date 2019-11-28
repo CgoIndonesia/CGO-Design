@@ -79,11 +79,6 @@ const routes = [
     name: 'contactus',
     component: ContactUs
   },
-  {
-    path: '/home/merchant',
-    name: 'merchant',
-    component: Merchant
-  },
   // Destination
   {
     path: '/destination/topdestination',
@@ -114,7 +109,7 @@ const routes = [
     name: 'Transportation',
     component: Transportation
   },
-  //Merchant
+  //
   {
     path: '/Merchant/merchant',
     name: 'Merchant',

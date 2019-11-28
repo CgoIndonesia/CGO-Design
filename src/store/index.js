@@ -203,6 +203,7 @@ export default new Vuex.Store({
           })
       })
     },
+
     login(context, data) {
       return new Promise((resolve, reject) => {
         axios.post('api/v1/UserApps/login', data, config)
@@ -211,6 +212,18 @@ export default new Vuex.Store({
 
             localStorage.setItem('access_token', token)
             context.commit('retrieveToken', token)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    otp(context, data) {
+      return new Promise((resolve, reject) => {
+        axios.post('/api/v1/UserApps/LoginGetOTP ', data, config)
+          .then(response => {
+            console.log("succes otp")
             resolve(response)
           })
           .catch(error => {
