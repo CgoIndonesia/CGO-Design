@@ -165,14 +165,11 @@
                     <b-row style="text-align:left;padding: 0 20px; padding-top: 15px;">
                       <b-col md="4">
                         <b-form-group id="input-group-2" label="From" label-for="input-2">
-                          <b-form-input
-                            id="input-2"
-                            placeholder="your holiday destination"
-                            style="background-color: #F7F7F7;
-                                border: transparent;
-                                font-family: NunitoSans-Regular;
-                                font-size: 14px;"
-                          ></b-form-input>
+                          <select class="form-control" @change="changeCheckOut()" id="divisions_list" name="division" v-model="duration">
+                            <option v-for="destiny in destination" :value="destiny.name">
+                                {{destiny.name}}
+                            </option>
+                          </select>
                         </b-form-group>
                       </b-col>
                       <b-col md="4">
@@ -186,11 +183,15 @@
                       </b-col>
                       <b-col md="4">
                         <b-form-group id="input-group-2" label="Guest" label-for="input-2">
-                         <select class="form-control" @change="changeCheckOut()" id="divisions_list" name="division" v-model="duration">
-                            <option v-for="destiny in destination" :value="destiny.name">
-                                {{destiny.name}}
-                            </option>
-                          </select>
+                          <b-form-input
+                            id="input-2"
+                            type="number"
+                            placeholder="your holiday destination"
+                            style="background-color: #F7F7F7;
+                                border: transparent;
+                                font-family: NunitoSans-Regular;
+                                font-size: 14px;"
+                          ></b-form-input>
                         </b-form-group>
                       </b-col>
                     </b-row>
