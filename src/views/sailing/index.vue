@@ -105,7 +105,7 @@
             </b-form-group>
 
             <!-- Empty Search Sailing -->
-            <div class="d-none empty-sailing container">
+            <div class="empty-sailing container"  v-if="data_tour == null">
               <b-row>
                 <b-col md="12">
                   <div style="width: fit-content;" class="empty-content-sailing ml-auto mr-auto">
@@ -116,7 +116,7 @@
               </b-row>
             </div>
             <!-- Result sailing Search -->
-            <div class="container-fluid">
+            <div class="container-fluid"  v-if="data_tour != null">
               <b-row>
                 <b-col md="6" class="mt-4 mb-2" v-for="(data,i) in data_sailing" :key="i">
                   <b-card no-body>
