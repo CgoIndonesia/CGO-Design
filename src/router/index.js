@@ -16,7 +16,14 @@ import { access } from 'fs';
 import sailingEmpty from '../views/sailing/index.vue'
 import Tour from '../views/Tour/tour.vue'
 import Transportation from '../views/Transportation/transportation.vue'
+<<<<<<< HEAD
 import Merchant from '../views/Merchant/Merchant.vue'
+=======
+// import Merchant from '../views/Merchant/Merchant.vue'
+import Merchant from '../views/Home/Merchant.vue'
+import Services from '../views/Home/Services.vue'
+import AboutUs from '../views/Home/AboutUs.vue'
+>>>>>>> 7806f6b445d64c608bf644369cb654da4b943daf
 
 
 Vue.use(VueRouter)
@@ -111,6 +118,21 @@ const routes = [
     path: '/Merchant/merchant',
     name: 'Merchant',
     component: Merchant
+<<<<<<< HEAD
+=======
+  },
+  //Services
+  {
+    path: '/Services/services',
+    name: 'Service',
+    component: Services
+  },
+  //Services
+  {
+    path: '/home/aboutus',
+    name: 'AboutUs',
+    component: AboutUs
+>>>>>>> 7806f6b445d64c608bf644369cb654da4b943daf
   }
 ]
 

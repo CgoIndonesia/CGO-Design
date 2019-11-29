@@ -441,6 +441,55 @@
   border-color: #dee2e6 #dee2e6 #fff;
 }
 
+.hero-image {
+  background: url('../bg-header.png') no-repeat;
+  height: 190vh;
+  min-height: auto;
+  margin-top: 52px;
+  background-size: contain;
+  overflow: hidden;
+  position: relative;
+}
+.hero-image-about {
+  background: url('../image-home.png') no-repeat;
+  height: 190vh;
+  min-height: auto;
+  margin-top: 52px;
+  background-size: contain;
+  overflow: hidden;
+  position: relative;
+}
+.hero-text {
+  text-align: center;
+  position: absolute;
+  top: 7%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  width: fit-content;
+}
+#merchant-form .card-body {
+  padding: 3rem;
+  text-align: left;
+}
+#merchant-form .nav-tabs .nav-link {
+  color: black;
+    font-family: Mark-Bold;
+    background-color: #fff;
+}
+#merchant-form .nav-tabs .nav-link.active{
+  color: #233E98;
+    font-family: Mark-Bold;
+    border: 3px solid;
+    background-color: #fff;
+    border-color: #ffffff #ffffff #233E98;
+}
+.news-cover .card img {
+  height: 200px !important;
+  width: 200px !important;
+  object-fit: cover;
+}
+.news-cover .card {height: 200px !important;}
 /* profile-empty-state */
 
 @media (max-width: 991px) {
