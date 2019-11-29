@@ -470,10 +470,7 @@
                       <b-form-select class="mb-3">
                         <template v-slot:first>
                           <option :value="null">ID Card</option>
-<<<<<<< HEAD
-=======
                           <option :value="'ID Card'">Passport</option>
->>>>>>> 7806f6b445d64c608bf644369cb654da4b943daf
                         </template>
                       </b-form-select>
                     </b-form-group>
@@ -829,10 +826,7 @@ export default {
   data() {
     return {
       selectedContent: "sailingHome",
-<<<<<<< HEAD
-=======
       lastPayment: null,
->>>>>>> 7806f6b445d64c608bf644369cb654da4b943daf
       noImage:
         "https://icon-library.net/images/no-image-available-icon/no-image-available-icon-6.jpg",
       data_sailing: null,
@@ -995,12 +989,9 @@ export default {
         });
 
       //this.selectedContent = "confirmation";
-<<<<<<< HEAD
-=======
     },
     setLastPayment() {
       this.lastPayment = new Moment().add(2, 'hours').calendar();
->>>>>>> 7806f6b445d64c608bf644369cb654da4b943daf
     }
   },
   computed: {
