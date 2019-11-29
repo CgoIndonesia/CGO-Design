@@ -36,6 +36,8 @@ export default new Vuex.Store({
       form: {
         destination: null,
         date: Moment().format("YYYY-MM-DD"),
+        dateCheckIn: Moment().format("YYYY-MM-DD"),
+        dateCheckOut: Moment().format("YYYY-MM-DD"),
         day: 1,
         guest: 1,
       }

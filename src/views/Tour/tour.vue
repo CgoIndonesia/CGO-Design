@@ -93,7 +93,7 @@
         <b-col md="8">
           <div class="content-sailing">
             <!-- Empty Search Sailing -->
-            <div class="d-none empty-sailing container">
+            <div class="empty-sailing container" v-if="data_tour == null">
               <b-row>
                 <b-col md="12">
                   <div style="width: fit-content;" class="empty-content-sailing ml-auto mr-auto">
@@ -105,7 +105,7 @@
             </div>
 
             <!-- Result sailing Search -->
-            <div class="container-fluid">
+            <div class="container-fluid"  v-if="data_tour != null">
               <b-row>
                 <b-col md="6" class="mt-4 mb-2" v-for="(data,i) in data_tour" :key="i">
                   <b-card no-body>
@@ -1112,6 +1112,7 @@
 <script>
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import axios from '@/plugins/axiosAuth'
 import Moment from "moment";
 
 export default {
@@ -1171,15 +1172,24 @@ export default {
 
       var body = {};
       console.log(body);
-      this.$store
-        .dispatch("search", { type: "tour", data: body })
-        .then(res => {
-          this.data_tour = this.$store.state.tour.search_tour;
-          console.log("resss", JSON.stringify(this.data_tour));
+      // this.$store
+      //   .dispatch("search", { type: "tour", data: body })
+      //   .then(res => {
+      //     this.data_tour = this.$store.state.tour.search_tour;
+      //     console.log("resss", JSON.stringify(this.data_tour));
+      //   })
+      //   .catch(error => {
+      //     console.log(error);
+      //   });
+      axios.post('/api/v1/UserApps/search',{
+          "type": "tour",
+	        "page": 1
+
+      })
+      .then(res => {
+          this.data_tour = res.data.data
+          console.log("data :   anjiiir   "+ JSON.stringify(res.data.data))
         })
-        .catch(error => {
-          console.log(error);
-        });
     },
     goto(to, data) {
       //$this.state.tour.detail_search;

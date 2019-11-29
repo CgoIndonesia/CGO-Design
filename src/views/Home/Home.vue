@@ -22,16 +22,14 @@
                   <b-form @submit.stop.prevent="onSubmitSailing">
                     <b-row style="text-align:left; padding: 0px 20px; padding-top: 15px;">
                       <b-col md="3">
-                        <b-form-group id="input-group-2" label="Destination" label-for="input-2">
-                          <b-form-input
-                            v-model="$store.state.sailing.form.destination"
-                            id="input-2"
-                            placeholder="destination"
-                            style="background-color: #F7F7F7;
-                                border: transparent;
-                                font-family: NunitoSans-Regular;
-                                font-size: 14px;"
-                          ></b-form-input>
+                        <b-form-group id="input-group-2" label="Duration" label-for="input-2">
+                          <select class="form-control" @change="changeCheckOut()" id="divisions_list" name="division" v-model="selectedDestiny">
+                            <option disabled selected> Select Destination
+                            </option>
+                            <option v-for="destiny in destination" :value="destiny.name">
+                                {{destiny.name}}
+                            </option>
+                          </select>
                         </b-form-group>
                       </b-col>
                       <b-col md="3">
@@ -101,29 +99,16 @@
                     <b-row style="text-align:left;padding:20px">
                       <b-col md="4">
                         <b-form-group id="input-group-2" label="Destination" label-for="input-2">
-                          <b-form-input
-                            id="input-2"
-                            v-model="$store.state.tour.form.destination"
-                            placeholder="your holiday destination"
-                            style="background-color: #F7F7F7;
-                                border: transparent;
-                                font-family: NunitoSans-Regular;
-                                font-size: 14px;"
-                          ></b-form-input>
+                           <select class="form-control" @change="changeCheckOut()" id="divisions_list" name="division" v-model="selectedDestinyTour">
+                            <option v-for="destiny in destination" :value="destiny.name">
+                                {{destiny.name}}
+                            </option>
+                          </select>
                         </b-form-group>
                       </b-col>
                       <b-col md="4">
                         <b-form-group id="input-group-2" label="Month" label-for="input-2">
-                          <b-form-input
-                            id="input-2"
-                            v-model="$store.state.tour.form.date"
-                            type="date"
-                            placeholder="Dates"
-                            style="background-color: #F7F7F7;
-                                border: transparent;
-                                font-family: NunitoSans-Regular;
-                                font-size: 14px;"
-                          ></b-form-input>
+                          <date-picker v-model="timeTour" @change="bindingDateTour()" :disabled-date="notBeforeToday" placeholder="Select date" style="width: 140px; padding: 2px;" value-type="format" format="DD-MMM-YYYY"></date-picker>
                         </b-form-group>
                       </b-col>
                       <!-- <b-col md="3">
@@ -192,26 +177,20 @@
                       </b-col>
                       <b-col md="4">
                         <b-form-group id="input-group-2" label="To" label-for="input-2">
-                          <b-form-input
-                            id="input-2"
-                            placeholder="your holiday destination"
-                            style="background-color: #F7F7F7;
-                                border: transparent;
-                                font-family: NunitoSans-Regular;
-                                font-size: 14px;"
-                          ></b-form-input>
+                           <select class="form-control" @change="changeCheckOut()" id="divisions_list" name="division" v-model="duration">
+                            <option v-for="destiny in destination" :value="destiny.name">
+                                {{destiny.name}}
+                            </option>
+                          </select>
                         </b-form-group>
                       </b-col>
                       <b-col md="4">
                         <b-form-group id="input-group-2" label="Guest" label-for="input-2">
-                          <b-form-input
-                            id="input-2"
-                            placeholder="Guest"
-                            style="background-color: #F7F7F7;
-                                border: transparent;
-                                font-family: NunitoSans-Regular;
-                                font-size: 14px;"
-                          ></b-form-input>
+                         <select class="form-control" @change="changeCheckOut()" id="divisions_list" name="division" v-model="duration">
+                            <option v-for="destiny in destination" :value="destiny.name">
+                                {{destiny.name}}
+                            </option>
+                          </select>
                         </b-form-group>
                       </b-col>
                     </b-row>
@@ -626,7 +605,9 @@
 import Footer from "@/components/Footer.vue";
 import Header from "@/components/Header.vue";
 import DatePicker from 'vue2-datepicker';
+import axios from '@/plugins/axiosAuth'
 import 'vue2-datepicker/index.css';
+import { timeout } from 'q';
 import moment from 'moment'
 
 const today = new Date();
@@ -644,11 +625,18 @@ export default {
         {name: 5, value: 5},
         {name: 6, value: 6}
         ],
+        destination: [],
+      selectedDestiny: null,
+      selectedDestinyTour: null,
       returnStatus: null,
       selected: null,
       duration: 1,
+       dateCheckIn: null,
+      dateCheckOut: null,
       checkOut: null,
       time1: new Date(Date.now()),
+      timeTour: new Date(Date.now()),
+      timeTourParse: new Date(Date.now())
     };
   },
   components: {
@@ -681,28 +669,73 @@ export default {
     }
   });
 });
+axios.get('/api/v1/UserApps/Master/Harbor/')
+        .then(res => {
+          this.destination = res.data.data
+          console.log("data :   dadsa   "+res.data.data)
+        })
   },
   methods: {
     search(data) {},
     onSubmitSailing() {
+       this.$store.state.sailing.form.destination = this.selectedDestiny
+      this.$store.state.sailing.form.day = this.duration
       this.$router.push({ name: "sailingEmpty" });
     },
     onSubmitTour() {
       this.$router.push({ name: "Tour" });
+       this.$store.state.tour.form.destination = this.selectedDestinyTour
     },
     changeCheckOut(){
       var days = this.duration;
+      this.dateCheckIn = this.time1
+      this.dateCheckIn = this.checkOut
       this.checkOut = new Date(new Date(this.time1).setDate(new Date(this.time1).getDate() + days));
       this.checkOut =  moment(String(this.checkOut)).format('DD-MMM-YYYY')
+      this.dateCheckIn =  moment(String(this.time1)).format('YYYY-MM-DD');
+      this.dateCheckOut =  moment(String(this.checkOut)).format('YYYY-MM-DD');
+      // this.dateCheckOut =  moment(String(this.checkOut)).format("YYYY-MM-DD[T]HH:mm:ss");
+      this.$store.state.sailing.form.dateCheckIn = this.dateCheckIn
+      // this.$store.state.sailing.form.dateCheckIn = this.time1
+      this.$store.state.sailing.form.dateCheckOut = this.dateCheckOut
+  
+      console.log(this.time1)
+      console.log(this.checkOut)
+      console.log(this.dateCheckIn)
+      console.log(this.dateCheckOut)
     },
     notBeforeToday(date) {
       return date < today;
     },
     bindingDate(){
       var days = this.duration;
+      this.dateCheckIn = this.time1
+      this.dateCheckIn = this.checkOut
       this.checkOut = new Date(new Date(this.time1).setDate(new Date(this.time1).getDate() + days));
       this.checkOut =  moment(String(this.checkOut)).format('DD-MMM-YYYY')
       console.log(result)
+      this.dateCheckIn =  moment(String(this.time1)).format('YYYY-MM-DD');
+      this.dateCheckOut =  moment(String(this.checkOut)).format('YYYY-MM-DD');
+      // this.dateCheckOut =  moment(String(this.checkOut)).format("YYYY-MM-DD[T]HH:mm:ss");
+      this.$store.state.sailing.form.dateCheckIn = this.dateCheckIn
+      // this.$store.state.sailing.form.dateCheckOut = new Date(this.checkOut)
+      this.$store.state.sailing.form.dateCheckOut = this.dateCheckOut
+
+      console.log(this.time1)
+      console.log(this.checkOut)
+      console.log(this.dateCheckIn)
+      console.log(this.dateCheckOut)
+    },
+    bindingDateTour(){
+      // this.checkOut = new Date(new Date(this.time1).setDate(new Date(this.time1).getDate() + days));
+      // this.dateCheckOut =  moment(String(this.checkOut)).format('YYYY-MM-DD');
+      // this.checkOut =  moment(String(this.checkOut)).format('DD-MMM-YYYY')
+      this.timeTourParse =  moment(String(this.timeTour)).format('YYYY-MM-DD');
+      // this.dateCheckOut =  moment(String(this.checkOut)).format("YYYY-MM-DD[T]HH:mm:ss");
+      this.$store.state.tour.form.date = this.timeTourParse
+      // this.$store.state.sailing.form.dateCheckOut = new Date(this.checkOut)
+      // this.$store.state.sailing.form.dateCheckOut = this.dateCheckOut
+
     }
   },
   created() {

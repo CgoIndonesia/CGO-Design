@@ -24,7 +24,7 @@
                 </b-form-group>
                 <b-form-group id="input-group-1" label="Dates" label-for="input-1">
                   <b-form-input
-                    v-model="$store.state.sailing.form.date"
+                     v-model="$store.state.sailing.form.dateCheckIn"
                     id="input-2"
                     placeholder="Dates"
                     type="date"
@@ -105,7 +105,7 @@
             </b-form-group>
 
             <!-- Empty Search Sailing -->
-            <div class="d-none empty-sailing container">
+            <div class="empty-sailing container"  v-if="data_tour == null">
               <b-row>
                 <b-col md="12">
                   <div style="width: fit-content;" class="empty-content-sailing ml-auto mr-auto">
@@ -116,7 +116,7 @@
               </b-row>
             </div>
             <!-- Result sailing Search -->
-            <div class="container-fluid">
+            <div class="container-fluid"  v-if="data_tour != null">
               <b-row>
                 <b-col md="6" class="mt-4 mb-2" v-for="(data,i) in data_sailing" :key="i">
                   <b-card no-body>
@@ -819,6 +819,7 @@
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import Moment from "moment";
+import axios from '@/plugins/axiosAuth'
 
 export default {
   name: "sailingEmpty",
@@ -1004,6 +1005,9 @@ export default {
     profile() {
       return JSON.parse(this.$store.state.profile);
     }
+  },
+  mounted() {
+    console.log("data date: " +this.$store.state.sailing.form.dateCheckIn)
   },
   created() {
     this.$store.commit("bodyDetail", {
