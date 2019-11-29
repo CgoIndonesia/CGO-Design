@@ -18,7 +18,7 @@
         <!-- Right aligned nav items -->
 
         <b-navbar-nav>
-          <b-form>
+          <!-- <b-form>
             <b-input-group class="search">
               <b-input-group-prepend>
                 <span class="search-icon">
@@ -34,7 +34,7 @@
                 style="border-width: 0px;border-left-radius:0px; font-family: NunitoSans-Regular; color:#B7B5B5;"
               ></b-form-input>
             </b-input-group>
-          </b-form>
+          </b-form> -->
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto pr-6">
           <b-nav-item v-if="loggedIn" v-b-modal.modal-prevent-closing style="font-family: Mark-Bold !important;">Logout</b-nav-item>

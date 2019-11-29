@@ -92,7 +92,7 @@
         </b-col>
         <b-col md="8">
           <div class="content-sailing">
-            <b-form-group>
+            <!-- <b-form-group>
               <div class="menu-type d-flex">
                 <p>Type</p>
                 <b-form-checkbox-group
@@ -102,7 +102,7 @@
                   name="flavour-1"
                 ></b-form-checkbox-group>
               </div>
-            </b-form-group>
+            </b-form-group> -->
 
             <!-- Empty Search Sailing -->
             <div class="empty-sailing container"  v-if="data_tour == null">
