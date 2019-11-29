@@ -66,7 +66,7 @@
               </div>
               <b-form class="mt-4">
                 <b-form-group label="Destination">
-                  <b-form-input id="input-1" type="text" required placeholder="Enter email"></b-form-input>
+                  <b-form-input id="input-1" type="text" required placeholder="Enter Destination"></b-form-input>
                 </b-form-group>
               </b-form>
               <b-form class="mb-4 justify-content-between form-price" inline>
