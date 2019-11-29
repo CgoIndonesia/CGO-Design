@@ -56,14 +56,14 @@
             </b-row>
             <b-row>
               <b-col style="text-align:left;">
-                <b-link href="www.facebook.com"><img src="@/assets/img/fb.png" style="margin:5px"></b-link>
-                <b-link href="www.twitter.com"><img src="@/assets/img/tw.png" style="margin:5px"></b-link>
-                <b-link href="www.instagram.com"><img src="@/assets/img/ig.png" style="margin:5px"></b-link>
+                <!-- <b-link href="www.facebook.com"><img src="@/assets/img/fb.png" style="margin:5px"></b-link> -->
+                <!-- <b-link href="www.twitter.com"><img src="@/assets/img/tw.png" style="margin:5px"></b-link> -->
+                <b-link href="https://www.instagram.com/cgoindonesia/?hl=en"><img src="@/assets/img/ig.png" style="margin:5px"></b-link>
               </b-col>
             </b-row>
           </b-col>
           <b-col md="3" offset-md="3">
-            <b-button variant="outline-primary" style="margin:5px;width:100px;">English</b-button>
+            <!-- <b-button variant="outline-primary" style="margin:5px;width:100px;">English</b-button> -->
             <b-button variant="outline-primary" style="margin:5px;width:100px;">USD</b-button>
           </b-col>
         </b-row>

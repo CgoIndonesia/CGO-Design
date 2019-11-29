@@ -28,7 +28,7 @@
                             </b-form-group>
                             <b-button type="reset" variant="primary"  @click="$bvModal.show('modal-2')">Submit</b-button>
                             </b-form>
-                            <b-modal id="modal-1" title="BootstrapVue" hide-header hide-footer>
+                            <b-modal id="modal-2" title="BootstrapVue" hide-header hide-footer>
                 <div class="text-center">
                   <h5>Thank You.. We will contact you soon!</h5>
                 <p class="my-4">Let’s bring Indonesia’s sea industry to the next level together</p>

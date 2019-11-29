@@ -66,7 +66,7 @@
               </div>
               <b-form class="mt-4">
                 <b-form-group label="Destination">
-                  <b-form-input id="input-1" type="text" required placeholder="Enter email"></b-form-input>
+                  <b-form-input id="input-1" type="text" required placeholder="Enter Destination"></b-form-input>
                 </b-form-group>
               </b-form>
               <b-form class="mb-4 justify-content-between form-price" inline>
@@ -93,7 +93,7 @@
         <b-col md="8">
           <div class="content-sailing">
             <!-- Empty Search Sailing -->
-            <div class="d-none empty-sailing container">
+            <div class="empty-sailing container" v-if="data_tour == null">
               <b-row>
                 <b-col md="12">
                   <div style="width: fit-content;" class="empty-content-sailing ml-auto mr-auto">
@@ -105,7 +105,7 @@
             </div>
 
             <!-- Result sailing Search -->
-            <div class="container-fluid">
+            <div class="container-fluid"  v-if="data_tour != null">
               <b-row>
                 <b-col md="6" class="mt-4 mb-2" v-for="(data,i) in data_tour" :key="i">
                   <b-card no-body>

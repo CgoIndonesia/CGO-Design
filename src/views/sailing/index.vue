@@ -31,7 +31,7 @@
                     style="background-color:#DFDFDF"
                   ></b-form-input>
                 </b-form-group>
-                <b-form-group id="input-group-1" label="Day" label-for="input-1">
+                <b-form-group id="input-group-1" label="Duration" label-for="input-1">
                   <b-form-input
                     v-model="$store.state.sailing.form.day"
                     id="input-2"
@@ -66,7 +66,7 @@
               </div>
               <b-form class="mt-4">
                 <b-form-group label="Destination">
-                  <b-form-input id="input-1" type="text" required placeholder="Enter email"></b-form-input>
+                  <b-form-input id="input-1" type="text" required placeholder="Enter Destination"></b-form-input>
                 </b-form-group>
               </b-form>
               <b-form class="mb-4 justify-content-between form-price" inline>
@@ -105,7 +105,7 @@
             </b-form-group>
 
             <!-- Empty Search Sailing -->
-            <div class="d-none empty-sailing container">
+            <div class="empty-sailing container"  v-if="data_tour == null">
               <b-row>
                 <b-col md="12">
                   <div style="width: fit-content;" class="empty-content-sailing ml-auto mr-auto">
@@ -116,7 +116,7 @@
               </b-row>
             </div>
             <!-- Result sailing Search -->
-            <div class="container-fluid">
+            <div class="container-fluid"  v-if="data_tour != null">
               <b-row>
                 <b-col md="6" class="mt-4 mb-2" v-for="(data,i) in data_sailing" :key="i">
                   <b-card no-body>
