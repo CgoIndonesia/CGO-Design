@@ -11,9 +11,9 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav style="padding:0 30px 0 0">
          <b-navbar-nav>
-          <b-nav-item href="/sailing/index" style="font-family: Mark-Bold !important;">Sailing</b-nav-item>
-          <b-nav-item href="/Tour/tour" style="font-family: Mark-Bold !important;">Tour</b-nav-item>
-          <b-nav-item href="/Transportation/transportation" style="font-family: Mark-Bold !important;">Transportation</b-nav-item>
+          <b-nav-item href="/sailing/index" ><a style="font-family: Mark-Bold !important;">Sailing</a></b-nav-item>
+          <b-nav-item href="/Tour/tour" style="font-family: Mark-Bold !important;"><a style="font-family: Mark-Bold !important;">Tour</a></b-nav-item>
+          <b-nav-item href="/Transportation/transportation" style="font-family: Mark-Bold !important;"><a style="font-family: Mark-Bold !important;">Transportation</a></b-nav-item>
         </b-navbar-nav>
         <!-- Right aligned nav items -->
 
@@ -38,7 +38,7 @@
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto pr-6">
           <b-nav-item v-if="loggedIn" v-b-modal.modal-prevent-closing style="font-family: Mark-Bold !important;">Logout</b-nav-item>
-          <b-nav-item v-if="!loggedIn" href="/Home/register">Register</b-nav-item>
+          <b-nav-item v-if="!loggedIn" href="/Home/register"><a style="font-family: Mark-Bold !important;">Register</a></b-nav-item>
 
           <b-dropdown v-if="!loggedIn" variant="link" toggle-class="text-decoration-none" no-caret>
             <template v-slot:button-content style="padding:0px">
@@ -97,7 +97,7 @@
               size="sm"
               variant="danger"
               style="border-radius:5px;width:150px;margin-top:3px; font-family: Mark-Bold !important;"
-              href="/Home/merchant"
+              href="/Merchant/merchant"
             >for merchant</b-button>
           </b-col>
         </b-navbar-nav>

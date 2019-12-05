@@ -70,6 +70,7 @@
                           <b-form-input
                             v-model="$store.state.sailing.form.guest"
                             id="input-2"
+                            min="1"
                             placeholder="Guest"
                             type="number"
                             style="background-color: #F7F7F7;
@@ -108,7 +109,8 @@
                       </b-col>
                       <b-col md="4">
                         <b-form-group id="input-group-2" label="Month" label-for="input-2">
-                          <date-picker v-model="timeTour" @change="bindingDateTour()" :disabled-date="notBeforeToday" placeholder="Select date" style="width: 140px; padding: 2px;" value-type="format" format="DD-MMM-YYYY"></date-picker>
+                          <date-picker v-model="monthTour" type="month" placeholder="Select month"></date-picker>
+                          <!-- <date-picker v-model="timeTour" @change="bindingDateTour()" :disabled-date="notBeforeToday" placeholder="Select date" style="width: 140px; padding: 2px;" value-type="format" format="DD-MMM-YYYY"></date-picker> -->
                         </b-form-group>
                       </b-col>
                       <!-- <b-col md="3">
@@ -545,7 +547,7 @@
               <div class="container-fluid news-cover">
                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                   <div class="carousel-inner row w-75 mx-auto">
-                    <div class="carousel-item col-md-6 active">
+                    <div class="carousel-item col-md-6 active" href="https://www.thejakartapost.com/travel/2019/09/26/online-reservation-platform-cgo-to-offer-yachts-boats-for-your-travel-needs.html">
                       <b-card img-src="https://img.jakpost.net/c/2019/01/19/2019_01_19_63436_1547869618._large.jpg" img-alt="Card image" img-left class="mb-3">
                         <b-card-text>
                          Online reservation platform cGo to offer yachts, boats for your travel needs.
@@ -632,7 +634,8 @@ export default {
       returnStatus: null,
       selected: null,
       duration: 1,
-       dateCheckIn: null,
+      monthTour: '',
+      dateCheckIn: null,
       dateCheckOut: null,
       checkOut: null,
       time1: new Date(Date.now()),
