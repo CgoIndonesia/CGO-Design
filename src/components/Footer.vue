@@ -15,11 +15,11 @@
               <b-modal id="modal-1" title="BootstrapVue" hide-header hide-footer>
                 <div class="text-center">
                   <h5>Thank you for your subscribe!</h5>
-                <p class="my-4">We will keep you updated with our latest news and promo</p>
-                <img src="@/assets/img/Icon for web app-18 1.png" alt="">
-                <div>
-                  <b-button variant="outline-primary" @click="$bvModal.hide('modal-1')">Close</b-button>
-                </div>
+                  <p class="my-4">We will keep you updated with our latest news and promo</p>
+                  <img src="@/assets/img/Icon for web app-18 1.png" alt />
+                  <div>
+                    <b-button variant="outline-primary" @click="$bvModal.hide('modal-1')">Close</b-button>
+                  </div>
                 </div>
               </b-modal>
             </b-col>
@@ -51,36 +51,38 @@
           <b-col md="2">
             <b-row>
               <b-col>
-               <p style="font-weight:bold;color:#233E98;">Connect with Us</p>
+                <p style="font-weight:bold;color:#233E98;">Connect with Us</p>
               </b-col>
             </b-row>
             <b-row>
               <b-col style="text-align:left;">
                 <!-- <b-link href="www.facebook.com"><img src="@/assets/img/fb.png" style="margin:5px"></b-link> -->
                 <!-- <b-link href="www.twitter.com"><img src="@/assets/img/tw.png" style="margin:5px"></b-link> -->
-                <b-link href="https://www.instagram.com/cgoindonesia/?hl=en"><img src="@/assets/img/ig.png" style="margin:5px"></b-link>
+                <b-link href="https://www.instagram.com/cgoindonesia/?hl=en">
+                  <img src="@/assets/img/ig.png" style="margin:5px" />
+                </b-link>
               </b-col>
             </b-row>
           </b-col>
           <b-col md="3" offset-md="3">
             <!-- <b-button variant="outline-primary" style="margin:5px;width:100px;">English</b-button> -->
-<<<<<<< HEAD
             <!-- <b-button variant="outline-primary" style="margin:5px;width:100px;">USD</b-button> -->
-=======
-            <b-button variant="outline-primary" style="margin:5px;width:100px;">USD</b-button>
->>>>>>> 1fa24b7ff575a875ad8786cf23e1475d61d697b3
           </b-col>
         </b-row>
         <b-row>
           <b-col md="2" style="margin-top:33px;">
-            <p style="color: rgb(35, 62, 152);
+            <p
+              style="color: rgb(35, 62, 152);
               font-family: NunitoSans-Regular;
-              font-size: 13px;">PT DTech Solusi Bisnis</p>
+              font-size: 13px;"
+            >PT DTech Solusi Bisnis</p>
           </b-col>
           <b-col md="6" style="margin-top:33px;">
-            <p style="color: rgb(35, 62, 152);
+            <p
+              style="color: rgb(35, 62, 152);
               font-family: NunitoSans-Regular;
-              font-size: 13px;">&copy;2019 cGo. All rights reserved</p>
+              font-size: 13px;"
+            >&copy;2019 cGo. All rights reserved</p>
           </b-col>
         </b-row>
       </b-container>
@@ -93,7 +95,7 @@ template {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 .footer-bottom {
-  background-color: #F7F7F7;
+  background-color: #f7f7f7;
   padding: 30px;
 }
 </style>
