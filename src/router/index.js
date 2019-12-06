@@ -22,6 +22,7 @@ import Transportation from '../views/Transportation/transportation.vue'
 import Merchant from '../views/Home/Merchant.vue'
 import Services from '../views/Home/Services.vue'
 import AboutUs from '../views/Home/AboutUs.vue'
+import Profile from '../views/Profile/Profile.vue'
 
 
 Vue.use(VueRouter)
@@ -128,6 +129,12 @@ const routes = [
     path: '/home/aboutus',
     name: 'AboutUs',
     component: AboutUs
+  },
+  //profile 
+  {
+    path: '/profile',
+    name: 'profile',
+    component: Profile
   }
 ]
 

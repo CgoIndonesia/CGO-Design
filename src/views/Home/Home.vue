@@ -17,7 +17,8 @@
               <b-tabs card pills vertical id="tab-find">
                 <b-tab active style>
                   <template v-slot:title>
-                    <img src="@/assets/img/Group 426.png" alt=""> <strong>Sailing</strong>
+                    <img src="@/assets/img/Group 426.png" alt />
+                    <strong>Sailing</strong>
                   </template>
                   <b-form @submit.stop.prevent="onSubmitSailing">
                     <b-row style="text-align:left; padding: 0px 20px; padding-top: 15px;">
@@ -45,24 +46,39 @@
                               border: transparent;
                               font-family: NunitoSans-Regular;
                               font-size: 14px;" 
-                          ></b-form-input> -->
+                          ></b-form-input>-->
                           <!-- <datepicker @selected="bindingDate" v-model="state.date" format="dd MMM yyyy" :disabled-dates="state.disabledDates"></datepicker> -->
-                          <date-picker v-model="time1" @change="bindingDate()" :disabled-date="notBeforeToday" placeholder="Select date" style="width: 140px; padding: 2px;" value-type="format" format="DD-MMM-YYYY"></date-picker>
+                          <date-picker
+                            v-model="time1"
+                            @change="bindingDate()"
+                            :disabled-date="notBeforeToday"
+                            placeholder="Select date"
+                            style="width: 140px; padding: 2px;"
+                            value-type="format"
+                            format="DD-MMM-YYYY"
+                          ></date-picker>
                         </b-form-group>
                       </b-col>
                       <b-col md="3">
                         <b-form-group id="input-group-2" label="Duration" label-for="input-2">
-                          <select class="form-control" @change="changeCheckOut()" id="divisions_list" name="division" v-model="duration">
-                            <option v-for="days in day" :value="days.value">
-                                {{days.name}}
-                            </option>
+                          <select
+                            class="form-control"
+                            @change="changeCheckOut()"
+                            id="divisions_list"
+                            name="division"
+                            v-model="duration"
+                          >
+                            <option
+                              v-for="(days,i) in day"
+                              :value="days.value"
+                              :key="i"
+                            >{{days.name}}</option>
                           </select>
                         </b-form-group>
                       </b-col>
                       <b-col md="3">
                         <b-form-group id="input-group-2" label="Check Out" label-for="input-2">
-                          <p
-                          >{{checkOut}}</p>
+                          <p>{{checkOut}}</p>
                         </b-form-group>
                       </b-col>
                     </b-row>
@@ -95,7 +111,8 @@
                 </b-tab>
                 <b-tab>
                   <template v-slot:title>
-                    <img src="@/assets/img/Group 427.png" alt=""> <strong>Tour</strong>
+                    <img src="@/assets/img/Group 427.png" alt />
+                    <strong>Tour</strong>
                   </template>
                   <b-form @submit.stop.prevent="onSubmitTour">
                     <b-row style="text-align:left;padding:20px">
@@ -140,7 +157,7 @@
                             min="1"
                           ></b-form-input>
                         </b-form-group>
-                      </b-col> -->
+                      </b-col>-->
                       <b-col md="4">
                         <b-form-group id="input-group-2" label="Guest" label-for="input-2">
                           <b-form-input
@@ -154,7 +171,6 @@
                                 font-family: NunitoSans-Regular;
                                 font-size: 14px;"
                           ></b-form-input>
-                          
                         </b-form-group>
                       </b-col>
                     </b-row>
@@ -174,7 +190,8 @@
                 </b-tab>
                 <b-tab>
                   <template v-slot:title>
-                    <img src="@/assets/img/camper-van.png" alt=""> <strong>Transportation</strong>
+                    <img src="@/assets/img/camper-van.png" alt />
+                    <strong>Transportation</strong>
                   </template>
                   <b-form>
                     <b-row style="text-align:left;padding: 0 20px; padding-top: 15px;">
@@ -230,16 +247,15 @@
                       </b-col>
                       <b-col md="4">
                         <b-form-group id="input-group-2">
-                             <b-form-checkbox
+                          <b-form-checkbox
                             name="checkbox-1"
                             v-model="returnStatus"
                             v-value="1"
                             v-unchecked-value="null"
                             class="mb-1"
-                          > Return
-                          </b-form-checkbox>
+                          >Return</b-form-checkbox>
                           <b-form-input
-                          v-if="returnStatus == 1"
+                            v-if="returnStatus == 1"
                             id="input-2"
                             placeholder="Dates"
                             style="background-color: #F7F7F7;
@@ -332,31 +348,39 @@
     <div class="popular-destination">
       <b-row align-h="center">
         <b-col>
-          <p style="font-size:22px;font-weight:bold; font-family:Mark-Bold; color: #292727;">Popular Destination</p>
+          <p
+            style="font-size:22px;font-weight:bold; font-family:Mark-Bold; color: #292727;"
+          >Popular Destination</p>
         </b-col>
       </b-row>
       <b-row align-h="center" style="margin-bottom:20px">
         <b-col>
-          <p style="font-size:15px; font-family: NunitoSans-Regular; margin-bottom: 1.7rem;">Enchanting natural beauty of Indonesia is an appealing reason to go on a sea trip.</p>
+          <p
+            style="font-size:15px; font-family: NunitoSans-Regular; margin-bottom: 1.7rem;"
+          >Enchanting natural beauty of Indonesia is an appealing reason to go on a sea trip.</p>
         </b-col>
       </b-row>
       <b-row align-h="center">
         <div class="container">
           <b-row>
-            <b-col md="3" style="margin-bottom:20px">
+            <b-col v-for="(e,i) in hotDestination" :key="i" md="3" style="margin-bottom:20px">
               <div class="card-p-destination">
                 <div class="card-p-destination-gradient">
-                  <p style="color:#ffffff; font-family: Mark-Bold;
-                  font-size: 20px;">Bali</p>
+                  <p
+                    style="color:#ffffff; font-family: Mark-Bold;
+                  font-size: 20px;"
+                  >{{ e.name }}, {{e.province_name}}</p>
                 </div>
-                <img src="@/assets/bali.png" style="witdth:260.75px;height:232.88px;" />
+                <img :src="e.image" width="260.75px" height="232.88px" />
               </div>
             </b-col>
             <b-col md="3" style="margin-bottom:20px">
               <div class="card-p-destination">
                 <div class="card-p-destination-gradient">
-                  <p style="color:#ffffff; font-family: Mark-Bold;
-                  font-size: 20px;">Lombok</p>
+                  <p
+                    style="color:#ffffff; font-family: Mark-Bold;
+                  font-size: 20px;"
+                  >Lombok</p>
                 </div>
                 <img src="@/assets/lombok.png" style="witdth:260.75px;height:232.88px;" />
               </div>
@@ -364,8 +388,10 @@
             <b-col md="3" style="margin-bottom:20px">
               <div class="card-p-destination">
                 <div class="card-p-destination-gradient">
-                  <p style="color:#ffffff; font-family: Mark-Bold;
-                  font-size: 20px;">Labuan Bajo</p>
+                  <p
+                    style="color:#ffffff; font-family: Mark-Bold;
+                  font-size: 20px;"
+                  >Labuan Bajo</p>
                 </div>
                 <img src="@/assets/labuan-bajo.png" style="witdth:260.75px;height:232.88px;" />
               </div>
@@ -373,8 +399,10 @@
             <b-col md="3" style="margin-bottom:20px">
               <div class="card-p-destination">
                 <div class="card-p-destination-gradient">
-                  <p style="color:#ffffff; font-family: Mark-Bold;
-                   font-size: 20px;">Pulau Pari, Kep. Seribu</p>
+                  <p
+                    style="color:#ffffff; font-family: Mark-Bold;
+                   font-size: 20px;"
+                  >Pulau Pari, Kep. Seribu</p>
                 </div>
                 <img src="@/assets/pulau-pari.png" style="witdth:260.75px;height:232.88px;" />
               </div>
@@ -382,8 +410,10 @@
             <b-col md="3" style="margin-bottom:20px">
               <div class="card-p-destination">
                 <div class="card-p-destination-gradient">
-                  <p style="color:#ffffff; font-family: Mark-Bold;
-                   font-size: 20px;">Pulau Tidung, Kep. Seribu</p>
+                  <p
+                    style="color:#ffffff; font-family: Mark-Bold;
+                   font-size: 20px;"
+                  >Pulau Tidung, Kep. Seribu</p>
                 </div>
                 <img src="@/assets/pulau-tidung.png" style="witdth:260.75px;height:232.88px;" />
               </div>
@@ -391,8 +421,10 @@
             <b-col md="3" style="margin-bottom:20px">
               <div class="card-p-destination">
                 <div class="card-p-destination-gradient">
-                  <p style="color:#ffffff; font-family: Mark-Bold;
-                  font-size: 20px;">Pulau Kelor, Kep. Seribu</p>
+                  <p
+                    style="color:#ffffff; font-family: Mark-Bold;
+                  font-size: 20px;"
+                  >Pulau Kelor, Kep. Seribu</p>
                 </div>
                 <img src="@/assets/pulau kelor.png" style="witdth:260.75px;height:232.88px;" />
               </div>
@@ -400,8 +432,10 @@
             <b-col md="3" style="margin-bottom:20px">
               <div class="card-p-destination">
                 <div class="card-p-destination-gradient">
-                  <p style="color:#ffffff; font-family: Mark-Bold;
-                  font-size: 20px;">Pulau Onrust, Kep. Seribu</p>
+                  <p
+                    style="color:#ffffff; font-family: Mark-Bold;
+                  font-size: 20px;"
+                  >Pulau Onrust, Kep. Seribu</p>
                 </div>
                 <img src="@/assets/pulau-onrush.png" style="witdth:260.75px;height:232.88px;" />
               </div>
@@ -409,8 +443,10 @@
             <b-col md="3" style="margin-bottom:20px">
               <div class="card-p-destination">
                 <div class="card-p-destination-gradient">
-                  <p style="color:#ffffff; font-family: Mark-Bold;
-                  font-size: 20px;">Ujung Kulon</p>
+                  <p
+                    style="color:#ffffff; font-family: Mark-Bold;
+                  font-size: 20px;"
+                  >Ujung Kulon</p>
                 </div>
                 <img src="@/assets/ujung-kulon.png" style="witdth:260.75px;height:232.88px;" />
               </div>
@@ -418,12 +454,12 @@
           </b-row>
         </div>
       </b-row>
-      <b-row align-h="center">
+      <!-- <b-row align-h="center">
         <b-col>
           <b-button variant="outline-primary" style="font-family: NunitoSans-Regular;
     width: 9rem;">See All</b-button>
         </b-col>
-      </b-row>
+      </b-row>-->
       <!-- Spesial Promos -->
       <b-row align-h="center" style="margin-top:50px">
         <b-col>
@@ -432,8 +468,10 @@
       </b-row>
       <b-row align-h="center">
         <b-col>
-          <p style="font-size: 13px;
-          font-family: NunitoSans-Regular;">Enjoy variety of exclusive offers</p>
+          <p
+            style="font-size: 13px;
+          font-family: NunitoSans-Regular;"
+          >Enjoy variety of exclusive offers</p>
         </b-col>
       </b-row>
       <div class="container">
@@ -450,7 +488,11 @@
                     >Get discount for your first book</p>
                   </div>
                 </b-col>
-                <img src="@/assets/img/Frame.png" alt style="position:absolute;margin:14% 0px 0px 8%;" />
+                <img
+                  src="@/assets/img/Frame.png"
+                  alt
+                  style="position:absolute;margin:14% 0px 0px 8%;"
+                />
               </b-row>
               <b-row>
                 <b-col>
@@ -462,14 +504,17 @@
           <b-col md="4">
             <div class="promos">
               <b-row>
-                <b-col md="2">
-                </b-col>
+                <b-col md="2"></b-col>
                 <b-col md="10" align-self="end">
                   <div class="component-promos">
                     <p style="font-weight: bold;font-size: 20px;color: #292727;">Invite Your Friends</p>
                   </div>
                 </b-col>
-                 <img src="@/assets/img/Group 596.png" alt style="position:absolute;margin:14% 0px 0px 8%;" />
+                <img
+                  src="@/assets/img/Group 596.png"
+                  alt
+                  style="position:absolute;margin:14% 0px 0px 8%;"
+                />
               </b-row>
               <b-row>
                 <b-col>
@@ -486,7 +531,9 @@
     <div class="content-above">
       <b-row align-h="center">
         <b-col>
-          <p style="font-size:22px;font-family: Mark-Bold;color: #292727;">Never been on board before?</p>
+          <p
+            style="font-size:22px;font-family: Mark-Bold;color: #292727;"
+          >Never been on board before?</p>
         </b-col>
       </b-row>
       <b-row align-h="center">
@@ -566,46 +613,71 @@
                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                   <div class="carousel-inner row w-75 mx-auto">
                     <div class="carousel-item col-md-6 active">
-                      <b-card img-src="https://img.jakpost.net/c/2019/01/19/2019_01_19_63436_1547869618._large.jpg" img-alt="Card image" img-left class="mb-3">
-                        <b-card-text>
-                         Online reservation platform cGo to offer yachts, boats for your travel needs.
-                        </b-card-text>
+                      <b-card
+                        img-src="https://img.jakpost.net/c/2019/01/19/2019_01_19_63436_1547869618._large.jpg"
+                        img-alt="Card image"
+                        img-left
+                        class="mb-3"
+                      >
+                        <b-card-text>Online reservation platform cGo to offer yachts, boats for your travel needs.</b-card-text>
                       </b-card>
                     </div>
                     <div class="carousel-item col-md-6">
-                      <b-card img-src="https://www.thefolio.co.id/wp-content/uploads/2019/09/Team-cGO-_-Partners.jpg" img-alt="Card image" img-left class="mb-3">
-                        <b-card-text>
-                          cGo: The Platform for Marine Tourism Officially Launched.
-                        </b-card-text>
+                      <b-card
+                        img-src="https://www.thefolio.co.id/wp-content/uploads/2019/09/Team-cGO-_-Partners.jpg"
+                        img-alt="Card image"
+                        img-left
+                        class="mb-3"
+                      >
+                        <b-card-text>cGo: The Platform for Marine Tourism Officially Launched.</b-card-text>
                       </b-card>
                     </div>
                     <div class="carousel-item col-md-6">
-                      <b-card img-src="https://whatsnewindonesia.com/wp-content/uploads/2019/09/Jajaran_Kepemilikan_cGO.jpg" img-alt="Card image" img-left class="mb-3">
-                        <b-card-text>
-                         INTRODUCING CGO : A NEW AVENUE TO EXPLORE THE INDONESIA ARCHIPELAGO.
-                        </b-card-text>
+                      <b-card
+                        img-src="https://whatsnewindonesia.com/wp-content/uploads/2019/09/Jajaran_Kepemilikan_cGO.jpg"
+                        img-alt="Card image"
+                        img-left
+                        class="mb-3"
+                      >
+                        <b-card-text>INTRODUCING CGO : A NEW AVENUE TO EXPLORE THE INDONESIA ARCHIPELAGO.</b-card-text>
                       </b-card>
                     </div>
                     <div class="carousel-item col-md-6">
-                      <b-card img-src="https://www.gadis.co.id/gadis/new-img/images/cGO%2C%20Solusi%20Tepat%20untuk%20Eksplorasi%20Wisata%20Bahari%20Indonesia%20-%20Artikel%201.JPG" img-alt="Card image" img-left class="mb-3">
-                        <b-card-text>
-                          cGO, Solusi Tepat untuk Eksplorasi Wisata Bahari Indonesia.
-                        </b-card-text>
+                      <b-card
+                        img-src="https://www.gadis.co.id/gadis/new-img/images/cGO%2C%20Solusi%20Tepat%20untuk%20Eksplorasi%20Wisata%20Bahari%20Indonesia%20-%20Artikel%201.JPG"
+                        img-alt="Card image"
+                        img-left
+                        class="mb-3"
+                      >
+                        <b-card-text>cGO, Solusi Tepat untuk Eksplorasi Wisata Bahari Indonesia.</b-card-text>
                       </b-card>
                     </div>
                     <div class="carousel-item col-md-6">
-                      <b-card img-src="http://samudranesia.id/wp-content/uploads/2019/09/birds-eye-view-2133661_960_720.jpg" img-alt="Card image" img-left class="mb-3">
-                        <b-card-text>
-                         Media Launch cGO, Aplikasi Sewa Kapal Pesiar Indonesia.
-                        </b-card-text>
+                      <b-card
+                        img-src="http://samudranesia.id/wp-content/uploads/2019/09/birds-eye-view-2133661_960_720.jpg"
+                        img-alt="Card image"
+                        img-left
+                        class="mb-3"
+                      >
+                        <b-card-text>Media Launch cGO, Aplikasi Sewa Kapal Pesiar Indonesia.</b-card-text>
                       </b-card>
                     </div>
                   </div>
-                  <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                  <a
+                    class="carousel-control-prev"
+                    href="#myCarousel"
+                    role="button"
+                    data-slide="prev"
+                  >
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
                   </a>
-                  <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                  <a
+                    class="carousel-control-next"
+                    href="#myCarousel"
+                    role="button"
+                    data-slide="next"
+                  >
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                   </a>
@@ -625,9 +697,9 @@
 // @ is an alias to /src
 import Footer from "@/components/Footer.vue";
 import Header from "@/components/Header.vue";
-import DatePicker from 'vue2-datepicker';
-import 'vue2-datepicker/index.css';
-import moment from 'moment'
+import DatePicker from "vue2-datepicker";
+import "vue2-datepicker/index.css";
+import moment from "moment";
 
 const today = new Date();
 today.setHours(0, 0, 0, 0);
@@ -636,51 +708,52 @@ export default {
   name: "home",
   data() {
     return {
+      hotDestination: [],
       day: [
-        {name: 1, value: 1},
-        {name: 2, value: 2},
-        {name: 3, value: 3},
-        {name: 4, value: 4},
-        {name: 5, value: 5},
-        {name: 6, value: 6}
-        ],
+        { name: 1, value: 1 },
+        { name: 2, value: 2 },
+        { name: 3, value: 3 },
+        { name: 4, value: 4 },
+        { name: 5, value: 5 },
+        { name: 6, value: 6 }
+      ],
       returnStatus: null,
       selected: null,
       duration: 1,
       checkOut: null,
-      time1: new Date(Date.now()),
+      time1: new Date(Date.now())
     };
   },
   components: {
     Footer,
-    Header, 
+    Header,
     DatePicker
   },
   mounted() {
     $(document).ready(function() {
-  $("#myCarousel").on("slide.bs.carousel", function(e) {
-    var $e = $(e.relatedTarget);
-    var idx = $e.index();
-    var itemsPerSlide = 4;
-    var totalItems = $(".carousel-item").length;
+      $("#myCarousel").on("slide.bs.carousel", function(e) {
+        var $e = $(e.relatedTarget);
+        var idx = $e.index();
+        var itemsPerSlide = 4;
+        var totalItems = $(".carousel-item").length;
 
-    if (idx >= totalItems - (itemsPerSlide - 1)) {
-      var it = itemsPerSlide - (totalItems - idx);
-      for (var i = 0; i < it; i++) {
-        // append slides to end
-        if (e.direction == "left") {
-          $(".carousel-item")
-            .eq(i)
-            .appendTo(".carousel-inner");
-        } else {
-          $(".carousel-item")
-            .eq(0)
-            .appendTo($(this).find(".carousel-inner"));
+        if (idx >= totalItems - (itemsPerSlide - 1)) {
+          var it = itemsPerSlide - (totalItems - idx);
+          for (var i = 0; i < it; i++) {
+            // append slides to end
+            if (e.direction == "left") {
+              $(".carousel-item")
+                .eq(i)
+                .appendTo(".carousel-inner");
+            } else {
+              $(".carousel-item")
+                .eq(0)
+                .appendTo($(this).find(".carousel-inner"));
+            }
+          }
         }
-      }
-    }
-  });
-});
+      });
+    });
   },
   methods: {
     search(data) {},
@@ -690,22 +763,33 @@ export default {
     onSubmitTour() {
       this.$router.push({ name: "Tour" });
     },
-    changeCheckOut(){
+    changeCheckOut() {
       var days = this.duration;
-      this.checkOut = new Date(new Date(this.time1).setDate(new Date(this.time1).getDate() + days));
-      this.checkOut =  moment(String(this.checkOut)).format('DD-MMM-YYYY')
+      this.checkOut = new Date(
+        new Date(this.time1).setDate(new Date(this.time1).getDate() + days)
+      );
+      this.checkOut = moment(String(this.checkOut)).format("DD-MMM-YYYY");
     },
     notBeforeToday(date) {
       return date < today;
     },
-    bindingDate(){
+    bindingDate() {
       var days = this.duration;
-      this.checkOut = new Date(new Date(this.time1).setDate(new Date(this.time1).getDate() + days));
-      this.checkOut =  moment(String(this.checkOut)).format('DD-MMM-YYYY')
-      console.log(result)
+      this.checkOut = new Date(
+        new Date(this.time1).setDate(new Date(this.time1).getDate() + days)
+      );
+      this.checkOut = moment(String(this.checkOut)).format("DD-MMM-YYYY");
+      console.log(result);
+    },
+    getHotDestination() {
+      this.$store.dispatch("hotDestination").then(Response => {
+        console.log("Response.data.data", Response.data.data);
+        this.hotDestination = Response.data.data;
+      });
     }
   },
   created() {
+    this.getHotDestination();
     this.search(null);
   }
 };
