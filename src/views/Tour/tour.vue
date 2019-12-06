@@ -7,91 +7,55 @@
         <b-col md="4">
           <div class="content-aside-sailing">
             <b-card
-              title="Tour"
-              img-top
-              tag="article"
               style="max-width: 18rem; font-family: Mark-Bold;"
               class="mb-2"
             >
+              <div class="d-flex justify-content-between">
+                <h4>Filter</h4>
+                <a style="color:red;" href @click.prevent="resetFilter">Reset Filter</a>
+              </div>
+
               <b-form class="mt-4">
                 <b-form-group id="input-group-1" label="Destination" label-for="input-1">
-                  <b-form-input
-                    id="input-1"
-                    v-model="$store.state.tour.form.destination"
-                    type="text"
-                    required
-                    placeholder="Enter Destination"
-                  ></b-form-input>
+                  <select class="form-control form-control-primary" v-model="tour.search.destination">
+                    <option value="">(Select Destination)</option>
+                    <option v-for="destiny in destination" :value="destiny.name">
+                      {{destiny.name}}
+                    </option>
+                  </select>
                 </b-form-group>
-                <b-form-group id="input-group-1" label="Month" label-for="input-1">
-                  <b-form-input
-                    id="input-1"
-                    v-model="$store.state.tour.form.date"
-                    type="date"
-                    required
-                  ></b-form-input>
-                </b-form-group>
-                <b-form-group id="input-group-1" label="Days" label-for="input-1">
-                  <b-form-input
-                    id="input-1"
-                    v-model="$store.state.tour.form.day"
-                    type="number"
-                    required
-                    placeholder="Guest total here"
-                  ></b-form-input>
+                <b-form-group id="input-group-1" label="Date" label-for="input-1">
+                  <date-picker v-model="tour.search.date" class="form-control-primary" type="date" format="YYYY-MM-DD" value-type="format" placeholder="SelectDate"></date-picker>
                 </b-form-group>
                 <b-form-group id="input-group-1" label="Guest" label-for="input-1">
                   <b-form-input
                     id="input-1"
-                    v-model="$store.state.tour.form.guest"
+                    v-model="tour.search.guest"
                     type="number"
+                    class="form-control-primary"
                     required
                     placeholder="Guest total here"
                   ></b-form-input>
                 </b-form-group>
+<!--                <b-form-group label="Sort by">-->
+<!--                  <Select2 v-model="selected" :options="options"/>-->
+<!--                </b-form-group>-->
               </b-form>
 
               <b-button
-                @click.prevent="search(null)"
+                @click.prevent="getListTour(1, true)"
                 class="mt-3 w-100"
                 href="#"
                 variant="primary"
               >Search</b-button>
             </b-card>
-
-            <b-card img-top tag="article" style="max-width: 18rem;" class="mt-5 mb-2">
-              <div class="d-flex justify-content-between">
-                <h4>Filter</h4>
-                <a style="color:red;" href>Reset Filter</a>
-              </div>
-              <b-form class="mt-4">
-                <b-form-group label="Destination">
-                  <b-form-input id="input-1" type="text" required placeholder="Enter Destination"></b-form-input>
-                </b-form-group>
-              </b-form>
-              <b-form class="mb-4 justify-content-between form-price" inline>
-                <b-input
-                  id="inline-form-input-name"
-                  class="w-35 mb-2 mr-sm-2 mb-sm-0"
-                  placeholder="Rp. 500.000"
-                ></b-input>
-
-                <b-input-group class="w-35 mb-2 mr-sm-2 mb-sm-0">
-                  <b-input id="inline-form-input-username" placeholder="Rp. 800.000"></b-input>
-                </b-input-group>
-              </b-form>
-              <div class="col-sm-12">
-                <div id="slider-range"></div>
-              </div>
-
-              <b-form-group label="Sort by">
-                <b-form-select v-model="selected" :options="options"></b-form-select>
-              </b-form-group>
-            </b-card>
           </div>
         </b-col>
         <b-col md="8">
-          <div class="content-sailing">
+          <div class="content-sailing pt-5">
+            <h2 style="font-family: Mark-Bold;">
+              Tour
+            </h2>
             <!-- Empty Search Sailing -->
             <div class="d-none empty-sailing container">
               <b-row>
@@ -106,7 +70,7 @@
 
             <!-- Result sailing Search -->
             <div class="container-fluid">
-              <b-row>
+              <b-row v-if="!tour.loading">
                 <b-col md="6" class="mt-4 mb-2" v-for="(data,i) in tour.data" :key="i">
                   <b-card no-body>
                     <div>
@@ -164,8 +128,11 @@
                   </b-card>
                 </b-col>
               </b-row>
-              <div style="margin-top: 9rem;">
-                <h5 class="text-center">Yay, you have seen it all!</h5>
+              <div style="margin-top: 9rem;" v-if="tour.data.length == 0 && !tour.loading">
+                <h5 class="text-center">No Data</h5>
+              </div>
+              <div class="text-center" v-if="tour.loading">
+                <font-awesome-icon icon="spinner" spin size="3x"></font-awesome-icon>
               </div>
             </div>
           </div>
@@ -1121,10 +1088,11 @@
     import Header from "@/components/Header.vue";
     import Footer from "@/components/Footer.vue";
     import axios from '@/plugins/axiosAuth'
+    import DatePicker from 'vue2-datepicker';
 
     export default {
         name: "Tour",
-        components: { Footer, Header },
+        components: { Footer, Header, DatePicker },
         data() {
             return {
                 noImage:
@@ -1134,28 +1102,26 @@
                 lastPayment: null,
 
                 tour: {
+                    loading: false,
                     search: {
                         type: 'tour',
                         date: null,
                         days: null,
                         destination: null,
                         page: 1,
-                        guest: 3,
+                        guest: 1,
                         sort: ["date desc"]
                     },
                     data: [],
                     paging: {}
                 },
-
-                dataSearch: {
-                    type: "tour"
-                },
+                destination: [],
                 data_tour: null,
                 detailBody: null,
                 options: [
-                    { value: null, text: "Recommended by cGO" },
-                    { value: "a", text: "This is First option" },
-                    { value: "b", text: "Selected Option" }
+                    { id: null, text: "Recommended by cGO" },
+                    { id: "a", text: "This is First option" },
+                    { id: "b", text: "Selected Option" }
                 ],
                 type: [
                     { value: null, text: "Catamaran" },
@@ -1189,8 +1155,16 @@
                 page = page || 1;
 
                 self.tour.search.page = page;
+                self.tour.search.guest = parseInt(self.tour.search.guest);
+                self.tour.loading = true;
 
-                axios.post('/api/v1/UserApps/search',self.tour.search)
+                let searchQ = self.tour.search;
+
+                searchQ.date = MOMENT.parseZone(self.tour.search.date)
+                    .utc()
+                    .format();
+
+                axios.post('/api/v1/UserApps/search',searchQ)
                     .then(response =>
                     {
                         let res = response.data;
@@ -1202,7 +1176,30 @@
                         });
 
                         self.tour.data = res.data;
-                    })
+
+                        self.tour.loading = false;
+                    }).catch(()=>
+                {
+                    self.tour.loading = false;
+
+                })
+            },
+
+            resetFilter()
+            {
+                this.tour.search = {
+                    type: 'tour',
+                    date: null,
+                    days: null,
+                    destination: null,
+                    page: 1,
+                    guest: 1,
+                    sort: ["date desc"]
+                };
+
+                this.$router.push({ name: "Tour" });
+
+                this.getListTour()
             },
 
             goto(to, data) {
@@ -1315,7 +1312,25 @@
                 return JSON.parse(this.$store.state.profile);
             }
         },
-        created() {
+        created()
+        {
+            axios.get('/api/v1/UserApps/Master/Harbor/')
+                .then(response =>
+                {
+                    let res = response.data;
+
+                    res.data.forEach(item => {
+                        item.id = item.name;
+                        item.text = item.name;
+                    });
+
+                    this.destination = res.data
+                });
+
+            this.tour.search.date = this.$route.query.date ? MOMENT(this.$route.query.date,'YYYY-MM-DD').format('YYYY-MM-DD') : null;
+            this.tour.search.destination = this.$route.query.destination ? this.$route.query.destination : null;
+            this.tour.search.guest = this.$route.query.guest ? this.$route.query.guest : null;
+
             this.getListTour();
         }
         //   mounted() {

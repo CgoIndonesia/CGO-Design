@@ -27,7 +27,7 @@
                             <option disabled selected> Select Destination
                             </option>
                             <option v-for="destiny in destination" :value="destiny.name">
-                                {{destiny.name}}
+                              {{destiny.name}}
                             </option>
                           </select>
                         </b-form-group>
@@ -42,7 +42,7 @@
                             style="background-color: #F7F7F7;
                               border: transparent;
                               font-family: NunitoSans-Regular;
-                              font-size: 14px;" 
+                              font-size: 14px;"
                           ></b-form-input> -->
                           <!-- <datepicker @selected="bindingDate" v-model="state.date" format="dd MMM yyyy" :disabled-dates="state.disabledDates"></datepicker> -->
                           <date-picker v-model="time1" @change="bindingDate()" :disabled-date="notBeforeToday" placeholder="Select date" style="width: 140px; padding: 2px;" value-type="format" format="DD-MMM-YYYY"></date-picker>
@@ -52,7 +52,7 @@
                         <b-form-group id="input-group-2" label="Duration" label-for="input-2">
                           <select class="form-control" @change="changeCheckOut()" id="divisions_list" name="division" v-model="duration">
                             <option v-for="days in day" :value="days.value">
-                                {{days.name}}
+                              {{days.name}}
                             </option>
                           </select>
                         </b-form-group>
@@ -92,42 +92,27 @@
                     </b-row>
                   </b-form>
                 </b-tab>
-                <b-tab>
+                <b-tab >
                   <template v-slot:title>
                     <img src="@/assets/img/Group 427.png" alt=""> <strong>Tour</strong>
                   </template>
                   <b-form @submit.stop.prevent="onSubmitTour">
                     <b-row style="text-align:left;padding:20px">
                       <b-col md="4">
-                        <b-form-group id="input-group-2" label="Destination" label-for="input-2">
-                           <select class="form-control" @change="changeCheckOut()" id="divisions_list" name="division" v-model="selectedDestinyTour">
+                        <b-form-group label="Destination">
+                          <select class="form-control form-control-primary" v-model="search.tour.destination">
+                            <option value="">(Select Destination)</option>
                             <option v-for="destiny in destination" :value="destiny.name">
-                                {{destiny.name}}
+                              {{destiny.name}}
                             </option>
                           </select>
                         </b-form-group>
                       </b-col>
                       <b-col md="4">
-                        <b-form-group id="input-group-2" label="Month" label-for="input-2">
-                          <date-picker v-model="monthTour" type="month" placeholder="Select month"></date-picker>
-                          <!-- <date-picker v-model="timeTour" @change="bindingDateTour()" :disabled-date="notBeforeToday" placeholder="Select date" style="width: 140px; padding: 2px;" value-type="format" format="DD-MMM-YYYY"></date-picker> -->
+                        <b-form-group id="input-group-2" label="Date" label-for="input-2">
+                          <date-picker v-model="search.tour.date" class="form-control-primary" type="date" format="DD-MMM-YYYY" placeholder="Select Date"></date-picker>
                         </b-form-group>
                       </b-col>
-                      <!-- <b-col md="3">
-                        <b-form-group id="input-group-2" label="Day" label-for="input-2">
-                          <b-form-input
-                            v-model="$store.state.tour.form.day"
-                            id="input-2"
-                            placeholder="2 day"
-                            type="number"
-                            style="background-color: #F7F7F7;
-                                border: transparent;
-                                font-family: NunitoSans-Regular;
-                                font-size: 14px;"
-                            min="1"
-                          ></b-form-input>
-                        </b-form-group>
-                      </b-col> -->
                       <b-col md="4">
                         <b-form-group id="input-group-2" label="Guest" label-for="input-2">
                           <b-form-input
@@ -135,13 +120,9 @@
                             placeholder="Guest"
                             type="number"
                             min="1"
-                            v-model="$store.state.tour.form.guest"
-                            style="background-color: #F7F7F7;
-                                border: transparent;
-                                font-family: NunitoSans-Regular;
-                                font-size: 14px;"
+                            v-model="search.tour.guest"
+                            class="form-control-primary"
                           ></b-form-input>
-                          
                         </b-form-group>
                       </b-col>
                     </b-row>
@@ -169,16 +150,16 @@
                         <b-form-group id="input-group-2" label="From" label-for="input-2">
                           <select class="form-control" @change="changeCheckOut()" id="divisions_list" name="division" v-model="duration">
                             <option v-for="destiny in destination" :value="destiny.name">
-                                {{destiny.name}}
+                              {{destiny.name}}
                             </option>
                           </select>
                         </b-form-group>
                       </b-col>
                       <b-col md="4">
                         <b-form-group id="input-group-2" label="To" label-for="input-2">
-                           <select class="form-control" @change="changeCheckOut()" id="divisions_list" name="division" v-model="duration">
+                          <select class="form-control" @change="changeCheckOut()" id="divisions_list" name="division" v-model="duration">
                             <option v-for="destiny in destination" :value="destiny.name">
-                                {{destiny.name}}
+                              {{destiny.name}}
                             </option>
                           </select>
                         </b-form-group>
@@ -212,7 +193,7 @@
                       </b-col>
                       <b-col md="4">
                         <b-form-group id="input-group-2">
-                             <b-form-checkbox
+                          <b-form-checkbox
                             name="checkbox-1"
                             v-model="returnStatus"
                             v-value="1"
@@ -221,7 +202,7 @@
                           > Return
                           </b-form-checkbox>
                           <b-form-input
-                          v-if="returnStatus == 1"
+                            v-if="returnStatus == 1"
                             id="input-2"
                             placeholder="Dates"
                             style="background-color: #F7F7F7;
@@ -254,7 +235,7 @@
     <div class="space"></div>
     <!-- why book -->
     <div class="whybook">
-      <div class="container">
+      <div class="container" style="margin-top: 120px;">
         <b-row align-h="center">
           <b-col>
             <p style="font-size:20px;font-family:Mark-Bold; color: #292727;">Why Book With Us</p>
@@ -451,7 +432,7 @@
                     <p style="font-weight: bold;font-size: 20px;color: #292727;">Invite Your Friends</p>
                   </div>
                 </b-col>
-                 <img src="@/assets/img/Group 596.png" alt style="position:absolute;margin:14% 0px 0px 8%;" />
+                <img src="@/assets/img/Group 596.png" alt style="position:absolute;margin:14% 0px 0px 8%;" />
               </b-row>
               <b-row>
                 <b-col>
@@ -550,7 +531,7 @@
                     <div class="carousel-item col-md-6 active" href="https://www.thejakartapost.com/travel/2019/09/26/online-reservation-platform-cgo-to-offer-yachts-boats-for-your-travel-needs.html">
                       <b-card img-src="https://img.jakpost.net/c/2019/01/19/2019_01_19_63436_1547869618._large.jpg" img-alt="Card image" img-left class="mb-3">
                         <b-card-text>
-                         Online reservation platform cGo to offer yachts, boats for your travel needs.
+                          Online reservation platform cGo to offer yachts, boats for your travel needs.
                         </b-card-text>
                       </b-card>
                     </div>
@@ -564,7 +545,7 @@
                     <div class="carousel-item col-md-6">
                       <b-card img-src="https://whatsnewindonesia.com/wp-content/uploads/2019/09/Jajaran_Kepemilikan_cGO.jpg" img-alt="Card image" img-left class="mb-3">
                         <b-card-text>
-                         INTRODUCING CGO : A NEW AVENUE TO EXPLORE THE INDONESIA ARCHIPELAGO.
+                          INTRODUCING CGO : A NEW AVENUE TO EXPLORE THE INDONESIA ARCHIPELAGO.
                         </b-card-text>
                       </b-card>
                     </div>
@@ -578,7 +559,7 @@
                     <div class="carousel-item col-md-6">
                       <b-card img-src="http://samudranesia.id/wp-content/uploads/2019/09/birds-eye-view-2133661_960_720.jpg" img-alt="Card image" img-left class="mb-3">
                         <b-card-text>
-                         Media Launch cGO, Aplikasi Sewa Kapal Pesiar Indonesia.
+                          Media Launch cGO, Aplikasi Sewa Kapal Pesiar Indonesia.
                         </b-card-text>
                       </b-card>
                     </div>
@@ -604,146 +585,166 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import Footer from "@/components/Footer.vue";
-import Header from "@/components/Header.vue";
-import DatePicker from 'vue2-datepicker';
-import axios from '@/plugins/axiosAuth'
-import 'vue2-datepicker/index.css';
-import { timeout } from 'q';
-import moment from 'moment'
+    // @ is an alias to /src
+    import Footer from "@/components/Footer.vue";
+    import Header from "@/components/Header.vue";
+    import DatePicker from 'vue2-datepicker';
+    import axios from '@/plugins/axiosAuth'
+    import 'vue2-datepicker/index.css';
+    import { timeout } from 'q';
+    import moment from 'moment'
 
-const today = new Date();
-today.setHours(0, 0, 0, 0);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-export default {
-  name: "home",
-  data() {
-    return {
-      day: [
-        {name: 1, value: 1},
-        {name: 2, value: 2},
-        {name: 3, value: 3},
-        {name: 4, value: 4},
-        {name: 5, value: 5},
-        {name: 6, value: 6}
-        ],
-        destination: [],
-      selectedDestiny: null,
-      selectedDestinyTour: null,
-      returnStatus: null,
-      selected: null,
-      duration: 1,
-      monthTour: '',
-      dateCheckIn: null,
-      dateCheckOut: null,
-      checkOut: null,
-      time1: new Date(Date.now()),
-      timeTour: new Date(Date.now()),
-      timeTourParse: new Date(Date.now())
-    };
-  },
-  components: {
-    Footer,
-    Header, 
-    DatePicker
-  },
-  mounted() {
-    $(document).ready(function() {
-  $("#myCarousel").on("slide.bs.carousel", function(e) {
-    var $e = $(e.relatedTarget);
-    var idx = $e.index();
-    var itemsPerSlide = 4;
-    var totalItems = $(".carousel-item").length;
+    export default {
+        name: "home",
+        data() {
+            return {
+                day: [
+                    {name: 1, value: 1},
+                    {name: 2, value: 2},
+                    {name: 3, value: 3},
+                    {name: 4, value: 4},
+                    {name: 5, value: 5},
+                    {name: 6, value: 6}
+                ],
 
-    if (idx >= totalItems - (itemsPerSlide - 1)) {
-      var it = itemsPerSlide - (totalItems - idx);
-      for (var i = 0; i < it; i++) {
-        // append slides to end
-        if (e.direction == "left") {
-          $(".carousel-item")
-            .eq(i)
-            .appendTo(".carousel-inner");
-        } else {
-          $(".carousel-item")
-            .eq(0)
-            .appendTo($(this).find(".carousel-inner"));
+                search: {
+                    tour: {
+                        destination: '',
+                        date: MOMENT().format('DD MMMM YYYY'),
+                        guest: 1,
+                    },
+                },
+                destination: [],
+                selectedDestiny: null,
+                selectedDestinyTour: null,
+                returnStatus: null,
+                selected: null,
+                duration: 1,
+                monthTour: '',
+                dateCheckIn: null,
+                dateCheckOut: null,
+                checkOut: null,
+                time1: new Date(Date.now()),
+                timeTour: new Date(Date.now()),
+                timeTourParse: new Date(Date.now())
+            };
+        },
+        components: {
+            Footer,
+            Header,
+            DatePicker
+        },
+        mounted() {
+            $(document).ready(function() {
+                $("#myCarousel").on("slide.bs.carousel", function(e) {
+                    var $e = $(e.relatedTarget);
+                    var idx = $e.index();
+                    var itemsPerSlide = 4;
+                    var totalItems = $(".carousel-item").length;
+
+                    if (idx >= totalItems - (itemsPerSlide - 1)) {
+                        var it = itemsPerSlide - (totalItems - idx);
+                        for (var i = 0; i < it; i++) {
+                            // append slides to end
+                            if (e.direction == "left") {
+                                $(".carousel-item")
+                                    .eq(i)
+                                    .appendTo(".carousel-inner");
+                            } else {
+                                $(".carousel-item")
+                                    .eq(0)
+                                    .appendTo($(this).find(".carousel-inner"));
+                            }
+                        }
+                    }
+                });
+            });
+            axios.get('/api/v1/UserApps/Master/Harbor/')
+                .then(response =>
+                {
+                    let res = response.data;
+
+                    res.data.forEach(item => {
+                        item.id = item.name;
+                        item.text = item.name;
+                    });
+
+                    this.destination = res.data
+                })
+        },
+        methods: {
+            search(data) {},
+            onSubmitSailing() {
+                this.$store.state.sailing.form.destination = this.selectedDestiny
+                this.$store.state.sailing.form.day = this.duration
+                this.$router.push({ name: "sailingEmpty" });
+            },
+
+            onSubmitTour()
+            {
+                this.search.tour.date = MOMENT(this.search.tour.date,'DD MMMM YYYY').format('YYYY-MM-DD');
+
+                let query = this.search.tour;
+                this.$router.push({ name: "Tour", query: query });
+            },
+
+            changeCheckOut(){
+                var days = this.duration;
+                this.dateCheckIn = this.time1
+                this.dateCheckIn = this.checkOut
+                this.checkOut = new Date(new Date(this.time1).setDate(new Date(this.time1).getDate() + days));
+                this.checkOut =  moment(String(this.checkOut)).format('DD-MMM-YYYY')
+                this.dateCheckIn =  moment(String(this.time1)).format('YYYY-MM-DD');
+                this.dateCheckOut =  moment(String(this.checkOut)).format('YYYY-MM-DD');
+                // this.dateCheckOut =  moment(String(this.checkOut)).format("YYYY-MM-DD[T]HH:mm:ss");
+                this.$store.state.sailing.form.dateCheckIn = this.dateCheckIn
+                // this.$store.state.sailing.form.dateCheckIn = this.time1
+                this.$store.state.sailing.form.dateCheckOut = this.dateCheckOut
+
+                console.log(this.time1)
+                console.log(this.checkOut)
+                console.log(this.dateCheckIn)
+                console.log(this.dateCheckOut)
+            },
+            notBeforeToday(date) {
+                return date < today;
+            },
+            bindingDate(){
+                var days = this.duration;
+                this.dateCheckIn = this.time1
+                this.dateCheckIn = this.checkOut
+                this.checkOut = new Date(new Date(this.time1).setDate(new Date(this.time1).getDate() + days));
+                this.checkOut =  moment(String(this.checkOut)).format('DD-MMM-YYYY')
+                console.log(result)
+                this.dateCheckIn =  moment(String(this.time1)).format('YYYY-MM-DD');
+                this.dateCheckOut =  moment(String(this.checkOut)).format('YYYY-MM-DD');
+                // this.dateCheckOut =  moment(String(this.checkOut)).format("YYYY-MM-DD[T]HH:mm:ss");
+                this.$store.state.sailing.form.dateCheckIn = this.dateCheckIn
+                // this.$store.state.sailing.form.dateCheckOut = new Date(this.checkOut)
+                this.$store.state.sailing.form.dateCheckOut = this.dateCheckOut
+
+                console.log(this.time1)
+                console.log(this.checkOut)
+                console.log(this.dateCheckIn)
+                console.log(this.dateCheckOut)
+            },
+            bindingDateTour(){
+                // this.checkOut = new Date(new Date(this.time1).setDate(new Date(this.time1).getDate() + days));
+                // this.dateCheckOut =  moment(String(this.checkOut)).format('YYYY-MM-DD');
+                // this.checkOut =  moment(String(this.checkOut)).format('DD-MMM-YYYY')
+                this.timeTourParse =  moment(String(this.timeTour)).format('YYYY-MM-DD');
+                // this.dateCheckOut =  moment(String(this.checkOut)).format("YYYY-MM-DD[T]HH:mm:ss");
+                this.$store.state.tour.form.date = this.timeTourParse
+                // this.$store.state.sailing.form.dateCheckOut = new Date(this.checkOut)
+                // this.$store.state.sailing.form.dateCheckOut = this.dateCheckOut
+
+            }
+        },
+        created() {
+            this.search(null);
         }
-      }
-    }
-  });
-});
-axios.get('/api/v1/UserApps/Master/Harbor/')
-        .then(res => {
-          this.destination = res.data.data
-          console.log("data :   dadsa   "+res.data.data)
-        })
-  },
-  methods: {
-    search(data) {},
-    onSubmitSailing() {
-       this.$store.state.sailing.form.destination = this.selectedDestiny
-      this.$store.state.sailing.form.day = this.duration
-      this.$router.push({ name: "sailingEmpty" });
-    },
-    onSubmitTour() {
-      this.$router.push({ name: "Tour" });
-       this.$store.state.tour.form.destination = this.selectedDestinyTour
-    },
-    changeCheckOut(){
-      var days = this.duration;
-      this.dateCheckIn = this.time1
-      this.dateCheckIn = this.checkOut
-      this.checkOut = new Date(new Date(this.time1).setDate(new Date(this.time1).getDate() + days));
-      this.checkOut =  moment(String(this.checkOut)).format('DD-MMM-YYYY')
-      this.dateCheckIn =  moment(String(this.time1)).format('YYYY-MM-DD');
-      this.dateCheckOut =  moment(String(this.checkOut)).format('YYYY-MM-DD');
-      // this.dateCheckOut =  moment(String(this.checkOut)).format("YYYY-MM-DD[T]HH:mm:ss");
-      this.$store.state.sailing.form.dateCheckIn = this.dateCheckIn
-      // this.$store.state.sailing.form.dateCheckIn = this.time1
-      this.$store.state.sailing.form.dateCheckOut = this.dateCheckOut
-  
-      console.log(this.time1)
-      console.log(this.checkOut)
-      console.log(this.dateCheckIn)
-      console.log(this.dateCheckOut)
-    },
-    notBeforeToday(date) {
-      return date < today;
-    },
-    bindingDate(){
-      var days = this.duration;
-      this.dateCheckIn = this.time1
-      this.dateCheckIn = this.checkOut
-      this.checkOut = new Date(new Date(this.time1).setDate(new Date(this.time1).getDate() + days));
-      this.checkOut =  moment(String(this.checkOut)).format('DD-MMM-YYYY')
-      console.log(result)
-      this.dateCheckIn =  moment(String(this.time1)).format('YYYY-MM-DD');
-      this.dateCheckOut =  moment(String(this.checkOut)).format('YYYY-MM-DD');
-      // this.dateCheckOut =  moment(String(this.checkOut)).format("YYYY-MM-DD[T]HH:mm:ss");
-      this.$store.state.sailing.form.dateCheckIn = this.dateCheckIn
-      // this.$store.state.sailing.form.dateCheckOut = new Date(this.checkOut)
-      this.$store.state.sailing.form.dateCheckOut = this.dateCheckOut
-
-      console.log(this.time1)
-      console.log(this.checkOut)
-      console.log(this.dateCheckIn)
-      console.log(this.dateCheckOut)
-    },
-    bindingDateTour(){
-      // this.checkOut = new Date(new Date(this.time1).setDate(new Date(this.time1).getDate() + days));
-      // this.dateCheckOut =  moment(String(this.checkOut)).format('YYYY-MM-DD');
-      // this.checkOut =  moment(String(this.checkOut)).format('DD-MMM-YYYY')
-      this.timeTourParse =  moment(String(this.timeTour)).format('YYYY-MM-DD');
-      // this.dateCheckOut =  moment(String(this.checkOut)).format("YYYY-MM-DD[T]HH:mm:ss");
-      this.$store.state.tour.form.date = this.timeTourParse
-      // this.$store.state.sailing.form.dateCheckOut = new Date(this.checkOut)
-      // this.$store.state.sailing.form.dateCheckOut = this.dateCheckOut
-
-    }
-  },
-  created() {
-    this.search(null);
-  }
-};
+    };
 </script>

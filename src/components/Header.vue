@@ -5,7 +5,7 @@
       toggleable="lg"
       style="background-color:#233E98;color:#ffffff:padding:0 10% 0 10%"
     >
-      <b-navbar-brand href="/" style="padding:0 0 0 30px">
+      <b-navbar-brand to="/" style="padding:0 0 0 30px">
         <img src="@/assets/img/cgo-logo.png" />
       </b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
