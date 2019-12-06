@@ -18,7 +18,7 @@ import {
 import sailingEmpty from '../views/sailing/index.vue'
 import Tour from '../views/Tour/tour.vue'
 import Transportation from '../views/Transportation/transportation.vue'
-// import Merchant from '../views/Merchant/Merchant.vue'
+import MerchantForm from '../views/Merchant/Merchant.vue'
 import Merchant from '../views/Home/Merchant.vue'
 import Services from '../views/Home/Services.vue'
 import AboutUs from '../views/Home/AboutUs.vue'
@@ -135,6 +135,12 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: Profile
+  },
+  //formulir
+  {
+    path: '/home/form',
+    name: 'MerchantForm',
+    component: MerchantForm
   }
 ]
 

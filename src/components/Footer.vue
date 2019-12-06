@@ -64,7 +64,11 @@
           </b-col>
           <b-col md="3" offset-md="3">
             <!-- <b-button variant="outline-primary" style="margin:5px;width:100px;">English</b-button> -->
+<<<<<<< HEAD
             <!-- <b-button variant="outline-primary" style="margin:5px;width:100px;">USD</b-button> -->
+=======
+            <b-button variant="outline-primary" style="margin:5px;width:100px;">USD</b-button>
+>>>>>>> 1fa24b7ff575a875ad8786cf23e1475d61d697b3
           </b-col>
         </b-row>
         <b-row>

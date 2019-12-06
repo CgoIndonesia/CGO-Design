@@ -23,16 +23,20 @@
                   <b-form @submit.stop.prevent="onSubmitSailing">
                     <b-row style="text-align:left; padding: 0px 20px; padding-top: 15px;">
                       <b-col md="3">
-                        <b-form-group id="input-group-2" label="Destination" label-for="input-2">
-                          <b-form-input
-                            v-model="$store.state.sailing.form.destination"
-                            id="input-2"
-                            placeholder="destination"
-                            style="background-color: #F7F7F7;
-                                border: transparent;
-                                font-family: NunitoSans-Regular;
-                                font-size: 14px;"
-                          ></b-form-input>
+                        <b-form-group id="input-group-2" label="Duration" label-for="input-2">
+                          <select
+                            class="form-control"
+                            @change="changeCheckOut()"
+                            id="divisions_list"
+                            name="division"
+                            v-model="selectedDestiny"
+                          >
+                            <option disabled selected>Select Destination</option>
+                            <option
+                              v-for="destiny in destination"
+                              :value="destiny.name"
+                            >{{destiny.name}}</option>
+                          </select>
                         </b-form-group>
                       </b-col>
                       <b-col md="3">
@@ -45,7 +49,7 @@
                             style="background-color: #F7F7F7;
                               border: transparent;
                               font-family: NunitoSans-Regular;
-                              font-size: 14px;" 
+                              font-size: 14px;"
                           ></b-form-input>-->
                           <!-- <datepicker @selected="bindingDate" v-model="state.date" format="dd MMM yyyy" :disabled-dates="state.disabledDates"></datepicker> -->
                           <date-picker
@@ -68,11 +72,7 @@
                             name="division"
                             v-model="duration"
                           >
-                            <option
-                              v-for="(days,i) in day"
-                              :value="days.value"
-                              :key="i"
-                            >{{days.name}}</option>
+                            <option v-for="days in day" :value="days.value">{{days.name}}</option>
                           </select>
                         </b-form-group>
                       </b-col>
@@ -88,6 +88,7 @@
                           <b-form-input
                             v-model="$store.state.sailing.form.guest"
                             id="input-2"
+                            min="1"
                             placeholder="Guest"
                             type="number"
                             style="background-color: #F7F7F7;
@@ -117,47 +118,30 @@
                   <b-form @submit.stop.prevent="onSubmitTour">
                     <b-row style="text-align:left;padding:20px">
                       <b-col md="4">
-                        <b-form-group id="input-group-2" label="Destination" label-for="input-2">
-                          <b-form-input
-                            id="input-2"
-                            v-model="$store.state.tour.form.destination"
-                            placeholder="your holiday destination"
-                            style="background-color: #F7F7F7;
-                                border: transparent;
-                                font-family: NunitoSans-Regular;
-                                font-size: 14px;"
-                          ></b-form-input>
+                        <b-form-group label="Destination">
+                          <select
+                            class="form-control form-control-primary"
+                            v-model="search.tour.destination"
+                          >
+                            <option value>(Select Destination)</option>
+                            <option
+                              v-for="destiny in destination"
+                              :value="destiny.name"
+                            >{{destiny.name}}</option>
+                          </select>
                         </b-form-group>
                       </b-col>
                       <b-col md="4">
-                        <b-form-group id="input-group-2" label="Month" label-for="input-2">
-                          <b-form-input
-                            id="input-2"
-                            v-model="$store.state.tour.form.date"
+                        <b-form-group id="input-group-2" label="Date" label-for="input-2">
+                          <date-picker
+                            v-model="search.tour.date"
+                            class="form-control-primary"
                             type="date"
-                            placeholder="Dates"
-                            style="background-color: #F7F7F7;
-                                border: transparent;
-                                font-family: NunitoSans-Regular;
-                                font-size: 14px;"
-                          ></b-form-input>
+                            format="DD-MMM-YYYY"
+                            placeholder="Select Date"
+                          ></date-picker>
                         </b-form-group>
                       </b-col>
-                      <!-- <b-col md="3">
-                        <b-form-group id="input-group-2" label="Day" label-for="input-2">
-                          <b-form-input
-                            v-model="$store.state.tour.form.day"
-                            id="input-2"
-                            placeholder="2 day"
-                            type="number"
-                            style="background-color: #F7F7F7;
-                                border: transparent;
-                                font-family: NunitoSans-Regular;
-                                font-size: 14px;"
-                            min="1"
-                          ></b-form-input>
-                        </b-form-group>
-                      </b-col>-->
                       <b-col md="4">
                         <b-form-group id="input-group-2" label="Guest" label-for="input-2">
                           <b-form-input
@@ -165,11 +149,8 @@
                             placeholder="Guest"
                             type="number"
                             min="1"
-                            v-model="$store.state.tour.form.guest"
-                            style="background-color: #F7F7F7;
-                                border: transparent;
-                                font-family: NunitoSans-Regular;
-                                font-size: 14px;"
+                            v-model="search.tour.guest"
+                            class="form-control-primary"
                           ></b-form-input>
                         </b-form-group>
                       </b-col>
@@ -197,33 +178,42 @@
                     <b-row style="text-align:left;padding: 0 20px; padding-top: 15px;">
                       <b-col md="4">
                         <b-form-group id="input-group-2" label="From" label-for="input-2">
-                          <b-form-input
-                            id="input-2"
-                            placeholder="your holiday destination"
-                            style="background-color: #F7F7F7;
-                                border: transparent;
-                                font-family: NunitoSans-Regular;
-                                font-size: 14px;"
-                          ></b-form-input>
+                          <select
+                            class="form-control"
+                            @change="changeCheckOut()"
+                            id="divisions_list"
+                            name="division"
+                            v-model="duration"
+                          >
+                            <option
+                              v-for="destiny in destination"
+                              :value="destiny.name"
+                            >{{destiny.name}}</option>
+                          </select>
                         </b-form-group>
                       </b-col>
                       <b-col md="4">
                         <b-form-group id="input-group-2" label="To" label-for="input-2">
-                          <b-form-input
-                            id="input-2"
-                            placeholder="your holiday destination"
-                            style="background-color: #F7F7F7;
-                                border: transparent;
-                                font-family: NunitoSans-Regular;
-                                font-size: 14px;"
-                          ></b-form-input>
+                          <select
+                            class="form-control"
+                            @change="changeCheckOut()"
+                            id="divisions_list"
+                            name="division"
+                            v-model="duration"
+                          >
+                            <option
+                              v-for="destiny in destination"
+                              :value="destiny.name"
+                            >{{destiny.name}}</option>
+                          </select>
                         </b-form-group>
                       </b-col>
                       <b-col md="4">
                         <b-form-group id="input-group-2" label="Guest" label-for="input-2">
                           <b-form-input
                             id="input-2"
-                            placeholder="Guest"
+                            type="number"
+                            placeholder="your holiday destination"
                             style="background-color: #F7F7F7;
                                 border: transparent;
                                 font-family: NunitoSans-Regular;
@@ -288,7 +278,7 @@
     <div class="space"></div>
     <!-- why book -->
     <div class="whybook">
-      <div class="container">
+      <div class="container" style="margin-top: 120px;">
         <b-row align-h="center">
           <b-col>
             <p style="font-size:20px;font-family:Mark-Bold; color: #292727;">Why Book With Us</p>
@@ -369,86 +359,9 @@
                   <p
                     style="color:#ffffff; font-family: Mark-Bold;
                   font-size: 20px;"
-                  >{{ e.name }}, {{e.province_name}}</p>
+                  >Bali</p>
                 </div>
                 <img :src="e.image" width="260.75px" height="232.88px" />
-              </div>
-            </b-col>
-            <b-col md="3" style="margin-bottom:20px">
-              <div class="card-p-destination">
-                <div class="card-p-destination-gradient">
-                  <p
-                    style="color:#ffffff; font-family: Mark-Bold;
-                  font-size: 20px;"
-                  >Lombok</p>
-                </div>
-                <img src="@/assets/lombok.png" style="witdth:260.75px;height:232.88px;" />
-              </div>
-            </b-col>
-            <b-col md="3" style="margin-bottom:20px">
-              <div class="card-p-destination">
-                <div class="card-p-destination-gradient">
-                  <p
-                    style="color:#ffffff; font-family: Mark-Bold;
-                  font-size: 20px;"
-                  >Labuan Bajo</p>
-                </div>
-                <img src="@/assets/labuan-bajo.png" style="witdth:260.75px;height:232.88px;" />
-              </div>
-            </b-col>
-            <b-col md="3" style="margin-bottom:20px">
-              <div class="card-p-destination">
-                <div class="card-p-destination-gradient">
-                  <p
-                    style="color:#ffffff; font-family: Mark-Bold;
-                   font-size: 20px;"
-                  >Pulau Pari, Kep. Seribu</p>
-                </div>
-                <img src="@/assets/pulau-pari.png" style="witdth:260.75px;height:232.88px;" />
-              </div>
-            </b-col>
-            <b-col md="3" style="margin-bottom:20px">
-              <div class="card-p-destination">
-                <div class="card-p-destination-gradient">
-                  <p
-                    style="color:#ffffff; font-family: Mark-Bold;
-                   font-size: 20px;"
-                  >Pulau Tidung, Kep. Seribu</p>
-                </div>
-                <img src="@/assets/pulau-tidung.png" style="witdth:260.75px;height:232.88px;" />
-              </div>
-            </b-col>
-            <b-col md="3" style="margin-bottom:20px">
-              <div class="card-p-destination">
-                <div class="card-p-destination-gradient">
-                  <p
-                    style="color:#ffffff; font-family: Mark-Bold;
-                  font-size: 20px;"
-                  >Pulau Kelor, Kep. Seribu</p>
-                </div>
-                <img src="@/assets/pulau kelor.png" style="witdth:260.75px;height:232.88px;" />
-              </div>
-            </b-col>
-            <b-col md="3" style="margin-bottom:20px">
-              <div class="card-p-destination">
-                <div class="card-p-destination-gradient">
-                  <p
-                    style="color:#ffffff; font-family: Mark-Bold;
-                  font-size: 20px;"
-                  >Pulau Onrust, Kep. Seribu</p>
-                </div>
-                <img src="@/assets/pulau-onrush.png" style="witdth:260.75px;height:232.88px;" />
-              </div>
-            </b-col>
-            <b-col md="3" style="margin-bottom:20px">
-              <div class="card-p-destination">
-                <div class="card-p-destination-gradient">
-                  <p
-                    style="color:#ffffff; font-family: Mark-Bold;
-                  font-size: 20px;"
-                  >Ujung Kulon</p>
-                </div>
-                <img src="@/assets/ujung-kulon.png" style="witdth:260.75px;height:232.88px;" />
               </div>
             </b-col>
           </b-row>
@@ -612,7 +525,10 @@
               <div class="container-fluid news-cover">
                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                   <div class="carousel-inner row w-75 mx-auto">
-                    <div class="carousel-item col-md-6 active">
+                    <div
+                      class="carousel-item col-md-6 active"
+                      href="https://www.thejakartapost.com/travel/2019/09/26/online-reservation-platform-cgo-to-offer-yachts-boats-for-your-travel-needs.html"
+                    >
                       <b-card
                         img-src="https://img.jakpost.net/c/2019/01/19/2019_01_19_63436_1547869618._large.jpg"
                         img-alt="Card image"
@@ -698,7 +614,9 @@
 import Footer from "@/components/Footer.vue";
 import Header from "@/components/Header.vue";
 import DatePicker from "vue2-datepicker";
+import axios from "@/plugins/axiosAuth";
 import "vue2-datepicker/index.css";
+import { timeout } from "q";
 import moment from "moment";
 
 const today = new Date();
@@ -717,11 +635,27 @@ export default {
         { name: 5, value: 5 },
         { name: 6, value: 6 }
       ],
+
+      search: {
+        tour: {
+          destination: "",
+          date: MOMENT().format("DD MMMM YYYY"),
+          guest: 1
+        }
+      },
+      destination: [],
+      selectedDestiny: null,
+      selectedDestinyTour: null,
       returnStatus: null,
       selected: null,
       duration: 1,
+      monthTour: "",
+      dateCheckIn: null,
+      dateCheckOut: null,
       checkOut: null,
-      time1: new Date(Date.now())
+      time1: new Date(Date.now()),
+      timeTour: new Date(Date.now()),
+      timeTourParse: new Date(Date.now())
     };
   },
   components: {
@@ -754,38 +688,94 @@ export default {
         }
       });
     });
+    axios.get("/api/v1/UserApps/Master/Harbor/").then(response => {
+      let res = response.data;
+
+      res.data.forEach(item => {
+        item.id = item.name;
+        item.text = item.name;
+      });
+
+      this.destination = res.data;
+    });
   },
   methods: {
+    getHotDestination() {
+      this.$store.dispatch("hotDestination").then(Response => {
+        console.log("Response.data.data", Response.data.data);
+        this.hotDestination = Response.data.data;
+      });
+    },
     search(data) {},
     onSubmitSailing() {
+      this.$store.state.sailing.form.destination = this.selectedDestiny;
+      this.$store.state.sailing.form.day = this.duration;
       this.$router.push({ name: "sailingEmpty" });
     },
+
     onSubmitTour() {
-      this.$router.push({ name: "Tour" });
+      this.search.tour.date = MOMENT(
+        this.search.tour.date,
+        "DD MMMM YYYY"
+      ).format("YYYY-MM-DD");
+
+      let query = this.search.tour;
+      this.$router.push({ name: "Tour", query: query });
     },
+
     changeCheckOut() {
       var days = this.duration;
+      this.dateCheckIn = this.time1;
+      this.dateCheckIn = this.checkOut;
       this.checkOut = new Date(
         new Date(this.time1).setDate(new Date(this.time1).getDate() + days)
       );
       this.checkOut = moment(String(this.checkOut)).format("DD-MMM-YYYY");
+      this.dateCheckIn = moment(String(this.time1)).format("YYYY-MM-DD");
+      this.dateCheckOut = moment(String(this.checkOut)).format("YYYY-MM-DD");
+      // this.dateCheckOut =  moment(String(this.checkOut)).format("YYYY-MM-DD[T]HH:mm:ss");
+      this.$store.state.sailing.form.dateCheckIn = this.dateCheckIn;
+      // this.$store.state.sailing.form.dateCheckIn = this.time1
+      this.$store.state.sailing.form.dateCheckOut = this.dateCheckOut;
+
+      console.log(this.time1);
+      console.log(this.checkOut);
+      console.log(this.dateCheckIn);
+      console.log(this.dateCheckOut);
     },
     notBeforeToday(date) {
       return date < today;
     },
     bindingDate() {
       var days = this.duration;
+      this.dateCheckIn = this.time1;
+      this.dateCheckIn = this.checkOut;
       this.checkOut = new Date(
         new Date(this.time1).setDate(new Date(this.time1).getDate() + days)
       );
       this.checkOut = moment(String(this.checkOut)).format("DD-MMM-YYYY");
       console.log(result);
+      this.dateCheckIn = moment(String(this.time1)).format("YYYY-MM-DD");
+      this.dateCheckOut = moment(String(this.checkOut)).format("YYYY-MM-DD");
+      // this.dateCheckOut =  moment(String(this.checkOut)).format("YYYY-MM-DD[T]HH:mm:ss");
+      this.$store.state.sailing.form.dateCheckIn = this.dateCheckIn;
+      // this.$store.state.sailing.form.dateCheckOut = new Date(this.checkOut)
+      this.$store.state.sailing.form.dateCheckOut = this.dateCheckOut;
+
+      console.log(this.time1);
+      console.log(this.checkOut);
+      console.log(this.dateCheckIn);
+      console.log(this.dateCheckOut);
     },
-    getHotDestination() {
-      this.$store.dispatch("hotDestination").then(Response => {
-        console.log("Response.data.data", Response.data.data);
-        this.hotDestination = Response.data.data;
-      });
+    bindingDateTour() {
+      // this.checkOut = new Date(new Date(this.time1).setDate(new Date(this.time1).getDate() + days));
+      // this.dateCheckOut =  moment(String(this.checkOut)).format('YYYY-MM-DD');
+      // this.checkOut =  moment(String(this.checkOut)).format('DD-MMM-YYYY')
+      this.timeTourParse = moment(String(this.timeTour)).format("YYYY-MM-DD");
+      // this.dateCheckOut =  moment(String(this.checkOut)).format("YYYY-MM-DD[T]HH:mm:ss");
+      this.$store.state.tour.form.date = this.timeTourParse;
+      // this.$store.state.sailing.form.dateCheckOut = new Date(this.checkOut)
+      // this.$store.state.sailing.form.dateCheckOut = this.dateCheckOut
     }
   },
   created() {
