@@ -382,7 +382,7 @@
             </div>
           </div>
         </b-col>
-        <b-col md="3">
+        <b-col md="3" class="position-fixed" style="right:0;">
           <div class="content-aside-sailing-detail">
             <b-card>
               <div class="d-flex align-items-center">
