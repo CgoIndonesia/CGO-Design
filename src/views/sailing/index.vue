@@ -24,7 +24,7 @@
                 </b-form-group>
                 <b-form-group id="input-group-1" label="Dates" label-for="input-1">
                   <b-form-input
-                     v-model="$store.state.sailing.form.dateCheckIn"
+                    v-model="$store.state.sailing.form.dateCheckIn"
                     id="input-2"
                     placeholder="Dates"
                     type="date"
@@ -102,10 +102,10 @@
                   name="flavour-1"
                 ></b-form-checkbox-group>
               </div>
-            </b-form-group> -->
+            </b-form-group>-->
 
             <!-- Empty Search Sailing -->
-            <div class="d-none empty-sailing container" >
+            <div class="d-none empty-sailing container">
               <b-row>
                 <b-col md="12">
                   <div style="width: fit-content;" class="empty-content-sailing ml-auto mr-auto">
@@ -116,7 +116,7 @@
               </b-row>
             </div>
             <!-- Result sailing Search -->
-            <div class="container-fluid">
+            <div class="container-fluid" v-if="data_tour != null">
               <b-row>
                 <b-col md="6" class="mt-4 mb-2" v-for="(data,i) in data_sailing" :key="i">
                   <b-card no-body>
@@ -500,7 +500,7 @@
                   rows="8"
                   class="mt-4"
                 ></b-form-textarea>
-              </b-form> -->
+              </b-form>-->
               <b-form
                 style="padding: 30px; background: #E2FDFB;"
                 class="mt-4 justify-content-around ref-code"
@@ -819,7 +819,7 @@
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import Moment from "moment";
-import axios from '@/plugins/axiosAuth'
+import axios from "@/plugins/axiosAuth";
 
 export default {
   name: "sailingEmpty",
@@ -992,7 +992,7 @@ export default {
       //this.selectedContent = "confirmation";
     },
     setLastPayment() {
-      this.lastPayment = new Moment().add(2, 'hours').calendar();
+      this.lastPayment = new Moment().add(2, "hours").calendar();
     }
   },
   computed: {
@@ -1007,7 +1007,7 @@ export default {
     }
   },
   mounted() {
-    console.log("data date: " +this.$store.state.sailing.form.dateCheckIn)
+    console.log("data date: " + this.$store.state.sailing.form.dateCheckIn);
   },
   created() {
     this.$store.commit("bodyDetail", {

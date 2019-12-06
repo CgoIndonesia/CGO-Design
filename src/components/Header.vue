@@ -34,18 +34,37 @@
                 style="border-width: 0px;border-left-radius:0px; font-family: NunitoSans-Regular; color:#B7B5B5;"
               ></b-form-input>
             </b-input-group>
-          </b-form> -->
+          </b-form>-->
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto pr-6">
-          <b-nav-item v-if="loggedIn" v-b-modal.modal-prevent-closing style="font-family: Mark-Bold !important;">Logout</b-nav-item>
-          <b-nav-item v-if="!loggedIn" href="/Home/register"><a style="font-family: Mark-Bold !important;">Register</a></b-nav-item>
+          <b-nav-item
+            v-if="loggedIn"
+            v-b-modal.modal-prevent-closing
+            style="font-family: Mark-Bold !important;"
+          >Logout</b-nav-item>
+          <b-nav-item v-if="loggedIn" href="/Profile">
+            <img
+              :src="$store.state.profile.avatar||no_image"
+              height="25px"
+              width="25px"
+              style=" border-radius:50%;"
+            />
+          </b-nav-item>
+          <b-nav-item v-if="!loggedIn" href="/Home/register">Register</b-nav-item>
 
           <b-dropdown v-if="!loggedIn" variant="link" toggle-class="text-decoration-none" no-caret>
             <template v-slot:button-content style="padding:0px">
-              <p style="color:rgba(255, 255, 255, 0.5);margin:0px; font-size:14px; font-family: Mark-Bold;">Login</p>
+              <p
+                style="color:rgba(255, 255, 255, 0.5);margin:0px; font-size:14px; font-family: Mark-Bold;"
+              >Login</p>
             </template>
             <b-dropdown-form style="width: 254px;">
-              <b-form-group style="font-family: Mark-Bold !important;" label="Email" label-for="dropdown-form-email" @submit.stop.prevent>
+              <b-form-group
+                style="font-family: Mark-Bold !important;"
+                label="Email"
+                label-for="dropdown-form-email"
+                @submit.stop.prevent
+              >
                 <b-form-input
                   id="dropdown-form-email"
                   size="sm"
@@ -115,6 +134,20 @@
 export default {
   data() {
     return {
+      no_image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJjmznwgy_l-XkdkZUsiOdRa3Kj3O4dZk4u38oztKSYoOXNxE5&s",
+      components: [
+        "Autocompletes",
+        "Comboboxes",
+        "Forms",
+        "Inputs",
+        "Overflow Buttons",
+        "Selects",
+        "Selection Controls",
+        "Sliders",
+        "Textareas",
+        "Text Fields"
+      ],
       form: {
         username: null,
         password: null,

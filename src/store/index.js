@@ -205,7 +205,16 @@ export default new Vuex.Store({
           })
       })
     },
-
+    hotDestination(contex) {
+      return new Promise((resolve, reject) => {
+        axios.get('/api/v1/UserApps/Home/HotDestination').then(response => {
+            resolve(response);
+          })
+          .catch(error => {
+            resolve(reject)
+          })
+      })
+    },
     login(context, data) {
       return new Promise((resolve, reject) => {
         axios.post('api/v1/UserApps/login', data, config)
