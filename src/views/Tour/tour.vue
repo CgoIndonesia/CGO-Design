@@ -2,6 +2,7 @@
   <div>
     <Header />
     <div class="content-center" id="content-center">
+
       <!-- Tour Search Screen -->
       <b-row class="m-0" v-if="selectedContent =='tourHome'">
         <b-col md="4">
@@ -18,7 +19,7 @@
               <b-form class="mt-4">
                 <b-form-group id="input-group-1" label="Destination" label-for="input-1">
                   <select class="form-control form-control-primary" v-model="tour.search.destination">
-                    <option value="">(Select Destination)</option>
+                    <option value="">(All Destination)</option>
                     <option v-for="destiny in destination" :value="destiny.name">
                       {{destiny.name}}
                     </option>
@@ -57,7 +58,7 @@
               Tour
             </h2>
             <!-- Empty Search Sailing -->
-            <div class="d-none empty-sailing container">
+            <div class="empty-sailing container" v-if="tour.data.length == 0 && !tour.loading">
               <b-row>
                 <b-col md="12">
                   <div style="width: fit-content;" class="empty-content-sailing ml-auto mr-auto">
@@ -128,9 +129,6 @@
                   </b-card>
                 </b-col>
               </b-row>
-              <div style="margin-top: 9rem;" v-if="tour.data.length == 0 && !tour.loading">
-                <h5 class="text-center">No Data</h5>
-              </div>
               <div class="text-center" v-if="tour.loading">
                 <font-awesome-icon icon="spinner" spin size="3x"></font-awesome-icon>
               </div>
@@ -152,14 +150,14 @@
               style="text-shadow: 1px 1px 2px #333;"
             >
               <b-carousel-slide
-                :v-if="tourDetail.images"
-                v-for="(img, i) in tourDetail.images"
+                :v-if="tour.detailData.images"
+                v-for="(img, i) in tour.detailData.images"
                 :key="i"
                 :img-src="img.endpoint"
                 style="max-height:400px;"
               ></b-carousel-slide>
               <b-carousel-slide
-                :v-else="tourDetail.images"
+                :v-else="tour.detailData.images"
                 :img-src="noImage"
                 style="max-height:400px;"
               ></b-carousel-slide>
@@ -170,7 +168,7 @@
               style="border: 2px solid #efefef; border-top:transparent;"
             >
               <div>
-                <h5 style="font-family: Mark-Bold; font-size: 22px;">{{ tourDetail.name }}</h5>
+                <h5 style="font-family: Mark-Bold; font-size: 22px;">{{ tour.detailData.name }}</h5>
                 <div class="d-flex">
                   <img
                     style="margin-top: 3px; height: 14px; margin-right: 5px;"
@@ -180,7 +178,7 @@
                   />
                   <p
                     style="font-family: NunitoSams-Regular;"
-                  >{{ tourDetail.origin }} - {{ tourDetail.destination }}</p>
+                  >{{ tour.detailData.origin }} - {{ tour.detailData.destination }}</p>
                 </div>
               </div>
             </div>
@@ -196,16 +194,16 @@
               />
               <strong
                 style="font-family: Mark-Bold; font-size: 20px; margin-right: 20px;"
-              >{{ tourDetail.rating ? tourDetail.rating : 0 }}.0</strong>
+              >{{ tour.detailData.rating ? tour.detailData.rating : 0 }}.0</strong>
               <p
                 class="m-0"
-              >Based on {{ tourDetail.reviews ? tourDetail.reviews.length : 0}} reviews</p>
+              >Based on {{ tour.detailData.reviews ? tour.detailData.reviews.length : 0}} reviews</p>
             </div>
             <div class="p-4" style="border: 2px solid #efefef; border-top:transparent;">
               <h5 style="font-family: Mark-Bold;">About</h5>
               <p
                 style="font-family: NunitoSans-Regular; line-height: 1.8;"
-              >{{ tourDetail.description }}</p>
+              >{{ tour.detailData.description }}</p>
               <a style="font-family: NunitoSans-Regular;" href>See all</a>
             </div>
             <div
@@ -276,7 +274,7 @@
               <div class="mt-4 d-flex flex-wrap justify-content-start">
                 <b-card
                   class="mr-4 mb-3"
-                  v-for="(itineraries,i) in tourDetail.itineraries"
+                  v-for="(itineraries,i) in tour.detailData.itineraries"
                   :key="i"
                 >
                   <div>
@@ -305,7 +303,7 @@
                       >Departure</h5>
                       <p
                         style="font-family: NunitoSans-Regular;font-size: 14px;"
-                      >{{ tourDetail.origin }} {{ tourDetail.date }}</p>
+                      >{{ tour.detailData.origin }} {{ tour.detailData.date }}</p>
                     </div>
                   </div>
                 </b-card>
@@ -318,7 +316,7 @@
                       >Arrival</h5>
                       <p
                         style="font-family: NunitoSans-Regular;font-size: 14px;"
-                      >{{ tourDetail.destination }} {{ tourDetail.end_date }}</p>
+                      >{{ tour.detailData.destination }} {{ tour.detailData.end_date }}</p>
                     </div>
                   </div>
                 </b-card>
@@ -328,7 +326,7 @@
               <h5 style="font-family: Mark-Bold;">Facilities</h5>
               <div class="facilities d-flex flex-wrap justify-content-start">
                 <span
-                  v-for="(facilities,i) in tourDetail.ship.facilities"
+                  v-for="(facilities,i) in tour.detailData.ship.facilities"
                   :key="i"
                 >{{ facilities.name }}</span>
               </div>
@@ -507,10 +505,10 @@
             <div class="mt-5 rating-comment">
               <b-card>
                 <div class="title-rating-comment">
-                  <h5>Rating and Review {{ tourDetail.reviews ? tourDetail.reviews.length : 0}}</h5>
+                  <h5>Rating and Review {{ tour.detailData.reviews ? tour.detailData.reviews.length : 0}}</h5>
                 </div>
                 <b-row>
-                  <b-col md="6" v-for="(item,i) in tourDetail.reviews" :key="i">
+                  <b-col md="6" v-for="(item,i) in tour.detailData.reviews" :key="i">
                     <div class="d-flex justify-content-between">
                       <div class="d-flex align-items-center">
                         <img
@@ -566,13 +564,13 @@
                 <img
                   style="object-fit:cover; height:45px; width:45px; margin-top: 4px; margin-right:10px;"
                   class="rounded-circle"
-                  :src="tourDetail.merchant_image || noImage"
+                  :src="tour.detailData.merchant_image || noImage"
                   alt
                 />
                 <span>
                   <h5
                     style="font-family: Mark-Bold; font-size: 15px; margin-bottom: 2px;"
-                  >{{ tourDetail.merchant_name }}</h5>
+                  >{{ tour.detailData.merchant_name }}</h5>
                   <p
                     class="m-0"
                     style="font-family: NunitoSans-Regular; font-size: 12px;"
@@ -590,10 +588,10 @@
               <strong>{{$store.state.tour.form.guest }} guests/pax</strong>
               <template v-slot:footer>
                 <span class="d-flex price">
-                  <h5>{{ tourDetail.ship.current_currency_code }}</h5>
+                  <h5>{{ tour.detailData.ship.current_currency_code }}</h5>
                   <strong
                     style="font-family:NunitoSans-Bold; font-size: 22px;"
-                  >{{ stringIDR(tourDetail.price_exchange) }}</strong>
+                  >{{ stringIDR(tour.detailData.price_exchange) }}</strong>
                   <p>/pax</p>
                 </span>
                 <b-button
@@ -706,11 +704,11 @@
                     <h6
                       style="font-size: 15px;
                                     font-family: NunitoSans-Bold;"
-                    >{{ tourDetail.destination }} {{ searchDetail.origin_city_name }}, {{ searchDetail.origin_province_name }}</h6>
+                    >{{ tour.detailData.destination }} {{ searchDetail.origin_city_name }}, {{ searchDetail.origin_province_name }}</h6>
                     <span
                       style="font-size: 15px;
                                     font-family: NunitoSans-Regular;"
-                    >Rp {{ tourDetail.price_exchange }}</span>
+                    >Rp {{ tour.detailData.price_exchange }}</span>
                   </div>
                   <div class="d-flex justify-content-between">
                     <em
@@ -767,7 +765,7 @@
               <h6
                 style="margin-bottom: 30px; font-family: Mark-Bold; font-size: 20px; color: #292727;"
               >Booking Details</h6>
-              <strong>{{ tourDetail.name }}</strong>
+              <strong>{{ tour.detailData.name }}</strong>
               <p
                 class="m-0 mt-1"
               >{{ searchDetail.origin_city_name }}, {{ searchDetail.origin_province_name }}</p>
@@ -801,20 +799,20 @@
                     <div>
                       <h6
                         style="font-family: NunitoSans-Bold; font-size: 18px;"
-                      >{{ tourDetail.name }}</h6>
+                      >{{ tour.detailData.name }}</h6>
                       <span class="d-flex align-items-center">
                         <img style="height: 14px;" src="../../assets/droplet-outline.png" alt />
-                        <p class="m-0 ml-3">{{ tourDetail.origin }} - {{ tourDetail.destination }}</p>
+                        <p class="m-0 ml-3">{{ tour.detailData.origin }} - {{ tour.detailData.destination }}</p>
                       </span>
                     </div>
                     <div style="position: absolute; bottom: 0;" class="d-flex align-items-center">
                       <img
                         style="height:29px;"
                         class="rounded-circle"
-                        :src="tourDetail.merchant_image ||noImage"
+                        :src="tour.detailData.merchant_image ||noImage"
                         alt
                       />
-                      <h6 class="m-0 ml-3">{{tourDetail.merchant_name}}</h6>
+                      <h6 class="m-0 ml-3">{{tour.detailData.merchant_name}}</h6>
                     </div>
                   </b-col>
                 </b-row>
@@ -830,11 +828,11 @@
                   <strong style="font-family: NunitoSans-Bold;">Pickup and Return</strong>
                   <div class="mt-2 d-flex justify-content-between">
                     <h6>Departure</h6>
-                    <strong>{{ tourDetail.origin }} {{ dateFormat($store.state.tour.form.date) }} at 20:30 WITA</strong>
+                    <strong>{{ tour.detailData.origin }} {{ dateFormat($store.state.tour.form.date) }} at 20:30 WITA</strong>
                   </div>
                   <div class="d-flex justify-content-between">
                     <em>Arrival</em>
-                    <strong>{{ tourDetail.destination }} {{dateFormat($store.getters.pax)}} at 20:30 WITA</strong>
+                    <strong>{{ tour.detailData.destination }} {{dateFormat($store.getters.pax)}} at 20:30 WITA</strong>
                   </div>
                 </b-card-text>
                 <template v-slot:footer>
@@ -866,8 +864,8 @@
                   <div class="d-flex justify-content-between">
                     <h6
                       style="font-family: NunitoSans-Bold;"
-                    >{{ tourDetail.origin }} - {{ tourDetail.destination }}</h6>
-                    <strong>Rp {{tourDetail.price_exchange}}</strong>
+                    >{{ tour.detailData.origin }} - {{ tour.detailData.destination }}</h6>
+                    <strong>Rp {{tour.detailData.price_exchange}}</strong>
                   </div>
                   <div class="pb-2 d-flex justify-content-between">
                     <em>Pax (x{{$store.state.tour.form.guest}})</em>
@@ -998,7 +996,7 @@
                   <div class="p-5 d-flex justify-content-between">
                     <div>
                       <p>Package</p>
-                      <h6>{{ tourDetail.origin }} - {{ tourDetail.destination }}</h6>
+                      <h6>{{ tour.detailData.origin }} - {{ tour.detailData.destination }}</h6>
                     </div>
                     <div class="d-flex">
                       <div>
@@ -1023,11 +1021,11 @@
                       <strong style="font-family: NunitoSans-Bold;">Pickup and Return</strong>
                       <div class="mt-2 d-flex justify-content-between">
                         <h6>Departure</h6>
-                        <strong>{{ tourDetail.origin }} {{ dateFormat($store.state.tour.form.date) }} at 20:30 WITA</strong>
+                        <strong>{{ tour.detailData.origin }} {{ dateFormat($store.state.tour.form.date) }} at 20:30 WITA</strong>
                       </div>
                       <div class="d-flex justify-content-between">
                         <em>Arrival</em>
-                        <strong>{{ tourDetail.destination }} {{dateFormat($store.getters.pax)}} Gili Trawangan at 20:30 WITA</strong>
+                        <strong>{{ tour.detailData.destination }} {{dateFormat($store.getters.pax)}} Gili Trawangan at 20:30 WITA</strong>
                       </div>
                     </b-card-text>
                     <template v-slot:footer>
@@ -1113,6 +1111,7 @@
                         sort: ["date desc"]
                     },
                     data: [],
+                    detailData: null,
                     paging: {}
                 },
                 destination: [],
@@ -1160,9 +1159,9 @@
 
                 let searchQ = self.tour.search;
 
-                searchQ.date = MOMENT.parseZone(self.tour.search.date)
+                searchQ.date = self.tour.search.date ? MOMENT.parseZone(self.tour.search.date)
                     .utc()
-                    .format();
+                    .format() : null;
 
                 axios.post('/api/v1/UserApps/search',searchQ)
                     .then(response =>
@@ -1205,8 +1204,9 @@
             goto(to, data) {
                 //$this.state.tour.detail_search;
                 this.$store.state.tour.detail_search = data;
-                if (to == "tourDetail") this.getDetail(to, data);
+                if (to == "tourDetail") this.getTourDetail(to, data);
             },
+
             booking_ship() {
                 var date_from = MOMENT(this.$store.state.tour.form.date).format();
                 var date_to = MOMENT(this.$store.getters.pax).format();
@@ -1269,25 +1269,27 @@
 
                 //this.selectedContent = "confirmation";
             },
-            getDetail(to, data) {
-                var body = this.selectedContent;
-                this.$store
-                    .dispatch("detailShip", {
-                        id: data.ref_id,
-                        data: this.detailBody,
-                        type: "tour"
-                    })
-                    .then(res => {
-                        var harga = this.$store.state.tour.detail.price_exchange || 0;
-                        this.$store.state.tour.form.total =
-                            harga * this.$store.state.tour.form.day;
-                        console.log("dataaa", res.data.data);
+
+            getTourDetail(to, data)
+            {
+                if(data.ref_id)
+                {
+                    axios.post('/api/v1/UserApps/Tour/'+data.ref_id, {}).then(response =>
+                    {
+                        let res = response.data.data;
+
+                        res.date = MOMENT.parseZone(res.date)
+                            .utc()
+                            .format('DD MMMM YYYY');
+
+                        this.tour.detailData = res;
                         this.selectedContent = to;
+                    }).catch(()=> {
+
                     })
-                    .catch(error => {
-                        console.log(error);
-                    });
+                }
             },
+
             stringIDR(data) {
                 const x = Math.round(data);
                 return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -1303,7 +1305,7 @@
         },
         computed: {
             tourDetail() {
-                return this.$store.state.tour.detail;
+                return this.tour.detailData;
             },
             searchDetail() {
                 return this.$store.state.tour.detail_search;

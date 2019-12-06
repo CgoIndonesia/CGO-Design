@@ -92,7 +92,7 @@
                     </b-row>
                   </b-form>
                 </b-tab>
-                <b-tab >
+                <b-tab>
                   <template v-slot:title>
                     <img src="@/assets/img/Group 427.png" alt=""> <strong>Tour</strong>
                   </template>
@@ -144,11 +144,11 @@
                   <template v-slot:title>
                     <img src="@/assets/img/camper-van.png" alt=""> <strong>Transportation</strong>
                   </template>
-                  <b-form>
+                  <b-form @submit.stop.prevent="onSubmitTransportation">
                     <b-row style="text-align:left;padding: 0 20px; padding-top: 15px;">
                       <b-col md="4">
                         <b-form-group id="input-group-2" label="From" label-for="input-2">
-                          <select class="form-control" @change="changeCheckOut()" id="divisions_list" name="division" v-model="duration">
+                          <select class="form-control form-control-primary" v-model="search.transportation.origin">
                             <option v-for="destiny in destination" :value="destiny.name">
                               {{destiny.name}}
                             </option>
@@ -157,7 +157,7 @@
                       </b-col>
                       <b-col md="4">
                         <b-form-group id="input-group-2" label="To" label-for="input-2">
-                          <select class="form-control" @change="changeCheckOut()" id="divisions_list" name="division" v-model="duration">
+                          <select class="form-control form-control-primary" v-model="search.transportation.destination">
                             <option v-for="destiny in destination" :value="destiny.name">
                               {{destiny.name}}
                             </option>
@@ -168,8 +168,9 @@
                         <b-form-group id="input-group-2" label="Guest" label-for="input-2">
                           <b-form-input
                             id="input-2"
+                            v-model="search.transportation.guest"
                             type="number"
-                            placeholder="your holiday destination"
+                            placeholder="GUest"
                             style="background-color: #F7F7F7;
                                 border: transparent;
                                 font-family: NunitoSans-Regular;
@@ -180,37 +181,30 @@
                     </b-row>
                     <b-row style="text-align:left;padding:0 20px">
                       <b-col md="4">
-                        <b-form-group id="input-group-2" label="Departure" label-for="input-2">
-                          <b-form-input
-                            id="input-2"
-                            placeholder="Dates"
-                            style="background-color: #F7F7F7;
-                                border: transparent;
-                                font-family: NunitoSans-Regular;
-                                font-size: 14px;"
-                          ></b-form-input>
+                        <b-form-group id="input-group-2" label="Date" label-for="input-2">
+                          <date-picker v-model="search.transportation.date" class="form-control-primary" type="date" format="DD-MMM-YYYY" placeholder="Select Date"></date-picker>
                         </b-form-group>
                       </b-col>
                       <b-col md="4">
-                        <b-form-group id="input-group-2">
-                          <b-form-checkbox
-                            name="checkbox-1"
-                            v-model="returnStatus"
-                            v-value="1"
-                            v-unchecked-value="null"
-                            class="mb-1"
-                          > Return
-                          </b-form-checkbox>
-                          <b-form-input
-                            v-if="returnStatus == 1"
-                            id="input-2"
-                            placeholder="Dates"
-                            style="background-color: #F7F7F7;
-                                border: transparent;
-                                font-family: NunitoSans-Regular;
-                                font-size: 14px;"
-                          ></b-form-input>
-                        </b-form-group>
+<!--                        <b-form-group id="input-group-2">-->
+<!--                          <b-form-checkbox-->
+<!--                            name="checkbox-1"-->
+<!--                            v-model="returnStatus"-->
+<!--                            v-value="1"-->
+<!--                            v-unchecked-value="null"-->
+<!--                            class="mb-1"-->
+<!--                          > Return-->
+<!--                          </b-form-checkbox>-->
+<!--                          <b-form-input-->
+<!--                            v-if="returnStatus == 1"-->
+<!--                            id="input-2"-->
+<!--                            placeholder="Dates"-->
+<!--                            style="background-color: #F7F7F7;-->
+<!--                                border: transparent;-->
+<!--                                font-family: NunitoSans-Regular;-->
+<!--                                font-size: 14px;"-->
+<!--                          ></b-form-input>-->
+<!--                        </b-form-group>-->
                       </b-col>
                       <b-col md="4" class="align-self-center">
                         <b-form-group class="m-0">
@@ -616,7 +610,19 @@
                         date: MOMENT().format('DD MMMM YYYY'),
                         guest: 1,
                     },
+                    sailing: {
+                        destination: '',
+                        date: MOMENT().format('DD MMMM YYYY'),
+                        guest: 1,
+                    },
+                    transportation: {
+                        origin: '',
+                        destination: '',
+                        date: MOMENT().format('DD MMMM YYYY'),
+                        guest: 1,
+                    },
                 },
+
                 destination: [],
                 selectedDestiny: null,
                 selectedDestinyTour: null,
@@ -677,6 +683,7 @@
         },
         methods: {
             search(data) {},
+
             onSubmitSailing() {
                 this.$store.state.sailing.form.destination = this.selectedDestiny
                 this.$store.state.sailing.form.day = this.duration
@@ -691,7 +698,16 @@
                 this.$router.push({ name: "Tour", query: query });
             },
 
-            changeCheckOut(){
+            onSubmitTransportation()
+            {
+                this.search.transportation.date = MOMENT(this.search.transportation.date,'DD MMMM YYYY').format('YYYY-MM-DD');
+
+                let query = this.search.transportation;
+                this.$router.push({ name: "Transportation", query: query });
+            },
+
+            changeCheckOut()
+            {
                 var days = this.duration;
                 this.dateCheckIn = this.time1
                 this.dateCheckIn = this.checkOut
@@ -709,9 +725,11 @@
                 console.log(this.dateCheckIn)
                 console.log(this.dateCheckOut)
             },
+
             notBeforeToday(date) {
                 return date < today;
             },
+
             bindingDate(){
                 var days = this.duration;
                 this.dateCheckIn = this.time1

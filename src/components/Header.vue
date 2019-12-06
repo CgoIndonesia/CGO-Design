@@ -11,9 +11,9 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav style="padding:0 30px 0 0">
          <b-navbar-nav>
-          <b-nav-item href="/sailing/index" ><a style="font-family: Mark-Bold !important;">Sailing</a></b-nav-item>
-          <b-nav-item href="/Tour/tour" style="font-family: Mark-Bold !important;"><a style="font-family: Mark-Bold !important;">Tour</a></b-nav-item>
-          <b-nav-item href="/Transportation/transportation" style="font-family: Mark-Bold !important;"><a style="font-family: Mark-Bold !important;">Transportation</a></b-nav-item>
+          <b-nav-item to="/sailing/index" ><a style="font-family: Mark-Bold !important;">Sailing</a></b-nav-item>
+          <b-nav-item to="/Tour/tour" style="font-family: Mark-Bold !important;"><a style="font-family: Mark-Bold !important;">Tour</a></b-nav-item>
+          <b-nav-item to="/Transportation/transportation" style="font-family: Mark-Bold !important;"><a style="font-family: Mark-Bold !important;">Transportation</a></b-nav-item>
         </b-navbar-nav>
         <!-- Right aligned nav items -->
 
