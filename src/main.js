@@ -10,8 +10,8 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import Select2 from 'v-select2-component';
 
-
 Vue.component('Select2', Select2);
+window.MOMENT = require('moment')
 
 import {
   library
