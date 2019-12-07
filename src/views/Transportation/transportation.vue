@@ -3,7 +3,7 @@
     <Header />
     <div class="content-center" id="content-center">
       <!-- Tour Search Screen -->
-      <b-row class="m-0" v-if="selectedContent =='tourHome'">
+      <b-row class="m-0" v-if="selectedContent =='transportationHome'">
         <b-col md="4">
           <div class="content-aside-sailing">
             <b-card
@@ -807,7 +807,7 @@ export default {
   components: { Footer, Header },
   data() {
     return {
-      selectedContent: "tourHome",
+      selectedContent: "transportationHome",
       selected: null,
       sailingDetail: null,
       dataSearch: {

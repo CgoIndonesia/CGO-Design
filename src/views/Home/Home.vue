@@ -624,7 +624,7 @@
                     },
                     sailing: {
                         destination: '',
-                        date: MOMENT().format('DD MMMM YYYY'),
+                        daterange: [MOMENT().format('DD MMMM YYYY'), MOMENT().format('DD MMMM YYYY')],
                         guest: 1,
                     },
                     transportation: {
