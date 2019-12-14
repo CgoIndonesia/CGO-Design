@@ -6,7 +6,7 @@
                 <b-col md="3">
                     <div class="sidebar-profile">
                         <div class="profile-photos">
-                          <img :src="profiles.data.avatar || no_image" alt="John Doe" class="rounded-circle" style="width:100px;height:100px">
+                          <img :src="no_image" alt="John Doe" class="rounded-circle" style="width:100px;height:100px">
                               <p style="font-weight:bold">{{profiles.data.first_name}}</p>
                               <p>{{profiles.data.email}}</p>
                               <p>{{profiles.data.phone_number}}</p>
@@ -72,7 +72,7 @@
                                                 <p style="text-align:left"><img src="@/assets/img/sailing.png" style="margin-right:10px">Sailing</p>
                                               </b-col>
                                               <b-col md="3">
-                                                <p  style="text-align:left"><ul><li>2 Days</li></ul></p>
+                                                <p  style="text-align:left"><ul><li>3 Days</li></ul></p>
                                               </b-col>
                                               <b-col md="4">
                                                 <p  style="text-align:left"><ul><li>Order ID 111111</li></ul></p>
@@ -91,7 +91,7 @@
                                                 <p  style="text-align:left"><strong> Guest</strong> 8 Guest</p>
                                               </b-col>
                                               <b-col md="3" align-self="end">
-                                                <b-button variant="primary" style="background: linear-gradient(273.33deg, #143ABE 3.36%, #5E79D3 88.52%);border-radius:3px;text-align:right;">See Ticket</b-button>
+                                                <b-button variant="primary" style="background: linear-gradient(273.33deg, #143ABE 3.36%, #5E79D3 88.52%);border-radius:3px;text-align:right;">See aa</b-button>
                                               </b-col>
                                             </b-row>
                                           </div>
@@ -202,7 +202,7 @@
                                   </b-collapse>
                                   <b-collapse id="collapse-2" class="mt-2">
                                      <!-- sailing -->
-                                    <div class="mytrip">
+                                    <div class="mytrip"   v-for="(item,i) in my_ship" :key="i" >
                                       <b-row>
                                         <b-col md="2">
                                           <div class="date">
@@ -215,7 +215,7 @@
                                           <div class="ticket-content">
                                             <b-row>
                                               <b-col md="2">
-                                                <p style="text-align:left"><img src="@/assets/img/sailing.png" style="margin-right:10px">Sailing</p>
+                                                <p style="text-align:left"><img src="@/assets/img/sailing.png" style="margin-right:10px">{{item.type}}</p>
                                               </b-col>
                                               <b-col md="3">
                                                 <p  style="text-align:left"><ul><li>2 Days</li></ul></p>
@@ -226,7 +226,7 @@
                                             </b-row>
                                             <b-row>
                                               <b-col>
-                                                <p style="font-weight:bold;font-size:16px;text-align:left">Big Sky 157 Ocean Fast</p>
+                                                <p style="font-weight:bold;font-size:16px;text-align:left">{{item.merchant_name}}</p>
                                               </b-col>
                                             </b-row>
                                             <b-row>
@@ -1128,11 +1128,24 @@ export default {
   },
   data () {
     return {
+      my_ship:null,
       profiles: null,
-      no_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJjmznwgy_l-XkdkZUsiOdRa3Kj3O4dZk4u38oztKSYoOXNxE5&s"
+      no_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJjmznwgy_l-XkdkZUsiOdRa3Kj3O4dZk4u38oztKSYoOXNxE5&s",
+      no_my_ship:"@/assets/img/empty.png",
+    }
+  },
+  methods : {
+    get_my_ship(){
+      this.$store.dispatch("my_ship").then(res=>{
+        console.log("my_shp",res)
+        this.my_ship = res;
+      }).catch(err=>{
+        console.log(err)
+      })
     }
   },
   mounted () {
+    this.get_my_ship();
     let token = this.$store.state.token;
     axios.get('http://api.cgo.co.id/api/v1/UserApps/My/Profile', {
       headers: {
@@ -1145,3 +1158,37 @@ export default {
   }
 }
 </script>
+<style>
+.mytrip {
+  box-shadow: 0px 0px 4px rgba(117, 117, 117, 0.25);
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.date {
+  border-radius: 5px 0 0 5px;
+  box-shadow: 0px 0px 5px rgba(117, 117, 117, 0.25);
+  height: 100%;
+  padding: 15px;
+}
+
+.ticket-content {
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+}
+
+.expired {
+  background: linear-gradient(90deg, #D42128 53.76%, rgba(212, 33, 40, 0.42) 103.76%);
+  color: #ffffff;
+  border-radius: 0px 5px 0 5px;
+  float: right;
+  padding: 5px;
+  width: 15%;
+  height: 30px;
+}
+
+/* Profile-Trip */
+
+  
+</style>

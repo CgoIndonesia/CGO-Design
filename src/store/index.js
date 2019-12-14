@@ -242,6 +242,24 @@ export default new Vuex.Store({
           })
       })
     },
+    my_ship(context) {
+      config = {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + context.getters.token,
+        },
+      }
+      return new Promise((resolve, reject) => {
+        axios.get('/api/v1/UserApps/My/Trip', config)
+          .then(response => {
+            console.log("succes my_ship")
+            resolve(response.data.data)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
     logout(context) {
       return context.commit('logout')
     },
